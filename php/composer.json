@@ -1,0 +1,14 @@
+{
+  "name": "victorycode/sdk",
+  "description": "Official PHP SDK for Victory Code APIs",
+  "type": "library",
+  "require": {
+    "php": ">=8.1",
+    "guzzlehttp/guzzle": "^7.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "VictoryCode\\SDK\\": "src/"
+    }
+  }
+}
