@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
     "declaration": true,
+    "target": "es6",
+    "module": "commonjs",
     "outDir": "dist",
-    "strict": true,
-    "moduleResolution": "Bundler",
-    "skipLibCheck": true
+    "rootDir": "src",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
-  "include": ["src"]
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

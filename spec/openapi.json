@@ -1,0 +1,2758 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Victory Code Client API",
+    "version": "1.0.0",
+    "description": "This collection provides the core set of APIs for Tactix clients to interact with the platform. It covers authentication and token management, as well as a wide range of game-related endpoints including uploading full games, fetching generated clips, checking clipping status, retrieving game scoring summaries, and accessing detailed team statistics. All requests are versioned to ensure backward compatibility and smooth upgrades."
+  },
+  "paths": {
+    "/api/v1/client/auth/token": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Get client api token",
+        "description": "This endpoint is used to generate a client API token that authenticates subsequent requests to the Tactix API. The client must provide a valid app-id and app-secret in the request headers. Upon successful validation, the server issues a short-lived JWT (JSON Web Token) that should be included in the Authorization header (as App-Token) for all protected API calls.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerateAccessTokenResponse"
+                },
+                "examples": {
+                  "Get client api token": {
+                    "summary": "Get client api token",
+                    "value": {
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzdmY2E2NmVkOTk1M2RhYjQ4YThkMGEiLCJpYXQiOjE3NTYzOTAzMzgsImV4cCI6MTc1NjM5MzkzOH0.v_rCKGBlWFGu4wkWYaYEI8sAKmhrA-GpKa86rJOhqnw",
+                      "message": "Token generated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppSecret": []
+          }
+        ],
+        "operationId": "generateAccessToken"
+      }
+    },
+    "/api/v1/client/classifications": {
+      "post": {
+        "tags": [
+          "classifications"
+        ],
+        "summary": "Create a new classification",
+        "description": "Creates a new classification record in the Tactix platform.\nClassifications are used to categorize teams by league, division, or competition level (e.g., “Division 1A”, “Junior Varsity”).",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateClassificationResponse"
+                },
+                "examples": {
+                  "Create a new classification": {
+                    "summary": "Create a new classification",
+                    "value": {
+                      "message": "Classification created successfully",
+                      "data": {
+                        "name": "Test Classification",
+                        "description": "This is Test Classification description",
+                        "_id": "{Unique UUID of the classification}",
+                        "createdAt": "2025-09-22T13:11:38.115Z",
+                        "updatedAt": "2025-09-22T13:11:38.115Z",
+                        "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassificationRequest"
+              },
+              "example": {
+                "name": "Test Classification",
+                "description": "This is Test Classification description"
+              }
+            }
+          }
+        },
+        "operationId": "createClassification"
+      },
+      "get": {
+        "tags": [
+          "classifications"
+        ],
+        "summary": "Get all classifications",
+        "description": "Retrieves a paginated list of all classifications available to the authenticated client.\nEach classification object includes a name, description, and timestamps for creation and modification.\nThis endpoint is typically used to populate dropdowns or filters when creating or updating teams.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListClassificationsResponse"
+                },
+                "examples": {
+                  "Get all classifications": {
+                    "summary": "Get all classifications",
+                    "value": {
+                      "message": "Classifications list",
+                      "data": [
+                        {
+                          "_id": "{Unique UUID of the classification}",
+                          "name": "PrincetonHighSchool_CLS_82",
+                          "description": "Princeton High School classification",
+                          "createdAt": "2025-09-21T17:12:04.329Z",
+                          "updatedAt": "2025-09-21T17:12:04.329Z",
+                          "__v": 0
+                        },
+                        {
+                          "_id": "{Unique UUID of the classification}",
+                          "name": "PlanoSeniorHighSchool_CLS_224",
+                          "description": "Plano Senior High School classification",
+                          "createdAt": "2025-09-21T17:11:52.462Z",
+                          "updatedAt": "2025-09-21T17:11:52.462Z",
+                          "__v": 0
+                        },
+                        {
+                          "_id": "{Unique UUID of the classification}",
+                          "name": "SpainParkHighSchool_CLS_918",
+                          "description": "Spain Park High School classification",
+                          "createdAt": "2025-09-21T17:09:34.340Z",
+                          "updatedAt": "2025-09-21T17:09:34.340Z",
+                          "__v": 0
+                        }
+                      ],
+                      "pagination": {
+                        "limit": 10,
+                        "totalData": 28,
+                        "page": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "listClassifications"
+      }
+    },
+    "/api/v1/client/classifications/{id}": {
+      "patch": {
+        "tags": [
+          "classifications"
+        ],
+        "summary": "Update a classification",
+        "description": "Updates an existing classification identified by its unique id.\nThis endpoint allows modification of the classification’s name or description.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateClassificationResponse"
+                },
+                "examples": {
+                  "Update a classification": {
+                    "summary": "Update a classification",
+                    "value": {
+                      "message": "Classification updated successfully",
+                      "data": {
+                        "_id": "{Unique UUID of the classification}",
+                        "name": "Testing - Edited",
+                        "description": "This is Classification description Edited",
+                        "createdAt": "2025-09-22T13:11:38.115Z",
+                        "updatedAt": "2025-09-22T13:13:00.922Z",
+                        "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClassificationRequest"
+              },
+              "example": {
+                "name": "Testing - Edited",
+                "description": "This is Classification description Edited"
+              }
+            }
+          }
+        },
+        "operationId": "updateClassification"
+      },
+      "delete": {
+        "tags": [
+          "classifications"
+        ],
+        "summary": "Delete a classification",
+        "description": "Deletes a specific classification from the Tactix system using its unique id.\nThis permanently removes the classification and disassociates it from any linked team records.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteClassificationResponse"
+                },
+                "examples": {
+                  "Delete a classification": {
+                    "summary": "Delete a classification",
+                    "value": {
+                      "message": "Classification deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "deleteClassification"
+      }
+    },
+    "/api/v1/client/game-recap/{gameId}/score": {
+      "get": {
+        "tags": [
+          "game-recap"
+        ],
+        "summary": "Get the Game Recap Score for a specific Game",
+        "description": "Retrieves the overall score for the specified game. This includes the final scoreline and also include period-by-period (quarters) breakdowns.",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetGameRecapScoreResponse"
+                },
+                "examples": {
+                  "Get the Game Recap Score for a specific Game": {
+                    "summary": "Get the Game Recap Score for a specific Game",
+                    "value": {
+                      "message": "Game Recap Score for a specific Game",
+                      "data": {
+                        "gameId": "{Unique UUID of the game}",
+                        "homeTeam": {
+                          "teamId": "{Unique UUID of the home team}",
+                          "sourceId": "N/A",
+                          "name": "Lakeland",
+                          "shortName": "Dreadnaugh",
+                          "mascot": "Dreadnaughts",
+                          "classification": "{name of the classification}",
+                          "totalScore": 37,
+                          "periodScores": [
+                            {
+                              "period": 1,
+                              "type": "REGULATION",
+                              "name": "Q1",
+                              "score": 0
+                            },
+                            {
+                              "period": 2,
+                              "type": "REGULATION",
+                              "name": "Q2",
+                              "score": 17
+                            },
+                            {
+                              "period": 3,
+                              "type": "REGULATION",
+                              "name": "Q3",
+                              "score": 20
+                            },
+                            {
+                              "period": 4,
+                              "type": "REGULATION",
+                              "name": "Q4",
+                              "score": 0
+                            },
+                            {
+                              "period": 5,
+                              "type": "OVERTIME",
+                              "name": "OT",
+                              "score": 0
+                            }
+                          ]
+                        },
+                        "awayTeam": {
+                          "teamId": "{Unique UUID of the away team}",
+                          "sourceId": "N/A",
+                          "name": "St. Thomas Aquinas",
+                          "shortName": "Raiderss",
+                          "mascot": "Raiders",
+                          "classification": "{name of the classification}",
+                          "totalScore": 44,
+                          "periodScores": [
+                            {
+                              "period": 1,
+                              "type": "REGULATION",
+                              "name": "Q1",
+                              "score": 10
+                            },
+                            {
+                              "period": 2,
+                              "type": "REGULATION",
+                              "name": "Q2",
+                              "score": 0
+                            },
+                            {
+                              "period": 3,
+                              "type": "REGULATION",
+                              "name": "Q3",
+                              "score": 0
+                            },
+                            {
+                              "period": 4,
+                              "type": "REGULATION",
+                              "name": "Q4",
+                              "score": 34
+                            },
+                            {
+                              "period": 5,
+                              "type": "OVERTIME",
+                              "name": "OT",
+                              "score": 0
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "getGameRecapScore"
+      }
+    },
+    "/api/v1/client/game-recap/{gameId}/scoring-summary": {
+      "get": {
+        "tags": [
+          "game-recap"
+        ],
+        "summary": "Get the Game Recap Scoring Summary for a specific Game.",
+        "description": "Retrieves a chronological summary of all scoring plays for the specified game. Each record is linked to a playId, enabling clients to correlate the scoring event with detailed play data.",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetGameRecapScoringSummaryResponse"
+                },
+                "examples": {
+                  "Get the Game Recap Scoring Summary for a specific Game.": {
+                    "summary": "Get the Game Recap Scoring Summary for a specific Game.",
+                    "value": {
+                      "message": "Game Recap Scoring Summary for a specific Game.",
+                      "data": {
+                        "gameId": "{Unique UUID of the game}",
+                        "total": 10,
+                        "data": [
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "2nd",
+                              "timeRemaining": "11:33",
+                              "scoringTeamId": "TeamA",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 0,
+                              "awayScore": 10
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "2nd",
+                              "timeRemaining": "09:08",
+                              "scoringTeamId": "TeamA",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 10,
+                              "awayScore": 0
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "2nd",
+                              "timeRemaining": "08:43",
+                              "scoringTeamId": "TeamA",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 17,
+                              "awayScore": 0
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "2nd",
+                              "timeRemaining": "08:05",
+                              "scoringTeamId": "TeamA",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 0,
+                              "awayScore": 17
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "2nd",
+                              "timeRemaining": "06:29",
+                              "scoringTeamId": "TeamA",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 17,
+                              "awayScore": 0
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "2nd",
+                              "timeRemaining": "05:45",
+                              "scoringTeamId": "TeamA",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 0,
+                              "awayScore": 17
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "3rd",
+                              "timeRemaining": "11:52",
+                              "scoringTeamId": "TeamB",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 17,
+                              "awayScore": 0
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "3rd",
+                              "timeRemaining": "10:51",
+                              "scoringTeamId": "TeamB",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 0,
+                              "awayScore": 17
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "3rd",
+                              "timeRemaining": "09:29",
+                              "scoringTeamId": "TeamB",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 0,
+                              "homeScore": 0,
+                              "awayScore": 17
+                            }
+                          ],
+                          [
+                            {
+                              "playId": "{Unique UUID of the play clip}",
+                              "period": "3rd",
+                              "timeRemaining": "07:29",
+                              "scoringTeamId": "TeamA",
+                              "scoreType": "touchdown",
+                              "scoreMethod": null,
+                              "scoreYardage": 12,
+                              "homeScore": 0,
+                              "awayScore": 20
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "getGameRecapScoringSummary"
+      }
+    },
+    "/api/v1/client/game-recap/{gameId}/team-stats": {
+      "get": {
+        "tags": [
+          "game-recap"
+        ],
+        "summary": "Get the Game Recap Team Stats for a specific Game.",
+        "description": "Retrieves a statistical summary for both the home and away teams in a specific game. The response includes key offensive and first-down metrics, allowing clients to analyze game efficiency, offensive output, and team balance between rushing and passing plays.",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetGameRecapTeamStatsResponse"
+                },
+                "examples": {
+                  "Get the Game Recap Team Stats for a specific Game.": {
+                    "summary": "Get the Game Recap Team Stats for a specific Game.",
+                    "value": {
+                      "message": "Game Recap Team Stats for a specific Game.",
+                      "data": {
+                        "gameId": "{Unique UUID of the game}",
+                        "homeTeam": {
+                          "teamId": "{Unique UUID of the home team}",
+                          "sourceId": "N/A",
+                          "name": "Lakeland",
+                          "mascot": "Dreadnaughts",
+                          "classification": "PlayOn",
+                          "firstDowns": {
+                            "total": 1,
+                            "rushing": 1,
+                            "passing": 0
+                          },
+                          "offense": {
+                            "totalPlays": 52,
+                            "totalYards": 122,
+                            "yardsPerPlay": 2.35
+                          },
+                          "passing": {
+                            "totalYards": 0
+                          },
+                          "rushing": {
+                            "totalYards": 36
+                          }
+                        },
+                        "awayTeam": {
+                          "teamId": "{Unique UUID of the away team}",
+                          "sourceId": "N/A",
+                          "name": "St. Thomas Aquinas",
+                          "mascot": "Raiders",
+                          "classification": "PlayOn",
+                          "firstDowns": {
+                            "total": 0,
+                            "rushing": 0,
+                            "passing": 0
+                          },
+                          "offense": {
+                            "totalPlays": 35,
+                            "totalYards": 318,
+                            "yardsPerPlay": 9.09
+                          },
+                          "passing": {
+                            "totalYards": 0
+                          },
+                          "rushing": {
+                            "totalYards": 0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "getGameRecapTeamStats"
+      }
+    },
+    "/api/v1/client/games": {
+      "get": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Get All Games",
+        "description": "Returns a paginated list of games accessible to the client. Useful for building game pickers and dashboards, or to obtain a gameId before fetching detailed resources.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListGamesResponse"
+                },
+                "examples": {
+                  "Get All Games": {
+                    "summary": "Get All Games",
+                    "value": {
+                      "message": "Successfully fetched games",
+                      "data": {
+                        "total": 456,
+                        "limit": 10,
+                        "games": [
+                          {
+                            "gameName": "Varsity Football | Huntland School vs. Cascade High School",
+                            "dateTime": "2025-09-22T13:45:45.365Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Huntland School",
+                              "shortName": "Huntland School",
+                              "classification": "Huntland School",
+                              "mascot": "The Hornets"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Cascade High School",
+                              "shortName": "Cascade High School",
+                              "classification": "Cascade High School",
+                              "mascot": "The Bruins"
+                            }
+                          },
+                          {
+                            "gameName": "Test gam011e4e16fb- Varsity Football | Southmoreland High School vs. Derry Area High School",
+                            "dateTime": "2025-09-22T08:37:19.580Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "SMWHR",
+                            "venue": "SMWHR",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Derry Area High School",
+                              "shortName": "Derry",
+                              "classification": "Derry Area High School",
+                              "mascot": "Trojans"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Southmoreland High School",
+                              "shortName": "Scotties",
+                              "classification": "Southmoreland High School",
+                              "mascot": "Scotties"
+                            }
+                          },
+                          {
+                            "gameName": "Varsity Football | Princeton High School vs. Plano Senior High School",
+                            "dateTime": "2025-09-21T17:12:12.506Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "Plano, Texas",
+                            "venue": "John Clark Stadium",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Plano Senior High School",
+                              "shortName": "PLAN",
+                              "classification": "Plano Senior High School",
+                              "mascot": "PlanoSeniorHighSchool_987"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Princeton High School",
+                              "shortName": "PRIN",
+                              "classification": "Princeton High School",
+                              "mascot": "PrincetonHighSchool_954"
+                            }
+                          },
+                          {
+                            "gameName": "Varsity Football | Spain Park High School vs. James Clemens High School",
+                            "dateTime": "2025-09-21T17:09:51.704Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "Madison, Alabama",
+                            "venue": "Madison City Schools Stadium",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "James Clemens High School",
+                              "shortName": "JAME",
+                              "classification": "James Clemens High School",
+                              "mascot": "JamesClemensHighSchool_124"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Spain Park High School",
+                              "shortName": "SPAI",
+                              "classification": "Spain Park High School",
+                              "mascot": "SpainParkHighSchool_230"
+                            }
+                          },
+                          {
+                            "gameName": "Varsity Football | Trinity Presbyterian School vs. Saint James School",
+                            "dateTime": "2025-09-19T17:11:55.415Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "Montgomery, Alabama",
+                            "venue": "Ragsdale-Boykin Field",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Trinity Presbyterian",
+                              "shortName": "TRIN",
+                              "classification": "Trinity Presbyterian",
+                              "mascot": "TrinityPresbyterian_789"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Saint James School",
+                              "shortName": "SAIN",
+                              "classification": "Saint James School",
+                              "mascot": "SaintJamesSchool_606"
+                            }
+                          },
+                          {
+                            "gameName": "Varsity Football | St. Anthony Village High School vs. DeLaSalle High School",
+                            "dateTime": "2025-09-19T16:34:05.147Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "St. Anthony, Minnesota",
+                            "venue": "St. Anthony Village High School  Minnesota Scores",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "DeLaSalle High School",
+                              "shortName": "DELA",
+                              "classification": "DeLaSalle High School",
+                              "mascot": "DeLaSalleHighSchool_154"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "St. Anthony Village High School",
+                              "shortName": "ST.A",
+                              "classification": "St. Anthony Village High School",
+                              "mascot": "St.AnthonyVillageHighSchool_346"
+                            }
+                          },
+                          {
+                            "gameName": "Varsity Football | Southmoreland High School vs. Derry Area High School",
+                            "dateTime": "2025-09-17T12:42:06.099Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "Alverton",
+                            "venue": "Russ Grimm Field",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Southmoreland High School",
+                              "shortName": "Scotties",
+                              "classification": "Southmoreland High School",
+                              "mascot": "Scotties"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Derry Area High School",
+                              "shortName": "Derry",
+                              "classification": "Derry Area High School",
+                              "mascot": "Trojans"
+                            }
+                          },
+                          {
+                            "gameName": "TEST3 Westlake vs Lake Travis",
+                            "dateTime": "2025-09-17T07:11:57.527Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "SMWHR",
+                            "venue": "SMWHR",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Lake Travis High School",
+                              "shortName": "LTHS",
+                              "classification": "Lake Travis High School",
+                              "mascot": "LT Cavaliers"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Westlake High School",
+                              "shortName": "WHS",
+                              "classification": "Westlake High School",
+                              "mascot": "Chaparral"
+                            }
+                          },
+                          {
+                            "gameName": "Safal Test Again",
+                            "dateTime": "2025-09-17T06:24:18.389Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "Kathmandu",
+                            "venue": "Dashrath Stadium",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Hayward High School",
+                              "shortName": "Hayward",
+                              "classification": "Hayward High School",
+                              "mascot": "Farmer"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Lynden High School",
+                              "shortName": "Lynden",
+                              "classification": "Lynden High School",
+                              "mascot": "Lions"
+                            }
+                          },
+                          {
+                            "gameName": "Safal Test",
+                            "dateTime": "2025-09-17T05:58:36.177Z",
+                            "gameId": "{Unique UUID of the game}",
+                            "location": "Kathmandu",
+                            "venue": "Dashrath Stadium",
+                            "homeTeam": {
+                              "teamId": "{Unique UUID of the home team}",
+                              "name": "Hayward High School",
+                              "shortName": "Hayward",
+                              "classification": "Hayward High School",
+                              "mascot": "Farmer"
+                            },
+                            "awayTeam": {
+                              "teamId": "{Unique UUID of the away team}",
+                              "name": "Lynden High School",
+                              "shortName": "Lynden",
+                              "classification": "Lynden High School",
+                              "mascot": "Lions"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "listGames"
+      }
+    },
+    "/api/v1/client/games/{gameId}": {
+      "get": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Get single game",
+        "description": "Retrieves metadata for a specific game by gameId. The response includes core identifiers, participating teams, venue/location, timestamps, processing status, and any available high-level attributes required to render a game detail view.",
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetGameResponse"
+                },
+                "examples": {
+                  "Get single game": {
+                    "summary": "Get single game",
+                    "value": {
+                      "message": "Single Game",
+                      "data": {
+                        "gameName": "Test gam011e4e16fb- Varsity Football | Southmoreland High School vs. Derry Area High School",
+                        "dateTime": "2025-09-22T08:37:19.580Z",
+                        "gameId": "{Unique UUID of the game}",
+                        "location": "SMWHR",
+                        "venue": "SMWHR",
+                        "homeTeam": {
+                          "teamId": "{Unique UUID of the home team}",
+                          "name": "Derry Area High School",
+                          "shortName": "Derry",
+                          "mascot": "Trojans",
+                          "classification": "Versity Football"
+                        },
+                        "awayTeam": {
+                          "teamId": "{Unique UUID of the away team}",
+                          "name": "Southmoreland High School",
+                          "shortName": "Scotties",
+                          "mascot": "Scotties",
+                          "classification": "Versity Football"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "getGame"
+      }
+    },
+    "/api/v1/client/mascots": {
+      "post": {
+        "tags": [
+          "mascots"
+        ],
+        "summary": "Create a new mascot",
+        "description": "Creates a new mascot record in the Tactix system.\nClients can define the mascot’s name, description, and image URL, which can later be associated with one or more teams.\nThis endpoint is typically used when onboarding new teams or setting up school/club branding assets.",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateMascotResponse"
+                },
+                "examples": {
+                  "Create a new mascot": {
+                    "summary": "Create a new mascot",
+                    "value": {
+                      "message": "Mascot created successfully",
+                      "data": {
+                        "name": "The Hornets",
+                        "description": "The Hornets is the Mascot of Huntland School",
+                        "mascotImage": "{S3 URL of the mascot logo}",
+                        "_id": "{Unique UUID of the mascot}",
+                        "createdAt": "2025-09-22T11:22:20.929Z",
+                        "updatedAt": "2025-09-22T11:22:20.929Z",
+                        "__v": 0
+                      }
+                    }
+                  },
+                  "Create a new mascot (2)": {
+                    "summary": "Create a new mascot",
+                    "value": {
+                      "message": "Mascot created successfully",
+                      "data": {
+                        "name": "The Bruins",
+                        "description": "The Bruins is the Mascot of Cascade High School",
+                        "mascotImage": "https://tactix-sandbox-bucket.s3.eu-west-1.amazonaws.com/1758540520922-502f4c3ddeb119fdChatGPT%20Image%20Sep%2022%2C%202025%2C%2005_13_25%20PM.png",
+                        "_id": "68d132e95f30985c10753ac3",
+                        "createdAt": "2025-09-22T11:28:41.039Z",
+                        "updatedAt": "2025-09-22T11:28:41.039Z",
+                        "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMascotRequest"
+              },
+              "example": {
+                "name": "The Test",
+                "description": "The Test is the Mascot of Test High School"
+              }
+            }
+          }
+        },
+        "operationId": "createMascot"
+      },
+      "get": {
+        "tags": [
+          "mascots"
+        ],
+        "summary": "Get all mascots",
+        "description": "Retrieves a paginated list of all mascots available to the authenticated client.\nEach mascot record contains the name, description, image URL, and timestamps.\nThis endpoint is ideal for displaying mascot lists, searching for existing records, or selecting mascots to associate with teams.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListMascotsResponse"
+                },
+                "examples": {
+                  "Get all mascots": {
+                    "summary": "Get all mascots",
+                    "value": {
+                      "message": "Mascots list",
+                      "data": [
+                        {
+                          "_id": "{Unique UUID of the mascot}",
+                          "name": "The Bruins",
+                          "description": "The Bruins is the Mascot of Cascade High School",
+                          "mascotImage": "{S3 URL of the mascot logo}",
+                          "createdAt": "2025-09-22T11:28:41.039Z",
+                          "updatedAt": "2025-09-22T11:28:41.039Z",
+                          "__v": 0
+                        },
+                        {
+                          "_id": "{Unique UUID of the mascot}",
+                          "name": "The Hornets",
+                          "description": "The Hornets is the Mascot of Huntland School",
+                          "mascotImage": "{S3 URL of the mascot logo}",
+                          "createdAt": "2025-09-22T11:22:20.929Z",
+                          "updatedAt": "2025-09-22T11:22:20.929Z",
+                          "__v": 0
+                        }
+                      ],
+                      "pagination": {
+                        "limit": 2,
+                        "totalData": 62,
+                        "page": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "listMascots"
+      }
+    },
+    "/api/v1/client/mascots/{id}": {
+      "patch": {
+        "tags": [
+          "mascots"
+        ],
+        "summary": "Update a mascot",
+        "description": "Updates the details of an existing mascot identified by its unique id.\nThis endpoint allows clients to modify a mascot’s name, description, and image, ensuring team branding and contextual information remain accurate and up to date.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateMascotResponse"
+                },
+                "examples": {
+                  "Update a mascot": {
+                    "summary": "Update a mascot",
+                    "value": {
+                      "message": "Mascot updated successfully",
+                      "data": {
+                        "_id": "{Unique UUID of the mascot}",
+                        "name": "The Bruins",
+                        "description": "The Bruins is the Mascot of Cascade High School - Washington",
+                        "mascotImage": "",
+                        "createdAt": "2025-09-22T11:28:41.039Z",
+                        "updatedAt": "2025-09-22T11:32:23.219Z",
+                        "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMascotRequest"
+              },
+              "example": {
+                "name": "The Bruins",
+                "description": "The Bruins is the Mascot of Cascade High School - Washington"
+              }
+            }
+          }
+        },
+        "operationId": "updateMascot"
+      },
+      "delete": {
+        "tags": [
+          "mascots"
+        ],
+        "summary": "Delete a mascot",
+        "description": "Deletes a specific mascot from the Tactix system using its unique id.\nThis operation permanently removes the mascot record and any direct associations it holds with teams.\nIt should be used with caution, as deleted mascots cannot be restored through the API.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteMascotResponse"
+                },
+                "examples": {
+                  "Delete a mascot": {
+                    "summary": "Delete a mascot",
+                    "value": {
+                      "message": "Mascot deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "deleteMascot"
+      }
+    },
+    "/api/v1/client/teams": {
+      "post": {
+        "tags": [
+          "teams"
+        ],
+        "summary": "Create a new team",
+        "description": "Creates a new team record in the Tactix system.\nThis endpoint allows clients to define a new team with key details such as name, short name, sport type, classification, mascot(s), and logo.\nOnce created, the team can be referenced in other modules such as Games, Plays, or Game Recaps.",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateTeamResponse"
+                },
+                "examples": {
+                  "Create a new team": {
+                    "summary": "Create a new team",
+                    "value": {
+                      "message": "Team created successfully",
+                      "data": {
+                        "name": "Test High School",
+                        "shortName": "THS",
+                        "sport": "football",
+                        "coach": null,
+                        "teamLogo": "{S3 URL of the. team logo}",
+                        "mascots": [
+                          "{UUID of array of mascots}"
+                        ],
+                        "classification": "{UUID of the classification}",
+                        "_id": "{Unique UUID of the team}",
+                        "createdAt": "2025-09-22T13:28:04.134Z",
+                        "updatedAt": "2025-09-22T13:28:04.134Z",
+                        "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeamRequest"
+              },
+              "example": {
+                "name": "Test High School",
+                "sport": "football",
+                "shortName": "THS",
+                "mascots": "68d132e95f30985c10753ac3",
+                "classification": "68d14d275f30985c1075ead3"
+              }
+            }
+          }
+        },
+        "operationId": "createTeam"
+      },
+      "get": {
+        "tags": [
+          "teams"
+        ],
+        "summary": "Get teams",
+        "description": "Retrieves a paginated list of all teams available to the authenticated client.\nEach team object includes its name, short name, sport type, associated mascots, classification details, logo, and timestamps.\nThis endpoint is typically used for team directories, selection lists, or administrative dashboards that require viewing multiple teams at once.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "{\n    \"message\": \"Teams list\",\n    \"data\": [\n        \n        {\n            \"_id\": \"{Unique UUID of team}\",\n            \"name\": \"Cascade High School\",\n            \"shortName\": \"Cascade High School\",\n            \"sport\": \"football\",\n            \"coach\": null,\n            \"teamLogo\": \"{S3 URL of the team logo}\",\n            \"mascots\": [\n                {{\n                    \"_id\": \"{UUID of the Mascot}\",\n                    \"name\": \"{Name of the Mascot}\"\n                }}\n            ],\n            \"classification\": {\n                \"_id\": \"{UUID of the classification}\",\n                \"name\": \"{Name of the classification}\"\n            },\n            \"createdAt\": \"2025-09-22T13:27:34.691Z\",\n            \"updatedAt\": \"2025-09-22T13:27:34.691Z\",\n            \"__v\": 0,\n            \"totalPlayers\": 0\n        },\n        {\n            \"_id\": \"{Unique UUID of team}\",\n            \"name\": \"Huntland School\",\n            \"shortName\": \"Huntland School\",\n            \"sport\": \"football\",\n            \"coach\": null,\n            \"teamLogo\": \"{S3 URL of the team logo}\",\n            \"mascots\": [\n                {{\n                    \"_id\": \"{UUID of the Mascot}\",\n                    \"name\": \"{Name of the Mascot}\"\n                }}\n            ],\n            \"classification\": {\n                \"_id\": \"{UUID of the classification}\",\n                \"name\": \"{Name of the classification}\"\n            },\n            \"createdAt\": \"2025-09-22T13:26:01.007Z\",\n            \"updatedAt\": \"2025-09-22T13:26:01.007Z\",\n            \"__v\": 0,\n            \"totalPlayers\": 0\n        }\n    ],\n    \"pagination\": {\n        \"limit\": 2,\n        \"totalData\": \"76\",\n        \"page\": 1\n    }\n}"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "listTeams"
+      }
+    },
+    "/api/v1/client/teams/{id}": {
+      "delete": {
+        "tags": [
+          "teams"
+        ],
+        "summary": "Delete a team",
+        "description": "Deletes a specific team from the Tactix system using its unique id.\nThis operation permanently removes the team record and its related metadata from the client’s accessible data scope.\nIt should be used with caution, as deleted teams cannot be restored via the API.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteTeamResponse"
+                },
+                "examples": {
+                  "Delete a team": {
+                    "summary": "Delete a team",
+                    "value": {
+                      "message": "Team deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "deleteTeam"
+      },
+      "patch": {
+        "tags": [
+          "teams"
+        ],
+        "summary": "Update a team",
+        "description": "Updates the information of an existing team identified by its unique id.\nThis endpoint allows clients to modify team attributes such as name, short name, sport type, classification, mascots, coach, or logo.\nUpon successful update, the response returns the updated team object and a confirmation message.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "{\n    \"message\": \"Team updated successfully\",\n    \"data\": {\n        \"_id\": \"{Unique UUID of the team}\",\n        \"name\": \"Test Team Edited\",\n        \"shortName\": \"TTE\",\n        \"sport\": \"football\",\n        \"coach\": null,\n        \"teamLogo\": \"\",\n        \"mascots\": [\n            {array of UUID ID of mascots}\n        ],\n        \"classification\": \"{UUID of classification}\",\n        \"createdAt\": \"2025-09-22T13:28:04.134Z\",\n        \"updatedAt\": \"2025-09-22T13:34:03.655Z\",\n        \"__v\": 0\n    }\n}"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTeamRequest"
+              },
+              "example": {
+                "name": "Test Team Edited",
+                "sport": "football",
+                "shortName": "TTE",
+                "mascots": "64c8882b9b1df9b17324aabc,64c8882b9b1df9b17324aabd",
+                "classification": "64c8882b9b1df9b17324aabe"
+              }
+            }
+          }
+        },
+        "operationId": "updateTeam"
+      }
+    },
+    "/api/v1/client/uploads": {
+      "post": {
+        "tags": [
+          "uploads"
+        ],
+        "summary": "Upload video and create new game",
+        "description": "This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadVideoAndCreateGameResponse"
+                },
+                "examples": {
+                  "Create a new video play": {
+                    "summary": "Create a new video play",
+                    "value": {
+                      "data": {
+                        "uploadId": "68d153065f30985c10760a69",
+                        "s3Key": "{S3 Key of the uploaded Video}"
+                      },
+                      "message": "Video upload is in progress, will be notified through mail after completion"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadVideoAndCreateGameRequest"
+              },
+              "example": {
+                "name": "Varsity Football | Huntland School vs. Cascade High School",
+                "homeTeam": "68d14e695f30985c1075fcaa",
+                "awayTeam": "68d14ec65f30985c1075fe09",
+                "venue": "Revolutionary Field",
+                "location": "Washington Crossing, PA",
+                "description": "Varsity Football | Huntland School vs. Cascade High School"
+              }
+            }
+          }
+        },
+        "operationId": "uploadVideoAndCreateGame"
+      }
+    },
+    "/api/v1/client/uploads/{uploadId}": {
+      "get": {
+        "tags": [
+          "uploads"
+        ],
+        "summary": "Video file upload status",
+        "description": "This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.",
+        "parameters": [
+          {
+            "name": "uploadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUploadStatusResponse"
+                },
+                "examples": {
+                  "Video file upload status": {
+                    "summary": "Video file upload status",
+                    "value": {
+                      "message": "Video file upload status",
+                      "data": {
+                        "_id": "{Unique ID of the Game}",
+                        "s3UploadId": "{Unique ID of Upload Process for the uploaded video}",
+                        "s3Key": "{S3 Key of the Uploaded Video}",
+                        "fileSize": 32317951,
+                        "status": "completed",
+                        "progress": 100,
+                        "createdAt": "2025-09-22T13:45:42.984Z",
+                        "updatedAt": "2025-09-22T13:45:44.651Z",
+                        "__v": 0,
+                        "location": "https://tactix-sandbox-bucket.s3.eu-west-1.amazonaws.com/playon2%2Fgame68d153065f30985c10760a68%2FClip004.mp4"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AppId": [],
+            "AppToken": []
+          }
+        ],
+        "operationId": "getUploadStatus"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "The Auth folder includes authentication-related endpoints that enable secure client access to the Tactix API. These endpoints handle login flows, credential validation, and issuance of API tokens. All requests in this section must be made over HTTPS to ensure confidentiality and integrity.",
+      "x-displayName": "Authentication"
+    },
+    {
+      "name": "uploads",
+      "description": "The Uploads endpoints allow clients to create new game uploads (video files with metadata) and check the status of ongoing uploads. These endpoints are essential for initiating the video processing pipeline, which generates clips, scoring summaries, and team statistics.",
+      "x-displayName": "Uploads"
+    },
+    {
+      "name": "games",
+      "description": "Endpoints for discovering and retrieving game data available to the client. Use these to list all games, fetch a single game’s metadata, and navigate to related resources such as plays within the game. All endpoints require a valid App-Token.",
+      "x-displayName": "Games"
+    },
+    {
+      "name": "game-recap",
+      "description": "The Game Recap endpoints provide post-game insights and analytics, including overall scores, scoring breakdowns, and team-level statistics. These endpoints are scoped to a specific gameId and allow clients to retrieve structured summaries generated by the Tactix AI platform.",
+      "x-displayName": "Game Recap"
+    },
+    {
+      "name": "teams",
+      "description": "The Teams folder provides endpoints for managing team-related data within the Tactix platform. It includes APIs to list / retrieve, create, update, or delete teams, along with their identifiers, mascots, and classifications.",
+      "x-displayName": "Teams"
+    },
+    {
+      "name": "mascots",
+      "description": "The Mascots folder provides endpoints to manage mascot data within the Tactix platform.\nMascots represent the visual or symbolic identity of teams and are often used across UI components, branding materials, and analytical summaries.\nThis folder allows clients to create, retrieve, update, and delete mascot records that are linked to team profiles.",
+      "x-displayName": "Mascots"
+    },
+    {
+      "name": "classifications",
+      "description": "The Classifications folder provides endpoints for managing team classification data within the Tactix platform.\nA classification defines a league, division, or level of competition that a team belongs to (for example, “Varsity Football” or “High School Division A”).\nClients can use these endpoints to create, update, view, and delete classifications that are later referenced in Team records.",
+      "x-displayName": "Classifications"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "AppId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "App-Id"
+      },
+      "AppSecret": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "app-secret"
+      },
+      "AppToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "App-Token"
+      }
+    },
+    "schemas": {
+      "CreateClassificationRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateClassificationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "_id": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "CreateMascotRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "mascotImage": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "CreateMascotResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "mascotImage": {
+                "type": "string"
+              },
+              "_id": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "CreateTeamRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "sport": {
+            "type": "string",
+            "description": "(This can only be one of football,rugby,golf,soccer,nfl)"
+          },
+          "shortName": {
+            "type": "string"
+          },
+          "mascots": {
+            "type": "string",
+            "description": "Array of Mascot IDs (must not be empty)"
+          },
+          "classification": {
+            "type": "string",
+            "description": "Classification ID"
+          },
+          "teamLogo": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "name",
+          "sport",
+          "shortName",
+          "mascots",
+          "classification"
+        ]
+      },
+      "CreateTeamResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "shortName": {
+                "type": "string"
+              },
+              "sport": {
+                "type": "string"
+              },
+              "coach": {
+                "nullable": true
+              },
+              "teamLogo": {
+                "type": "string"
+              },
+              "mascots": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "classification": {
+                "type": "string"
+              },
+              "_id": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "DeleteClassificationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "DeleteMascotResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "DeleteTeamResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "GenerateAccessTokenResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "GetGameRecapScoreResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "gameId": {
+                "type": "string"
+              },
+              "homeTeam": {
+                "type": "object",
+                "properties": {
+                  "teamId": {
+                    "type": "string"
+                  },
+                  "sourceId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "shortName": {
+                    "type": "string"
+                  },
+                  "mascot": {
+                    "type": "string"
+                  },
+                  "classification": {
+                    "type": "string"
+                  },
+                  "totalScore": {
+                    "type": "integer"
+                  },
+                  "periodScores": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "period": {
+                          "type": "integer"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "awayTeam": {
+                "type": "object",
+                "properties": {
+                  "teamId": {
+                    "type": "string"
+                  },
+                  "sourceId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "shortName": {
+                    "type": "string"
+                  },
+                  "mascot": {
+                    "type": "string"
+                  },
+                  "classification": {
+                    "type": "string"
+                  },
+                  "totalScore": {
+                    "type": "integer"
+                  },
+                  "periodScores": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "period": {
+                          "type": "integer"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetGameRecapScoringSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "gameId": {
+                "type": "string"
+              },
+              "total": {
+                "type": "integer"
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "playId": {
+                        "type": "string"
+                      },
+                      "period": {
+                        "type": "string"
+                      },
+                      "timeRemaining": {
+                        "type": "string"
+                      },
+                      "scoringTeamId": {
+                        "type": "string"
+                      },
+                      "scoreType": {
+                        "type": "string"
+                      },
+                      "scoreMethod": {
+                        "nullable": true
+                      },
+                      "scoreYardage": {
+                        "type": "integer"
+                      },
+                      "homeScore": {
+                        "type": "integer"
+                      },
+                      "awayScore": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetGameRecapTeamStatsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "gameId": {
+                "type": "string"
+              },
+              "homeTeam": {
+                "type": "object",
+                "properties": {
+                  "teamId": {
+                    "type": "string"
+                  },
+                  "sourceId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "mascot": {
+                    "type": "string"
+                  },
+                  "classification": {
+                    "type": "string"
+                  },
+                  "firstDowns": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "integer"
+                      },
+                      "rushing": {
+                        "type": "integer"
+                      },
+                      "passing": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "offense": {
+                    "type": "object",
+                    "properties": {
+                      "totalPlays": {
+                        "type": "integer"
+                      },
+                      "totalYards": {
+                        "type": "integer"
+                      },
+                      "yardsPerPlay": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "passing": {
+                    "type": "object",
+                    "properties": {
+                      "totalYards": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "rushing": {
+                    "type": "object",
+                    "properties": {
+                      "totalYards": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              },
+              "awayTeam": {
+                "type": "object",
+                "properties": {
+                  "teamId": {
+                    "type": "string"
+                  },
+                  "sourceId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "mascot": {
+                    "type": "string"
+                  },
+                  "classification": {
+                    "type": "string"
+                  },
+                  "firstDowns": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "integer"
+                      },
+                      "rushing": {
+                        "type": "integer"
+                      },
+                      "passing": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "offense": {
+                    "type": "object",
+                    "properties": {
+                      "totalPlays": {
+                        "type": "integer"
+                      },
+                      "totalYards": {
+                        "type": "integer"
+                      },
+                      "yardsPerPlay": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "passing": {
+                    "type": "object",
+                    "properties": {
+                      "totalYards": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "rushing": {
+                    "type": "object",
+                    "properties": {
+                      "totalYards": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetGameResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "gameName": {
+                "type": "string"
+              },
+              "dateTime": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "gameId": {
+                "type": "string"
+              },
+              "location": {
+                "type": "string"
+              },
+              "venue": {
+                "type": "string"
+              },
+              "homeTeam": {
+                "type": "object",
+                "properties": {
+                  "teamId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "shortName": {
+                    "type": "string"
+                  },
+                  "mascot": {
+                    "type": "string"
+                  },
+                  "classification": {
+                    "type": "string"
+                  }
+                }
+              },
+              "awayTeam": {
+                "type": "object",
+                "properties": {
+                  "teamId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "shortName": {
+                    "type": "string"
+                  },
+                  "mascot": {
+                    "type": "string"
+                  },
+                  "classification": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GetUploadStatusResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "s3UploadId": {
+                "type": "string"
+              },
+              "s3Key": {
+                "type": "string"
+              },
+              "fileSize": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string"
+              },
+              "progress": {
+                "type": "integer"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "__v": {
+                "type": "integer"
+              },
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "ListClassificationsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "__v": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer"
+              },
+              "totalData": {
+                "type": "integer"
+              },
+              "page": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "ListGamesResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "games": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "gameName": {
+                      "type": "string"
+                    },
+                    "dateTime": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "gameId": {
+                      "type": "string"
+                    },
+                    "homeTeam": {
+                      "type": "object",
+                      "properties": {
+                        "teamId": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "shortName": {
+                          "type": "string"
+                        },
+                        "classification": {
+                          "type": "string"
+                        },
+                        "mascot": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "awayTeam": {
+                      "type": "object",
+                      "properties": {
+                        "teamId": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "shortName": {
+                          "type": "string"
+                        },
+                        "classification": {
+                          "type": "string"
+                        },
+                        "mascot": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "venue": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ListMascotsResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "mascotImage": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "__v": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer"
+              },
+              "totalData": {
+                "type": "integer"
+              },
+              "page": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "UpdateClassificationRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateClassificationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "UpdateMascotRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "mascotImage": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "UpdateMascotResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "mascotImage": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "UpdateTeamRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "sport": {
+            "type": "string",
+            "description": "(This can only be one of football,rugby,golf,soccer,nfl)"
+          },
+          "shortName": {
+            "type": "string"
+          },
+          "teamLogo": {
+            "type": "string",
+            "format": "binary"
+          },
+          "mascots": {
+            "type": "string",
+            "description": "Array of Mascot IDs (must not be empty)"
+          },
+          "classification": {
+            "type": "string",
+            "description": "Classification ID"
+          }
+        }
+      },
+      "UploadVideoAndCreateGameRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "video": {
+            "type": "string",
+            "format": "binary"
+          },
+          "homeTeam": {
+            "type": "string",
+            "description": "ObjectId of home team"
+          },
+          "awayTeam": {
+            "type": "string",
+            "description": "ObjectId of away team"
+          },
+          "venue": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "video",
+          "homeTeam",
+          "awayTeam",
+          "venue",
+          "location"
+        ]
+      },
+      "UploadVideoAndCreateGameResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "uploadId": {
+                "type": "string"
+              },
+              "s3Key": {
+                "type": "string"
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sandbox.api.tactixai.com",
+      "description": "Sandbox"
+    },
+    {
+      "url": "https://api.tactixai.com",
+      "description": "Production"
+    }
+  ],
+  "x-tagGroups": [
+    {
+      "id": "aggregated-game-recaps",
+      "name": "Aggregated Game Recaps",
+      "description": "Computed scoreboards, scoring summaries, team stat blocks, and recap event objects.",
+      "tags": [
+        "game-recap"
+      ]
+    },
+    {
+      "id": "granular-play-by-play",
+      "name": "Granular Play-by-Play",
+      "description": "Game and upload resources used to trace event-level lifecycle and retrieval.",
+      "tags": [
+        "games",
+        "uploads"
+      ]
+    },
+    {
+      "id": "entities-and-admin",
+      "name": "Entity & Admin APIs",
+      "description": "Auth, teams, mascots, and classification resources for onboarding and metadata management.",
+      "tags": [
+        "auth",
+        "teams",
+        "mascots",
+        "classifications"
+      ]
+    }
+  ],
+  "x-portal-auth": {
+    "tokenOperation": "GET /api/v1/client/auth/token",
+    "tokenResponseField": "token",
+    "tokenScheme": "AppToken"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "victorycode-sdks-tooling",
+  "private": true,
+  "type": "module",
+  "description": "Generates the Victory Code SDKs from the API spec published by the developer portal.",
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "bump": "node scripts/bump-version.mjs",
+    "sync-spec": "node scripts/sync-spec.mjs"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "2.41.0"
+  }
+}

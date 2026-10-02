@@ -1,0 +1,32 @@
+# Signs and uploads the Java and Kotlin artifacts staged under target/staging-deploy
+# to Maven Central (Sonatype Central Portal). Used by .github/workflows/release.yml.
+project:
+  name: victorycode-sdk
+  description: Victory Code API clients for Java and Kotlin
+  license: MIT
+  inceptionYear: "2026"
+  authors:
+    - Victory Code
+  links:
+    homepage: https://github.com/victory-code-ai/victorycode-sdks
+  java:
+    groupId: ai.victorycode
+
+signing:
+  active: ALWAYS
+  armored: true
+
+deploy:
+  maven:
+    mavenCentral:
+      sonatype:
+        active: ALWAYS
+        url: https://central.sonatype.com/api/v1/publisher
+        stagingRepositories:
+          - target/staging-deploy
+
+release:
+  github:
+    # The GitHub release is created by release.yml; JReleaser only deploys.
+    skipRelease: true
+    skipTag: true

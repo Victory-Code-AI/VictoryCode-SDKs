@@ -1,16 +1,33 @@
-// swift-tools-version: 5.9
+// swift-tools-version:6.0
+
 import PackageDescription
 
 let package = Package(
     name: "VictoryCodeSDK",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v13)
+        .iOS(.v13),
+        .macOS(.v10_15),
+        .tvOS(.v13),
+        .watchOS(.v6),
     ],
     products: [
-        .library(name: "VictoryCodeSDK", targets: ["VictoryCodeSDK"])
+        // Products define the executables and libraries produced by a package, and make them visible to other packages.
+        .library(
+            name: "VictoryCodeSDK",
+            targets: ["VictoryCodeSDK"]
+        ),
+    ],
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
     ],
     targets: [
-        .target(name: "VictoryCodeSDK", path: "Sources/VictoryCodeSDK")
-    ]
+        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
+        .target(
+            name: "VictoryCodeSDK",
+            dependencies: [],
+            path: "Sources/VictoryCodeSDK"
+        ),
+    ],
+    swiftLanguageModes: [.v6]
 )

@@ -1,0 +1,25 @@
+# Tooling
+node_modules/
+.portal/
+.venv*/
+.prism.log
+target/
+
+# Build output of the generated SDKs (never committed; built in CI)
+__pycache__/
+.pytest_cache/
+python/dist/
+python/build/
+python/*.egg-info/
+javascript/node_modules/
+javascript/dist/
+java/target/
+php/vendor/
+php/composer.lock
+php/.phpunit.result.cache
+php/.phpunit.cache/
+android/build/
+android/.gradle/
+.gradle/
+.build/
+.swiftpm/
