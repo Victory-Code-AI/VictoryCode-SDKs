@@ -13,6 +13,7 @@ python/build/
 python/*.egg-info/
 javascript/node_modules/
 javascript/dist/
+javascript/package-lock.json
 java/target/
 php/vendor/
 php/composer.lock
