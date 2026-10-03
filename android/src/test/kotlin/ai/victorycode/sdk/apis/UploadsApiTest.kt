@@ -27,33 +27,40 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import ai.victorycode.sdk.apis.UploadsApi
-import ai.victorycode.sdk.models.GetUploadStatusResponse
-import ai.victorycode.sdk.models.UploadVideoAndCreateGameResponse
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.CompleteMultipartUploadDto
+import ai.victorycode.sdk.models.CompleteMultipartUploadResponseDto
+import ai.victorycode.sdk.models.GetPartsPresignUrlResponseDto
+import ai.victorycode.sdk.models.InitiateMultipartUploadDto
+import ai.victorycode.sdk.models.InitiateMultipartUploadResponseDto
 
 class UploadsApiTest : ShouldSpec() {
     init {
         // uncomment below to create an instance of UploadsApi
         //val apiInstance = UploadsApi()
 
-        // to test getUploadStatus
-        should("test getUploadStatus") {
-            // uncomment below to test getUploadStatus
-            //val uploadId : kotlin.String = uploadId_example // kotlin.String | 
-            //val result : GetUploadStatusResponse = apiInstance.getUploadStatus(uploadId)
+        // to test completeMultipartUpload
+        should("test completeMultipartUpload") {
+            // uncomment below to test completeMultipartUpload
+            //val completeMultipartUploadDto : CompleteMultipartUploadDto =  // CompleteMultipartUploadDto | 
+            //val result : CompleteMultipartUploadResponseDto = apiInstance.completeMultipartUpload(completeMultipartUploadDto)
             //result shouldBe ("TODO")
         }
 
-        // to test uploadVideoAndCreateGame
-        should("test uploadVideoAndCreateGame") {
-            // uncomment below to test uploadVideoAndCreateGame
-            //val name : kotlin.String = name_example // kotlin.String | 
-            //val video : java.io.File = BINARY_DATA_HERE // java.io.File | 
-            //val homeTeam : kotlin.String = homeTeam_example // kotlin.String | ObjectId of home team
-            //val awayTeam : kotlin.String = awayTeam_example // kotlin.String | ObjectId of away team
-            //val venue : kotlin.String = venue_example // kotlin.String | 
-            //val location : kotlin.String = location_example // kotlin.String | 
-            //val description : kotlin.String = description_example // kotlin.String | 
-            //val result : UploadVideoAndCreateGameResponse = apiInstance.uploadVideoAndCreateGame(name, video, homeTeam, awayTeam, venue, location, description)
+        // to test getPresignedUrl
+        should("test getPresignedUrl") {
+            // uncomment below to test getPresignedUrl
+            //val uploadId : kotlin.String = uploadId_example // kotlin.String | 
+            //val partNumber : java.math.BigDecimal = 8.14 // java.math.BigDecimal | 
+            //val result : GetPartsPresignUrlResponseDto = apiInstance.getPresignedUrl(uploadId, partNumber)
+            //result shouldBe ("TODO")
+        }
+
+        // to test initiateUpload
+        should("test initiateUpload") {
+            // uncomment below to test initiateUpload
+            //val initiateMultipartUploadDto : InitiateMultipartUploadDto =  // InitiateMultipartUploadDto | 
+            //val result : InitiateMultipartUploadResponseDto = apiInstance.initiateUpload(initiateMultipartUploadDto)
             //result shouldBe ("TODO")
         }
 

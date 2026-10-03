@@ -27,28 +27,64 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import ai.victorycode.sdk.apis.GamesApi
-import ai.victorycode.sdk.models.GetGameResponse
-import ai.victorycode.sdk.models.ListGamesResponse
+import ai.victorycode.sdk.models.AddVideoToGameWithS3LinkDto
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.ClientCreateGameWithVideoUrlDto
+import ai.victorycode.sdk.models.ConflictErrorResponseDto
+import ai.victorycode.sdk.models.GameDetailsResponse
+import ai.victorycode.sdk.models.ListGamesPaginatedResponseDto
+import ai.victorycode.sdk.models.ListVideoPaginatedResponseDto
+import ai.victorycode.sdk.models.NotFoundErrorResponseDto
+import ai.victorycode.sdk.models.SingleVideoResponseDto
+import ai.victorycode.sdk.models.UnauthorizedErrorResponseDto
 
 class GamesApiTest : ShouldSpec() {
     init {
         // uncomment below to create an instance of GamesApi
         //val apiInstance = GamesApi()
 
-        // to test getGame
-        should("test getGame") {
-            // uncomment below to test getGame
+        // to test addVideoToGame
+        should("test addVideoToGame") {
+            // uncomment below to test addVideoToGame
             //val gameId : kotlin.String = gameId_example // kotlin.String | 
-            //val result : GetGameResponse = apiInstance.getGame(gameId)
+            //val addVideoToGameWithS3LinkDto : AddVideoToGameWithS3LinkDto =  // AddVideoToGameWithS3LinkDto | 
+            //val result : SingleVideoResponseDto = apiInstance.addVideoToGame(gameId, addVideoToGameWithS3LinkDto)
             //result shouldBe ("TODO")
         }
 
-        // to test listGames
-        should("test listGames") {
-            // uncomment below to test listGames
-            //val limit : kotlin.Int = 10 // kotlin.Int | 
-            //val page : kotlin.Int = 1 // kotlin.Int | 
-            //val result : ListGamesResponse = apiInstance.listGames(limit, page)
+        // to test createGameWithVideoUrl
+        should("test createGameWithVideoUrl") {
+            // uncomment below to test createGameWithVideoUrl
+            //val clientCreateGameWithVideoUrlDto : ClientCreateGameWithVideoUrlDto =  // ClientCreateGameWithVideoUrlDto | 
+            //val result : GameDetailsResponse = apiInstance.createGameWithVideoUrl(clientCreateGameWithVideoUrlDto)
+            //result shouldBe ("TODO")
+        }
+
+        // to test getGameDetails
+        should("test getGameDetails") {
+            // uncomment below to test getGameDetails
+            //val gameId : kotlin.String = gameId_example // kotlin.String | 
+            //val result : GameDetailsResponse = apiInstance.getGameDetails(gameId)
+            //result shouldBe ("TODO")
+        }
+
+        // to test getGames
+        should("test getGames") {
+            // uncomment below to test getGames
+            //val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to return per page.
+            //val offset : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to skip for pagination.
+            //val search : kotlin.String = search_example // kotlin.String | 
+            //val result : ListGamesPaginatedResponseDto = apiInstance.getGames(limit, offset, search)
+            //result shouldBe ("TODO")
+        }
+
+        // to test getVideosOfGame
+        should("test getVideosOfGame") {
+            // uncomment below to test getVideosOfGame
+            //val gameId : kotlin.String = gameId_example // kotlin.String | 
+            //val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to return per page.
+            //val offset : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to skip for pagination.
+            //val result : ListVideoPaginatedResponseDto = apiInstance.getVideosOfGame(gameId, limit, offset)
             //result shouldBe ("TODO")
         }
 

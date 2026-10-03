@@ -1,6 +1,6 @@
 # VictoryCode\SDK\TeamsApi
 
-The Teams folder provides endpoints for managing team-related data within the Tactix platform. It includes APIs to list / retrieve, create, update, or delete teams, along with their identifiers, mascots, and classifications.
+
 
 All URIs are relative to https://sandbox.api.tactixai.com, except if the operation defines another base path.
 
@@ -8,19 +8,19 @@ All URIs are relative to https://sandbox.api.tactixai.com, except if the operati
 | ------------- | ------------- | ------------- |
 | [**createTeam()**](TeamsApi.md#createTeam) | **POST** /api/v1/client/teams | Create a new team |
 | [**deleteTeam()**](TeamsApi.md#deleteTeam) | **DELETE** /api/v1/client/teams/{id} | Delete a team |
-| [**listTeams()**](TeamsApi.md#listTeams) | **GET** /api/v1/client/teams | Get teams |
+| [**getTeams()**](TeamsApi.md#getTeams) | **GET** /api/v1/client/teams | Get teams |
 | [**updateTeam()**](TeamsApi.md#updateTeam) | **PATCH** /api/v1/client/teams/{id} | Update a team |
 
 
 ## `createTeam()`
 
 ```php
-createTeam($name, $sport, $short_name, $mascots, $classification, $team_logo): \VictoryCode\SDK\Model\CreateTeamResponse
+createTeam($create_team_dto): \VictoryCode\SDK\Model\SingleTeamResponseDto
 ```
 
 Create a new team
 
-Creates a new team record in the Tactix system. This endpoint allows clients to define a new team with key details such as name, short name, sport type, classification, mascot(s), and logo. Once created, the team can be referenced in other modules such as Games, Plays, or Game Recaps.
+Registers a new team in the system, including its name, short name, sport, mascots, classification.
 
 ### Example
 
@@ -29,12 +29,10 @@ Creates a new team record in the Tactix system. This endpoint allows clients to 
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-// Configure API key authorization: AppToken
-$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Token', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Token', 'Bearer');
+// Configure Bearer (JWT) authorization: Client-App-Token
+$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-// Configure API key authorization: AppId
+// Configure API key authorization: Client-App-Id
 $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Id', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Id', 'Bearer');
@@ -46,15 +44,10 @@ $apiInstance = new VictoryCode\SDK\Api\TeamsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$name = 'name_example'; // string
-$sport = 'sport_example'; // string | (This can only be one of football,rugby,golf,soccer,nfl)
-$short_name = 'short_name_example'; // string
-$mascots = 'mascots_example'; // string | Array of Mascot IDs (must not be empty)
-$classification = 'classification_example'; // string | Classification ID
-$team_logo = '/path/to/file.txt'; // \SplFileObject
+$create_team_dto = new \VictoryCode\SDK\Model\CreateTeamDto(); // \VictoryCode\SDK\Model\CreateTeamDto
 
 try {
-    $result = $apiInstance->createTeam($name, $sport, $short_name, $mascots, $classification, $team_logo);
+    $result = $apiInstance->createTeam($create_team_dto);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TeamsApi->createTeam: ', $e->getMessage(), PHP_EOL;
@@ -65,24 +58,19 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **name** | **string**|  | |
-| **sport** | **string**| (This can only be one of football,rugby,golf,soccer,nfl) | |
-| **short_name** | **string**|  | |
-| **mascots** | **string**| Array of Mascot IDs (must not be empty) | |
-| **classification** | **string**| Classification ID | |
-| **team_logo** | **\SplFileObject****\SplFileObject**|  | [optional] |
+| **create_team_dto** | [**\VictoryCode\SDK\Model\CreateTeamDto**](../Model/CreateTeamDto.md)|  | |
 
 ### Return type
 
-[**\VictoryCode\SDK\Model\CreateTeamResponse**](../Model/CreateTeamResponse.md)
+[**\VictoryCode\SDK\Model\SingleTeamResponseDto**](../Model/SingleTeamResponseDto.md)
 
 ### Authorization
 
-[AppToken](../../README.md#AppToken), [AppId](../../README.md#AppId)
+[Client-App-Token](../../README.md#Client-App-Token), [Client-App-Id](../../README.md#Client-App-Id)
 
 ### HTTP request headers
 
-- **Content-Type**: `multipart/form-data`
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
@@ -92,12 +80,12 @@ try {
 ## `deleteTeam()`
 
 ```php
-deleteTeam($id): \VictoryCode\SDK\Model\DeleteTeamResponse
+deleteTeam($id): \VictoryCode\SDK\Model\DeleteResponseDto
 ```
 
 Delete a team
 
-Deletes a specific team from the Tactix system using its unique id. This operation permanently removes the team record and its related metadata from the client’s accessible data scope. It should be used with caution, as deleted teams cannot be restored via the API.
+Permanently deletes a team record from the system.
 
 ### Example
 
@@ -106,12 +94,10 @@ Deletes a specific team from the Tactix system using its unique id. This operati
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-// Configure API key authorization: AppToken
-$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Token', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Token', 'Bearer');
+// Configure Bearer (JWT) authorization: Client-App-Token
+$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-// Configure API key authorization: AppId
+// Configure API key authorization: Client-App-Id
 $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Id', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Id', 'Bearer');
@@ -141,11 +127,11 @@ try {
 
 ### Return type
 
-[**\VictoryCode\SDK\Model\DeleteTeamResponse**](../Model/DeleteTeamResponse.md)
+[**\VictoryCode\SDK\Model\DeleteResponseDto**](../Model/DeleteResponseDto.md)
 
 ### Authorization
 
-[AppToken](../../README.md#AppToken), [AppId](../../README.md#AppId)
+[Client-App-Token](../../README.md#Client-App-Token), [Client-App-Id](../../README.md#Client-App-Id)
 
 ### HTTP request headers
 
@@ -156,15 +142,15 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
-## `listTeams()`
+## `getTeams()`
 
 ```php
-listTeams($limit, $page): string
+getTeams($limit, $offset, $search, $state): \VictoryCode\SDK\Model\ListTeamPaginatedResponseDto
 ```
 
 Get teams
 
-Retrieves a paginated list of all teams available to the authenticated client. Each team object includes its name, short name, sport type, associated mascots, classification details, logo, and timestamps. This endpoint is typically used for team directories, selection lists, or administrative dashboards that require viewing multiple teams at once.
+Retrieves a paginated list of all teams belonging to the client. Supports filters for search, sport, and state.
 
 ### Example
 
@@ -173,12 +159,10 @@ Retrieves a paginated list of all teams available to the authenticated client. E
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-// Configure API key authorization: AppToken
-$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Token', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Token', 'Bearer');
+// Configure Bearer (JWT) authorization: Client-App-Token
+$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-// Configure API key authorization: AppId
+// Configure API key authorization: Client-App-Id
 $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Id', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Id', 'Bearer');
@@ -190,14 +174,16 @@ $apiInstance = new VictoryCode\SDK\Api\TeamsApi(
     new GuzzleHttp\Client(),
     $config
 );
-$limit = 10; // int
-$page = 1; // int
+$limit = 50; // float | The number of results to return per page.
+$offset = 0; // float | The number of results to skip for pagination.
+$search = 'search_example'; // string
+$state = 'state_example'; // string
 
 try {
-    $result = $apiInstance->listTeams($limit, $page);
+    $result = $apiInstance->getTeams($limit, $offset, $search, $state);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling TeamsApi->listTeams: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling TeamsApi->getTeams: ', $e->getMessage(), PHP_EOL;
 }
 ```
 
@@ -205,21 +191,23 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **limit** | **int**|  | [optional] |
-| **page** | **int**|  | [optional] |
+| **limit** | **float**| The number of results to return per page. | [optional] [default to 50] |
+| **offset** | **float**| The number of results to skip for pagination. | [optional] [default to 0] |
+| **search** | **string**|  | [optional] |
+| **state** | **string**|  | [optional] |
 
 ### Return type
 
-**string**
+[**\VictoryCode\SDK\Model\ListTeamPaginatedResponseDto**](../Model/ListTeamPaginatedResponseDto.md)
 
 ### Authorization
 
-[AppToken](../../README.md#AppToken), [AppId](../../README.md#AppId)
+[Client-App-Token](../../README.md#Client-App-Token), [Client-App-Id](../../README.md#Client-App-Id)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: `text/plain`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)
@@ -228,12 +216,12 @@ try {
 ## `updateTeam()`
 
 ```php
-updateTeam($id, $name, $sport, $short_name, $team_logo, $mascots, $classification): string
+updateTeam($id, $update_team_dto): \VictoryCode\SDK\Model\SingleTeamResponseDto
 ```
 
 Update a team
 
-Updates the information of an existing team identified by its unique id. This endpoint allows clients to modify team attributes such as name, short name, sport type, classification, mascots, coach, or logo. Upon successful update, the response returns the updated team object and a confirmation message.
+Updates the details of an existing team identified by its ID. Allows updating the name, short name, coach, logo, and other details.
 
 ### Example
 
@@ -242,12 +230,10 @@ Updates the information of an existing team identified by its unique id. This en
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-// Configure API key authorization: AppToken
-$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Token', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Token', 'Bearer');
+// Configure Bearer (JWT) authorization: Client-App-Token
+$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-// Configure API key authorization: AppId
+// Configure API key authorization: Client-App-Id
 $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Id', 'YOUR_API_KEY');
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Id', 'Bearer');
@@ -260,15 +246,10 @@ $apiInstance = new VictoryCode\SDK\Api\TeamsApi(
     $config
 );
 $id = 'id_example'; // string
-$name = 'name_example'; // string
-$sport = 'sport_example'; // string | (This can only be one of football,rugby,golf,soccer,nfl)
-$short_name = 'short_name_example'; // string
-$team_logo = '/path/to/file.txt'; // \SplFileObject
-$mascots = 'mascots_example'; // string | Array of Mascot IDs (must not be empty)
-$classification = 'classification_example'; // string | Classification ID
+$update_team_dto = new \VictoryCode\SDK\Model\UpdateTeamDto(); // \VictoryCode\SDK\Model\UpdateTeamDto
 
 try {
-    $result = $apiInstance->updateTeam($id, $name, $sport, $short_name, $team_logo, $mascots, $classification);
+    $result = $apiInstance->updateTeam($id, $update_team_dto);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling TeamsApi->updateTeam: ', $e->getMessage(), PHP_EOL;
@@ -280,25 +261,20 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **string**|  | |
-| **name** | **string**|  | [optional] |
-| **sport** | **string**| (This can only be one of football,rugby,golf,soccer,nfl) | [optional] |
-| **short_name** | **string**|  | [optional] |
-| **team_logo** | **\SplFileObject****\SplFileObject**|  | [optional] |
-| **mascots** | **string**| Array of Mascot IDs (must not be empty) | [optional] |
-| **classification** | **string**| Classification ID | [optional] |
+| **update_team_dto** | [**\VictoryCode\SDK\Model\UpdateTeamDto**](../Model/UpdateTeamDto.md)|  | |
 
 ### Return type
 
-**string**
+[**\VictoryCode\SDK\Model\SingleTeamResponseDto**](../Model/SingleTeamResponseDto.md)
 
 ### Authorization
 
-[AppToken](../../README.md#AppToken), [AppId](../../README.md#AppId)
+[Client-App-Token](../../README.md#Client-App-Token), [Client-App-Id](../../README.md#Client-App-Id)
 
 ### HTTP request headers
 
-- **Content-Type**: `multipart/form-data`
-- **Accept**: `text/plain`
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
 
 [[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
 [[Back to Model list]](../../README.md#models)

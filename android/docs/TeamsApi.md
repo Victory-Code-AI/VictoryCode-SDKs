@@ -6,17 +6,17 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 | ------------- | ------------- | ------------- |
 | [**createTeam**](TeamsApi.md#createTeam) | **POST** /api/v1/client/teams | Create a new team |
 | [**deleteTeam**](TeamsApi.md#deleteTeam) | **DELETE** /api/v1/client/teams/{id} | Delete a team |
-| [**listTeams**](TeamsApi.md#listTeams) | **GET** /api/v1/client/teams | Get teams |
+| [**getTeams**](TeamsApi.md#getTeams) | **GET** /api/v1/client/teams | Get teams |
 | [**updateTeam**](TeamsApi.md#updateTeam) | **PATCH** /api/v1/client/teams/{id} | Update a team |
 
 
 <a id="createTeam"></a>
 # **createTeam**
-> CreateTeamResponse createTeam(name, sport, shortName, mascots, classification, teamLogo)
+> SingleTeamResponseDto createTeam(createTeamDto)
 
 Create a new team
 
-Creates a new team record in the Tactix system. This endpoint allows clients to define a new team with key details such as name, short name, sport type, classification, mascot(s), and logo. Once created, the team can be referenced in other modules such as Games, Plays, or Game Recaps.
+Registers a new team in the system, including its name, short name, sport, mascots, classification.
 
 ### Example
 ```kotlin
@@ -25,14 +25,9 @@ Creates a new team record in the Tactix system. This endpoint allows clients to 
 //import ai.victorycode.sdk.models.*
 
 val apiInstance = TeamsApi()
-val name : kotlin.String = name_example // kotlin.String | 
-val sport : kotlin.String = sport_example // kotlin.String | (This can only be one of football,rugby,golf,soccer,nfl)
-val shortName : kotlin.String = shortName_example // kotlin.String | 
-val mascots : kotlin.String = mascots_example // kotlin.String | Array of Mascot IDs (must not be empty)
-val classification : kotlin.String = classification_example // kotlin.String | Classification ID
-val teamLogo : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val createTeamDto : CreateTeamDto =  // CreateTeamDto | 
 try {
-    val result : CreateTeamResponse = apiInstance.createTeam(name, sport, shortName, mascots, classification, teamLogo)
+    val result : SingleTeamResponseDto = apiInstance.createTeam(createTeamDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TeamsApi#createTeam")
@@ -46,39 +41,39 @@ try {
 ### Parameters
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **name** | **kotlin.String**|  | |
-| **sport** | **kotlin.String**| (This can only be one of football,rugby,golf,soccer,nfl) | |
-| **shortName** | **kotlin.String**|  | |
-| **mascots** | **kotlin.String**| Array of Mascot IDs (must not be empty) | |
-| **classification** | **kotlin.String**| Classification ID | |
-| **teamLogo** | **java.io.File**|  | [optional] |
+| **createTeamDto** | [**CreateTeamDto**](CreateTeamDto.md)|  | |
 
 ### Return type
 
-[**CreateTeamResponse**](CreateTeamResponse.md)
+[**SingleTeamResponseDto**](SingleTeamResponseDto.md)
 
 ### Authorization
 
 
-Configure AppToken:
-    ApiClient.apiKey["App-Token"] = ""
-    ApiClient.apiKeyPrefix["App-Token"] = ""
-Configure AppId:
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
     ApiClient.apiKey["App-Id"] = ""
     ApiClient.apiKeyPrefix["App-Id"] = ""
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 <a id="deleteTeam"></a>
 # **deleteTeam**
-> DeleteTeamResponse deleteTeam(id)
+> DeleteResponseDto deleteTeam(id)
 
 Delete a team
 
-Deletes a specific team from the Tactix system using its unique id. This operation permanently removes the team record and its related metadata from the client’s accessible data scope. It should be used with caution, as deleted teams cannot be restored via the API.
+Permanently deletes a team record from the system.
 
 ### Example
 ```kotlin
@@ -89,7 +84,7 @@ Deletes a specific team from the Tactix system using its unique id. This operati
 val apiInstance = TeamsApi()
 val id : kotlin.String = id_example // kotlin.String | 
 try {
-    val result : DeleteTeamResponse = apiInstance.deleteTeam(id)
+    val result : DeleteResponseDto = apiInstance.deleteTeam(id)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TeamsApi#deleteTeam")
@@ -107,15 +102,20 @@ try {
 
 ### Return type
 
-[**DeleteTeamResponse**](DeleteTeamResponse.md)
+[**DeleteResponseDto**](DeleteResponseDto.md)
 
 ### Authorization
 
 
-Configure AppToken:
-    ApiClient.apiKey["App-Token"] = ""
-    ApiClient.apiKeyPrefix["App-Token"] = ""
-Configure AppId:
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
     ApiClient.apiKey["App-Id"] = ""
     ApiClient.apiKeyPrefix["App-Id"] = ""
 
@@ -124,13 +124,13 @@ Configure AppId:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a id="listTeams"></a>
-# **listTeams**
-> kotlin.String listTeams(limit, page)
+<a id="getTeams"></a>
+# **getTeams**
+> ListTeamPaginatedResponseDto getTeams(limit, offset, search, state)
 
 Get teams
 
-Retrieves a paginated list of all teams available to the authenticated client. Each team object includes its name, short name, sport type, associated mascots, classification details, logo, and timestamps. This endpoint is typically used for team directories, selection lists, or administrative dashboards that require viewing multiple teams at once.
+Retrieves a paginated list of all teams belonging to the client. Supports filters for search, sport, and state.
 
 ### Example
 ```kotlin
@@ -139,16 +139,18 @@ Retrieves a paginated list of all teams available to the authenticated client. E
 //import ai.victorycode.sdk.models.*
 
 val apiInstance = TeamsApi()
-val limit : kotlin.Int = 10 // kotlin.Int | 
-val page : kotlin.Int = 1 // kotlin.Int | 
+val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to return per page.
+val offset : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to skip for pagination.
+val search : kotlin.String = search_example // kotlin.String | 
+val state : kotlin.String = state_example // kotlin.String | 
 try {
-    val result : kotlin.String = apiInstance.listTeams(limit, page)
+    val result : ListTeamPaginatedResponseDto = apiInstance.getTeams(limit, offset, search, state)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling TeamsApi#listTeams")
+    println("4xx response calling TeamsApi#getTeams")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling TeamsApi#listTeams")
+    println("5xx response calling TeamsApi#getTeams")
     e.printStackTrace()
 }
 ```
@@ -156,35 +158,42 @@ try {
 ### Parameters
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **limit** | **kotlin.Int**|  | [optional] |
-| **page** | **kotlin.Int**|  | [optional] |
+| **limit** | **java.math.BigDecimal**| The number of results to return per page. | [optional] [default to 50] |
+| **offset** | **java.math.BigDecimal**| The number of results to skip for pagination. | [optional] [default to 0] |
+| **search** | **kotlin.String**|  | [optional] |
+| **state** | **kotlin.String**|  | [optional] |
 
 ### Return type
 
-**kotlin.String**
+[**ListTeamPaginatedResponseDto**](ListTeamPaginatedResponseDto.md)
 
 ### Authorization
 
 
-Configure AppToken:
-    ApiClient.apiKey["App-Token"] = ""
-    ApiClient.apiKeyPrefix["App-Token"] = ""
-Configure AppId:
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
     ApiClient.apiKey["App-Id"] = ""
     ApiClient.apiKeyPrefix["App-Id"] = ""
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain
+ - **Accept**: application/json
 
 <a id="updateTeam"></a>
 # **updateTeam**
-> kotlin.String updateTeam(id, name, sport, shortName, teamLogo, mascots, classification)
+> SingleTeamResponseDto updateTeam(id, updateTeamDto)
 
 Update a team
 
-Updates the information of an existing team identified by its unique id. This endpoint allows clients to modify team attributes such as name, short name, sport type, classification, mascots, coach, or logo. Upon successful update, the response returns the updated team object and a confirmation message.
+Updates the details of an existing team identified by its ID. Allows updating the name, short name, coach, logo, and other details.
 
 ### Example
 ```kotlin
@@ -194,14 +203,9 @@ Updates the information of an existing team identified by its unique id. This en
 
 val apiInstance = TeamsApi()
 val id : kotlin.String = id_example // kotlin.String | 
-val name : kotlin.String = name_example // kotlin.String | 
-val sport : kotlin.String = sport_example // kotlin.String | (This can only be one of football,rugby,golf,soccer,nfl)
-val shortName : kotlin.String = shortName_example // kotlin.String | 
-val teamLogo : java.io.File = BINARY_DATA_HERE // java.io.File | 
-val mascots : kotlin.String = mascots_example // kotlin.String | Array of Mascot IDs (must not be empty)
-val classification : kotlin.String = classification_example // kotlin.String | Classification ID
+val updateTeamDto : UpdateTeamDto =  // UpdateTeamDto | 
 try {
-    val result : kotlin.String = apiInstance.updateTeam(id, name, sport, shortName, teamLogo, mascots, classification)
+    val result : SingleTeamResponseDto = apiInstance.updateTeam(id, updateTeamDto)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling TeamsApi#updateTeam")
@@ -216,29 +220,29 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **id** | **kotlin.String**|  | |
-| **name** | **kotlin.String**|  | [optional] |
-| **sport** | **kotlin.String**| (This can only be one of football,rugby,golf,soccer,nfl) | [optional] |
-| **shortName** | **kotlin.String**|  | [optional] |
-| **teamLogo** | **java.io.File**|  | [optional] |
-| **mascots** | **kotlin.String**| Array of Mascot IDs (must not be empty) | [optional] |
-| **classification** | **kotlin.String**| Classification ID | [optional] |
+| **updateTeamDto** | [**UpdateTeamDto**](UpdateTeamDto.md)|  | |
 
 ### Return type
 
-**kotlin.String**
+[**SingleTeamResponseDto**](SingleTeamResponseDto.md)
 
 ### Authorization
 
 
-Configure AppToken:
-    ApiClient.apiKey["App-Token"] = ""
-    ApiClient.apiKeyPrefix["App-Token"] = ""
-Configure AppId:
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
     ApiClient.apiKey["App-Id"] = ""
     ApiClient.apiKeyPrefix["App-Id"] = ""
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: text/plain
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 

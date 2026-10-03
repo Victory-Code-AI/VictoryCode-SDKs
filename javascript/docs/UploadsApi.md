@@ -4,18 +4,17 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getUploadStatus**](UploadsApi.md#getuploadstatus) | **GET** /api/v1/client/uploads/{uploadId} | Video file upload status |
-| [**uploadVideoAndCreateGame**](UploadsApi.md#uploadvideoandcreategame) | **POST** /api/v1/client/uploads | Upload video and create new game |
+| [**completeMultipartUpload**](UploadsApi.md#completemultipartupload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3 |
+| [**getPresignedUrl**](UploadsApi.md#getpresignedurl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload |
+| [**initiateUpload**](UploadsApi.md#initiateupload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file |
 
 
 
-## getUploadStatus
+## completeMultipartUpload
 
-> GetUploadStatusResponse getUploadStatus(uploadId)
+> CompleteMultipartUploadResponseDto completeMultipartUpload(completeMultipartUploadDto)
 
-Video file upload status
-
-This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.
+Complete a multipart upload to S3
 
 ### Example
 
@@ -24,14 +23,86 @@ import {
   Configuration,
   UploadsApi,
 } from '@victorycode/sdk';
-import type { GetUploadStatusRequest } from '@victorycode/sdk';
+import type { CompleteMultipartUploadRequest } from '@victorycode/sdk';
 
 async function example() {
   console.log("🚀 Testing @victorycode/sdk SDK...");
   const config = new Configuration({ 
-    // To configure API key authorization: AppToken
+    // Configure HTTP bearer authorization: Client-App-Token
+    accessToken: "YOUR BEARER TOKEN",
+    // To configure API key authorization: Client-App-Id
     apiKey: "YOUR API KEY",
-    // To configure API key authorization: AppId
+  });
+  const api = new UploadsApi(config);
+
+  const body = {
+    // CompleteMultipartUploadDto
+    completeMultipartUploadDto: ...,
+  } satisfies CompleteMultipartUploadRequest;
+
+  try {
+    const data = await api.completeMultipartUpload(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **completeMultipartUploadDto** | [CompleteMultipartUploadDto](CompleteMultipartUploadDto.md) |  | |
+
+### Return type
+
+[**CompleteMultipartUploadResponseDto**](CompleteMultipartUploadResponseDto.md)
+
+### Authorization
+
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Presigned URL for part generated successfully. |  -  |
+| **400** | Validation error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## getPresignedUrl
+
+> GetPartsPresignUrlResponseDto getPresignedUrl(uploadId, partNumber)
+
+Get a presigned URL for a specific part of a multipart upload
+
+### Example
+
+```ts
+import {
+  Configuration,
+  UploadsApi,
+} from '@victorycode/sdk';
+import type { GetPresignedUrlRequest } from '@victorycode/sdk';
+
+async function example() {
+  console.log("🚀 Testing @victorycode/sdk SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: Client-App-Token
+    accessToken: "YOUR BEARER TOKEN",
+    // To configure API key authorization: Client-App-Id
     apiKey: "YOUR API KEY",
   });
   const api = new UploadsApi(config);
@@ -39,10 +110,12 @@ async function example() {
   const body = {
     // string
     uploadId: uploadId_example,
-  } satisfies GetUploadStatusRequest;
+    // number
+    partNumber: 8.14,
+  } satisfies GetPresignedUrlRequest;
 
   try {
-    const data = await api.getUploadStatus(body);
+    const data = await api.getPresignedUrl(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -59,14 +132,15 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **uploadId** | `string` |  | [Defaults to `undefined`] |
+| **partNumber** | `number` |  | [Defaults to `undefined`] |
 
 ### Return type
 
-[**GetUploadStatusResponse**](GetUploadStatusResponse.md)
+[**GetPartsPresignUrlResponseDto**](GetPartsPresignUrlResponseDto.md)
 
 ### Authorization
 
-[AppToken](../README.md#AppToken), [AppId](../README.md#AppId)
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
 
 ### HTTP request headers
 
@@ -77,18 +151,17 @@ example().catch(console.error);
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | OK |  -  |
+| **200** | Presigned URL for part generated successfully. |  -  |
+| **400** | Validation error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
-## uploadVideoAndCreateGame
+## initiateUpload
 
-> UploadVideoAndCreateGameResponse uploadVideoAndCreateGame(name, video, homeTeam, awayTeam, venue, location, description)
+> InitiateMultipartUploadResponseDto initiateUpload(initiateMultipartUploadDto)
 
-Upload video and create new game
-
-This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.
+Initiate a multipart upload to S3 for a large file
 
 ### Example
 
@@ -97,37 +170,25 @@ import {
   Configuration,
   UploadsApi,
 } from '@victorycode/sdk';
-import type { UploadVideoAndCreateGameRequest } from '@victorycode/sdk';
+import type { InitiateUploadRequest } from '@victorycode/sdk';
 
 async function example() {
   console.log("🚀 Testing @victorycode/sdk SDK...");
   const config = new Configuration({ 
-    // To configure API key authorization: AppToken
-    apiKey: "YOUR API KEY",
-    // To configure API key authorization: AppId
+    // Configure HTTP bearer authorization: Client-App-Token
+    accessToken: "YOUR BEARER TOKEN",
+    // To configure API key authorization: Client-App-Id
     apiKey: "YOUR API KEY",
   });
   const api = new UploadsApi(config);
 
   const body = {
-    // string
-    name: name_example,
-    // Blob
-    video: BINARY_DATA_HERE,
-    // string | ObjectId of home team
-    homeTeam: homeTeam_example,
-    // string | ObjectId of away team
-    awayTeam: awayTeam_example,
-    // string
-    venue: venue_example,
-    // string
-    location: location_example,
-    // string (optional)
-    description: description_example,
-  } satisfies UploadVideoAndCreateGameRequest;
+    // InitiateMultipartUploadDto
+    initiateMultipartUploadDto: ...,
+  } satisfies InitiateUploadRequest;
 
   try {
-    const data = await api.uploadVideoAndCreateGame(body);
+    const data = await api.initiateUpload(body);
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -143,32 +204,27 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **name** | `string` |  | [Defaults to `undefined`] |
-| **video** | `Blob` |  | [Defaults to `undefined`] |
-| **homeTeam** | `string` | ObjectId of home team | [Defaults to `undefined`] |
-| **awayTeam** | `string` | ObjectId of away team | [Defaults to `undefined`] |
-| **venue** | `string` |  | [Defaults to `undefined`] |
-| **location** | `string` |  | [Defaults to `undefined`] |
-| **description** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **initiateMultipartUploadDto** | [InitiateMultipartUploadDto](InitiateMultipartUploadDto.md) |  | |
 
 ### Return type
 
-[**UploadVideoAndCreateGameResponse**](UploadVideoAndCreateGameResponse.md)
+[**InitiateMultipartUploadResponseDto**](InitiateMultipartUploadResponseDto.md)
 
 ### Authorization
 
-[AppToken](../README.md#AppToken), [AppId](../README.md#AppId)
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
 
 ### HTTP request headers
 
-- **Content-Type**: `multipart/form-data`
+- **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | Created |  -  |
+| **201** | Multipart upload initiated successfully, returns uploadId. |  -  |
+| **400** | Validation error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

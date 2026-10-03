@@ -368,21 +368,17 @@ open class ApiClient(val baseUrl: String, val client: Call.Factory = defaultClie
                 }
             }
         }
-        if (requestConfig.headers["app-secret"].isNullOrEmpty()) {
-            if (apiKey["app-secret"] != null) {
-                if (apiKeyPrefix["app-secret"] != null) {
-                    requestConfig.headers["app-secret"] = apiKeyPrefix["app-secret"]!! + " " + apiKey["app-secret"]!!
-                } else {
-                    requestConfig.headers["app-secret"] = apiKey["app-secret"]!!
-                }
+        if (requestConfig.headers[AUTHORIZATION].isNullOrEmpty()) {
+            accessTokenProvider()?.let { token ->
+                requestConfig.headers[AUTHORIZATION] = "Bearer $token"
             }
         }
-        if (requestConfig.headers["App-Token"].isNullOrEmpty()) {
-            if (apiKey["App-Token"] != null) {
-                if (apiKeyPrefix["App-Token"] != null) {
-                    requestConfig.headers["App-Token"] = apiKeyPrefix["App-Token"]!! + " " + apiKey["App-Token"]!!
+        if (requestConfig.headers["App-Secret"].isNullOrEmpty()) {
+            if (apiKey["App-Secret"] != null) {
+                if (apiKeyPrefix["App-Secret"] != null) {
+                    requestConfig.headers["App-Secret"] = apiKeyPrefix["App-Secret"]!! + " " + apiKey["App-Secret"]!!
                 } else {
-                    requestConfig.headers["App-Token"] = apiKey["App-Token"]!!
+                    requestConfig.headers["App-Secret"] = apiKey["App-Secret"]!!
                 }
             }
         }

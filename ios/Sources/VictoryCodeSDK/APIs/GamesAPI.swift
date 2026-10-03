@@ -14,29 +14,116 @@ open class GamesAPI {
     }
 
     /**
-     Get single game
+     Add new video to a game
      
      - parameter gameId: (path)  
-     - returns: GetGameResponse
+     - parameter addVideoToGameWithS3LinkDto: (body)  
+     - returns: SingleVideoResponseDto
      */
-    open func getGame(gameId: String) async throws(ErrorResponse) -> GetGameResponse {
-        return try await getGameWithRequestBuilder(gameId: gameId).execute().body
+    open func addVideoToGame(gameId: String, addVideoToGameWithS3LinkDto: AddVideoToGameWithS3LinkDto) async throws(ErrorResponse) -> SingleVideoResponseDto {
+        return try await addVideoToGameWithRequestBuilder(gameId: gameId, addVideoToGameWithS3LinkDto: addVideoToGameWithS3LinkDto).execute().body
     }
 
     /**
-     Get single game
-     - GET /api/v1/client/games/{gameId}
-     - Retrieves metadata for a specific game by gameId. The response includes core identifiers, participating teams, venue/location, timestamps, processing status, and any available high-level attributes required to render a game detail view.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     Add new video to a game
+     - POST /api/v1/client/games/{gameId}/video
+     - Adds a new video to game.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
+       - name: Client-App-Id
      - parameter gameId: (path)  
-     - returns: RequestBuilder<GetGameResponse> 
+     - parameter addVideoToGameWithS3LinkDto: (body)  
+     - returns: RequestBuilder<SingleVideoResponseDto> 
      */
-    open func getGameWithRequestBuilder(gameId: String) -> RequestBuilder<GetGameResponse> {
+    open func addVideoToGameWithRequestBuilder(gameId: String, addVideoToGameWithS3LinkDto: AddVideoToGameWithS3LinkDto) -> RequestBuilder<SingleVideoResponseDto> {
+        var localVariablePath = "/api/v1/client/games/{gameId}/video"
+        let gameIdPreEscape = "\(APIHelper.mapValueToPathItem(gameId))"
+        let gameIdPostEscape = gameIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{gameId}", with: gameIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: addVideoToGameWithS3LinkDto, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: (any Sendable)?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<SingleVideoResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Create a new Game with Video URL
+     
+     - parameter clientCreateGameWithVideoUrlDto: (body)  
+     - returns: GameDetailsResponse
+     */
+    open func createGameWithVideoUrl(clientCreateGameWithVideoUrlDto: ClientCreateGameWithVideoUrlDto) async throws(ErrorResponse) -> GameDetailsResponse {
+        return try await createGameWithVideoUrlWithRequestBuilder(clientCreateGameWithVideoUrlDto: clientCreateGameWithVideoUrlDto).execute().body
+    }
+
+    /**
+     Create a new Game with Video URL
+     - POST /api/v1/client/games
+     - Registers a new game and associates a video URL (e.g., from a third-party source) with it in a single step.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
+     - API Key:
+       - type: apiKey App-Id (HEADER)
+       - name: Client-App-Id
+     - parameter clientCreateGameWithVideoUrlDto: (body)  
+     - returns: RequestBuilder<GameDetailsResponse> 
+     */
+    open func createGameWithVideoUrlWithRequestBuilder(clientCreateGameWithVideoUrlDto: ClientCreateGameWithVideoUrlDto) -> RequestBuilder<GameDetailsResponse> {
+        let localVariablePath = "/api/v1/client/games"
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: clientCreateGameWithVideoUrlDto, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: (any Sendable)?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<GameDetailsResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Get a Single Game.
+     
+     - parameter gameId: (path)  
+     - returns: GameDetailsResponse
+     */
+    open func getGameDetails(gameId: String) async throws(ErrorResponse) -> GameDetailsResponse {
+        return try await getGameDetailsWithRequestBuilder(gameId: gameId).execute().body
+    }
+
+    /**
+     Get a Single Game.
+     - GET /api/v1/client/games/{gameId}
+     - Retrieves the core metadata for a single game, including date, time, location, and teams who participated.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
+     - API Key:
+       - type: apiKey App-Id (HEADER)
+       - name: Client-App-Id
+     - parameter gameId: (path)  
+     - returns: RequestBuilder<GameDetailsResponse> 
+     */
+    open func getGameDetailsWithRequestBuilder(gameId: String) -> RequestBuilder<GameDetailsResponse> {
         var localVariablePath = "/api/v1/client/games/{gameId}"
         let gameIdPreEscape = "\(APIHelper.mapValueToPathItem(gameId))"
         let gameIdPostEscape = gameIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -52,37 +139,39 @@ open class GamesAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<GetGameResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GameDetailsResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
-     Get All Games
+     List and Filter Games.
      
-     - parameter limit: (query)  (optional)
-     - parameter page: (query)  (optional)
-     - returns: ListGamesResponse
+     - parameter limit: (query) The number of results to return per page. (optional, default to 50)
+     - parameter offset: (query) The number of results to skip for pagination. (optional, default to 0)
+     - parameter search: (query)  (optional)
+     - returns: ListGamesPaginatedResponseDto
      */
-    open func listGames(limit: Int? = nil, page: Int? = nil) async throws(ErrorResponse) -> ListGamesResponse {
-        return try await listGamesWithRequestBuilder(limit: limit, page: page).execute().body
+    open func getGames(limit: Double? = nil, offset: Double? = nil, search: String? = nil) async throws(ErrorResponse) -> ListGamesPaginatedResponseDto {
+        return try await getGamesWithRequestBuilder(limit: limit, offset: offset, search: search).execute().body
     }
 
     /**
-     Get All Games
+     List and Filter Games.
      - GET /api/v1/client/games
-     - Returns a paginated list of games accessible to the client. Useful for building game pickers and dashboards, or to obtain a gameId before fetching detailed resources.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     - Retrieves a paginated list of games, with optional filters for team, upload status, and date-time range.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter limit: (query)  (optional)
-     - parameter page: (query)  (optional)
-     - returns: RequestBuilder<ListGamesResponse> 
+       - name: Client-App-Id
+     - parameter limit: (query) The number of results to return per page. (optional, default to 50)
+     - parameter offset: (query) The number of results to skip for pagination. (optional, default to 0)
+     - parameter search: (query)  (optional)
+     - returns: RequestBuilder<ListGamesPaginatedResponseDto> 
      */
-    open func listGamesWithRequestBuilder(limit: Int? = nil, page: Int? = nil) -> RequestBuilder<ListGamesResponse> {
+    open func getGamesWithRequestBuilder(limit: Double? = nil, offset: Double? = nil, search: String? = nil) -> RequestBuilder<ListGamesPaginatedResponseDto> {
         let localVariablePath = "/api/v1/client/games"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: any Sendable]? = nil
@@ -90,7 +179,8 @@ open class GamesAPI {
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "limit": (wrappedValue: limit?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
-            "page": (wrappedValue: page?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "offset": (wrappedValue: offset?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "search": (wrappedValue: search?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: (any Sendable)?] = [
@@ -99,7 +189,59 @@ open class GamesAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<ListGamesResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListGamesPaginatedResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Get a list of videos of a game
+     
+     - parameter gameId: (path)  
+     - parameter limit: (query) The number of results to return per page. (optional, default to 50)
+     - parameter offset: (query) The number of results to skip for pagination. (optional, default to 0)
+     - returns: ListVideoPaginatedResponseDto
+     */
+    open func getVideosOfGame(gameId: String, limit: Double? = nil, offset: Double? = nil) async throws(ErrorResponse) -> ListVideoPaginatedResponseDto {
+        return try await getVideosOfGameWithRequestBuilder(gameId: gameId, limit: limit, offset: offset).execute().body
+    }
+
+    /**
+     Get a list of videos of a game
+     - GET /api/v1/client/games/{gameId}/videos
+     - Retrieves a list of videos of a game.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
+     - API Key:
+       - type: apiKey App-Id (HEADER)
+       - name: Client-App-Id
+     - parameter gameId: (path)  
+     - parameter limit: (query) The number of results to return per page. (optional, default to 50)
+     - parameter offset: (query) The number of results to skip for pagination. (optional, default to 0)
+     - returns: RequestBuilder<ListVideoPaginatedResponseDto> 
+     */
+    open func getVideosOfGameWithRequestBuilder(gameId: String, limit: Double? = nil, offset: Double? = nil) -> RequestBuilder<ListVideoPaginatedResponseDto> {
+        var localVariablePath = "/api/v1/client/games/{gameId}/videos"
+        let gameIdPreEscape = "\(APIHelper.mapValueToPathItem(gameId))"
+        let gameIdPostEscape = gameIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{gameId}", with: gameIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters: [String: any Sendable]? = nil
+
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "limit": (wrappedValue: limit?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "offset": (wrappedValue: offset?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+        ])
+
+        let localVariableNillableHeaders: [String: (any Sendable)?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<ListVideoPaginatedResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }

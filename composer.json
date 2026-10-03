@@ -1,6 +1,6 @@
 {
     "name": "victorycode/sdk",
-    "description": "This collection provides the core set of APIs for Tactix clients to interact with the platform. It covers authentication and token management, as well as a wide range of game-related endpoints including uploading full games, fetching generated clips, checking clipping status, retrieving game scoring summaries, and accessing detailed team statistics. All requests are versioned to ensure backward compatibility and smooth upgrades.",
+    "description": "Client APIs for Tactix partners: authenticate, upload game video, and retrieve games, plays, game recaps and team metadata.",
     "keywords": [
         "openapitools",
         "openapi-generator",

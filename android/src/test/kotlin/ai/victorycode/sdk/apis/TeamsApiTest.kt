@@ -27,8 +27,15 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import ai.victorycode.sdk.apis.TeamsApi
-import ai.victorycode.sdk.models.CreateTeamResponse
-import ai.victorycode.sdk.models.DeleteTeamResponse
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.ConflictErrorResponseDto
+import ai.victorycode.sdk.models.CreateTeamDto
+import ai.victorycode.sdk.models.DeleteResponseDto
+import ai.victorycode.sdk.models.ListTeamPaginatedResponseDto
+import ai.victorycode.sdk.models.NotFoundErrorResponseDto
+import ai.victorycode.sdk.models.SingleTeamResponseDto
+import ai.victorycode.sdk.models.UnauthorizedErrorResponseDto
+import ai.victorycode.sdk.models.UpdateTeamDto
 
 class TeamsApiTest : ShouldSpec() {
     init {
@@ -38,13 +45,8 @@ class TeamsApiTest : ShouldSpec() {
         // to test createTeam
         should("test createTeam") {
             // uncomment below to test createTeam
-            //val name : kotlin.String = name_example // kotlin.String | 
-            //val sport : kotlin.String = sport_example // kotlin.String | (This can only be one of football,rugby,golf,soccer,nfl)
-            //val shortName : kotlin.String = shortName_example // kotlin.String | 
-            //val mascots : kotlin.String = mascots_example // kotlin.String | Array of Mascot IDs (must not be empty)
-            //val classification : kotlin.String = classification_example // kotlin.String | Classification ID
-            //val teamLogo : java.io.File = BINARY_DATA_HERE // java.io.File | 
-            //val result : CreateTeamResponse = apiInstance.createTeam(name, sport, shortName, mascots, classification, teamLogo)
+            //val createTeamDto : CreateTeamDto =  // CreateTeamDto | 
+            //val result : SingleTeamResponseDto = apiInstance.createTeam(createTeamDto)
             //result shouldBe ("TODO")
         }
 
@@ -52,16 +54,18 @@ class TeamsApiTest : ShouldSpec() {
         should("test deleteTeam") {
             // uncomment below to test deleteTeam
             //val id : kotlin.String = id_example // kotlin.String | 
-            //val result : DeleteTeamResponse = apiInstance.deleteTeam(id)
+            //val result : DeleteResponseDto = apiInstance.deleteTeam(id)
             //result shouldBe ("TODO")
         }
 
-        // to test listTeams
-        should("test listTeams") {
-            // uncomment below to test listTeams
-            //val limit : kotlin.Int = 10 // kotlin.Int | 
-            //val page : kotlin.Int = 1 // kotlin.Int | 
-            //val result : kotlin.String = apiInstance.listTeams(limit, page)
+        // to test getTeams
+        should("test getTeams") {
+            // uncomment below to test getTeams
+            //val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to return per page.
+            //val offset : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to skip for pagination.
+            //val search : kotlin.String = search_example // kotlin.String | 
+            //val state : kotlin.String = state_example // kotlin.String | 
+            //val result : ListTeamPaginatedResponseDto = apiInstance.getTeams(limit, offset, search, state)
             //result shouldBe ("TODO")
         }
 
@@ -69,13 +73,8 @@ class TeamsApiTest : ShouldSpec() {
         should("test updateTeam") {
             // uncomment below to test updateTeam
             //val id : kotlin.String = id_example // kotlin.String | 
-            //val name : kotlin.String = name_example // kotlin.String | 
-            //val sport : kotlin.String = sport_example // kotlin.String | (This can only be one of football,rugby,golf,soccer,nfl)
-            //val shortName : kotlin.String = shortName_example // kotlin.String | 
-            //val teamLogo : java.io.File = BINARY_DATA_HERE // java.io.File | 
-            //val mascots : kotlin.String = mascots_example // kotlin.String | Array of Mascot IDs (must not be empty)
-            //val classification : kotlin.String = classification_example // kotlin.String | Classification ID
-            //val result : kotlin.String = apiInstance.updateTeam(id, name, sport, shortName, teamLogo, mascots, classification)
+            //val updateTeamDto : UpdateTeamDto =  // UpdateTeamDto | 
+            //val result : SingleTeamResponseDto = apiInstance.updateTeam(id, updateTeamDto)
             //result shouldBe ("TODO")
         }
 
