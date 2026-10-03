@@ -1,0 +1,87 @@
+name: SDK CI
+
+# Builds and tests every generated SDK. Runs on pull requests and pushes, and is
+# called by regenerate.yml to verify a release branch before it is published.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+    inputs:
+      ref:
+        description: Branch or commit to verify
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.language }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { language: python, os: ubuntu-latest }
+          - { language: javascript, os: ubuntu-latest }
+          - { language: java, os: ubuntu-latest }
+          - { language: php, os: ubuntu-latest }
+          - { language: android, os: ubuntu-latest }
+          - { language: ios, os: macos-15 }
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+
+      - if: matrix.language == 'python'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - if: matrix.language == 'javascript'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - if: matrix.language == 'java' || matrix.language == 'android'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: ${{ matrix.language == 'java' && 'maven' || 'gradle' }}
+      - if: matrix.language == 'android'
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.14.3"
+      - if: matrix.language == 'php'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer:v2
+      - if: matrix.language == 'ios'
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build and test
+        run: scripts/verify.sh ${{ matrix.language }}
+
+  smoke:
+    name: smoke tests (mock API)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install SDKs
+        run: |
+          pip install ./python
+          (cd javascript && npm install --no-audit --no-fund && npm run build)
+      - name: Call the Prism mock of spec/openapi.json through the SDKs
+        run: tests/smoke/run.sh python javascript

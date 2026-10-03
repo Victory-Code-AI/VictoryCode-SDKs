@@ -1,0 +1,49 @@
+// Adds what Maven Central requires to the generated Kotlin build without editing
+// generated files: POM metadata, a javadoc jar, and a local staging repository
+// that JReleaser signs and uploads from (see release.yml / jreleaser.yml).
+//   gradle --init-script ../ci/maven-central.init.gradle publishAllPublicationsToStagingRepository
+allprojects { project ->
+    project.plugins.withId('maven-publish') {
+        def javadocJar = project.tasks.register('centralJavadocJar', Jar) {
+            archiveClassifier.set('javadoc')
+            from(project.file('docs')) // generated API docs (Markdown); Central only requires the jar
+        }
+
+        project.afterEvaluate {
+            project.publishing {
+                repositories {
+                    maven {
+                        name = 'staging'
+                        url = project.rootProject.file('../target/staging-deploy').toURI()
+                    }
+                }
+                publications.withType(MavenPublication).configureEach { publication ->
+                    publication.artifact(javadocJar)
+                    publication.pom {
+                        name = 'Victory Code SDK for Kotlin'
+                        description = 'Victory Code API client for Kotlin and Android'
+                        url = 'https://github.com/victory-code-ai/victorycode-sdks'
+                        licenses {
+                            license {
+                                name = 'MIT License'
+                                url = 'https://opensource.org/licenses/MIT'
+                            }
+                        }
+                        developers {
+                            developer {
+                                id = 'victorycode'
+                                name = 'Victory Code'
+                                email = 'developers@victorycode.ai'
+                            }
+                        }
+                        scm {
+                            connection = 'scm:git:https://github.com/victory-code-ai/victorycode-sdks.git'
+                            developerConnection = 'scm:git:git@github.com:victory-code-ai/victorycode-sdks.git'
+                            url = 'https://github.com/victory-code-ai/victorycode-sdks'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,185 @@
+name: Regenerate SDKs
+
+# Triggered by the developer portal admin after a spec is published
+# (repository_dispatch "api-spec-published"), or manually.
+#
+#   portal commit ──► sync spec ──► bump version ──► generate ──► push release branch
+#                                                                     │
+#                         sdk-ci.yml (build + tests + mock-API smoke) ◄┘
+#                                                                     │
+#                           fast-forward main + push tag vX.Y.Z ◄──────┘
+#                                                                     │
+#                                          release.yml publishes ◄────┘
+on:
+  repository_dispatch:
+    types: [api-spec-published]
+  workflow_dispatch:
+    inputs:
+      portal_ref:
+        description: Portal commit or branch to read specs/ from
+        default: main
+      version:
+        description: "API version id to generate from (default: the portal's latest)"
+        required: false
+      level:
+        description: Version bump
+        type: choice
+        options: [auto, major, minor, patch]
+        default: auto
+      breaking:
+        description: Treat as a breaking API change (auto level only)
+        type: boolean
+        default: false
+      set_version:
+        description: "Explicit SDK version, e.g. 1.0.0 (overrides level)"
+        required: false
+      force:
+        description: Release even if the API surface is unchanged (e.g. generator upgrade)
+        type: boolean
+        default: false
+
+concurrency:
+  group: sdk-release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  PORTAL_REPO: ${{ github.event.client_payload.portalRepo || vars.PORTAL_REPO || 'victory-code-ai/developers-portal' }}
+  PORTAL_REF: ${{ github.event.client_payload.portalSha || inputs.portal_ref || 'main' }}
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.decide.outputs.release }}
+      version: ${{ steps.bump.outputs.version }}
+      branch: ${{ steps.push.outputs.branch }}
+    steps:
+      - name: Check out SDKs
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SDK_BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Check out the published portal commit
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PORTAL_REPO }}
+          ref: ${{ env.PORTAL_REF }}
+          token: ${{ secrets.PORTAL_READ_TOKEN }}
+          path: .portal
+          sparse-checkout: specs
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install generator tooling
+        run: npm ci
+
+      - name: Resolve API version
+        id: resolve
+        run: node scripts/resolve-release.mjs .portal
+
+      - name: Sync spec
+        id: sync
+        if: steps.resolve.outputs.release == 'true'
+        run: >
+          node scripts/sync-spec.mjs "${{ steps.resolve.outputs.spec_path }}"
+          --portal-repo "$PORTAL_REPO" --portal-sha "$(git -C .portal rev-parse HEAD)"
+          --version "${{ steps.resolve.outputs.version_id }}"
+          --revision "${{ steps.resolve.outputs.revision }}"
+          --api-version "${{ steps.resolve.outputs.api_version }}"
+
+      - name: Decide
+        id: decide
+        env:
+          RESOLVED: ${{ steps.resolve.outputs.release }}
+          REASON: ${{ steps.resolve.outputs.reason }}
+          CHANGED: ${{ steps.sync.outputs.changed }}
+          FORCE: ${{ inputs.force == true || (inputs.set_version != null && inputs.set_version != '') }}
+        run: |
+          if [ "$RESOLVED" != "true" ]; then
+            echo "::notice::$REASON"
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          elif [ "$CHANGED" != "true" ] && [ "$FORCE" != "true" ]; then
+            echo "::notice::The API surface is unchanged; no SDK release needed."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bump version
+        id: bump
+        if: steps.decide.outputs.release == 'true'
+        run: >
+          node scripts/bump-version.mjs
+          --breaking "${{ steps.resolve.outputs.breaking }}"
+          --level "${{ inputs.level || 'auto' }}"
+          --set "${{ inputs.set_version }}"
+          --api "${{ steps.resolve.outputs.version_id }} revision ${{ steps.resolve.outputs.revision }} (${{ steps.resolve.outputs.api_version }})"
+          --note "${{ steps.resolve.outputs.published_by && format('Published by @{0}.', steps.resolve.outputs.published_by) || '' }}"
+
+      - name: Generate SDKs
+        if: steps.decide.outputs.release == 'true'
+        run: node scripts/generate.mjs
+
+      - name: Push release branch
+        id: push
+        if: steps.decide.outputs.release == 'true'
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          branch="sdk-release/v${VERSION}"
+          git config user.name "victorycode-sdk-bot"
+          git config user.email "sdk-bot@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add -A
+          git commit -m "chore(sdk): release v${VERSION}" -m "Generated from $(jq -r '"\(.portalRepo)@\(.portalSha) \(.version) revision \(.revision)"' spec/source.json)."
+          git push origin "$branch"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+  verify:
+    needs: prepare
+    if: needs.prepare.outputs.release == 'true'
+    uses: ./.github/workflows/sdk-ci.yml
+    with:
+      ref: ${{ needs.prepare.outputs.branch }}
+
+  release:
+    needs: [prepare, verify]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.branch }}
+          token: ${{ secrets.SDK_BOT_TOKEN }}
+          fetch-depth: 0
+
+      - name: Fast-forward main and tag the release
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+          BRANCH: ${{ needs.prepare.outputs.branch }}
+        run: |
+          # Fails (instead of overwriting) if main moved since the branch was cut.
+          git push origin "HEAD:refs/heads/main"
+          git tag "v${VERSION}"
+          # Pushed with SDK_BOT_TOKEN so the tag triggers release.yml.
+          git push origin "v${VERSION}"
+          git push origin --delete "$BRANCH"
+
+  cleanup:
+    needs: [prepare, verify]
+    if: failure() && needs.prepare.outputs.branch != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report failed verification
+        run: |
+          echo "::error::SDK verification failed for ${{ needs.prepare.outputs.branch }}. The branch is kept for inspection; nothing was released."

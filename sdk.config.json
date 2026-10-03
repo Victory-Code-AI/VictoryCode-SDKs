@@ -1,0 +1,110 @@
+{
+  "version": "0.1.0",
+  "repository": {
+    "owner": "victory-code-ai",
+    "name": "victorycode-sdks",
+    "url": "https://github.com/victory-code-ai/victorycode-sdks"
+  },
+  "languages": {
+    "python": {
+      "generator": "python",
+      "output": "python",
+      "versionProperty": "packageVersion",
+      "registry": "PyPI",
+      "package": "victorycode-sdk",
+      "properties": {
+        "packageName": "victorycode_sdk",
+        "projectName": "victorycode-sdk",
+        "packageUrl": "https://github.com/victory-code-ai/victorycode-sdks",
+        "library": "urllib3"
+      }
+    },
+    "javascript": {
+      "generator": "typescript-fetch",
+      "output": "javascript",
+      "versionProperty": "npmVersion",
+      "registry": "npm",
+      "package": "@victorycode/sdk",
+      "properties": {
+        "npmName": "@victorycode/sdk",
+        "npmRepository": "https://registry.npmjs.org",
+        "supportsES6": true,
+        "withoutRuntimeChecks": false
+      }
+    },
+    "java": {
+      "generator": "java",
+      "output": "java",
+      "versionProperty": "artifactVersion",
+      "registry": "Maven Central",
+      "package": "ai.victorycode:victorycode-sdk",
+      "properties": {
+        "library": "okhttp-gson",
+        "groupId": "ai.victorycode",
+        "artifactId": "victorycode-sdk",
+        "artifactUrl": "https://github.com/victory-code-ai/victorycode-sdks",
+        "artifactDescription": "Victory Code API client for Java",
+        "invokerPackage": "ai.victorycode.sdk",
+        "apiPackage": "ai.victorycode.sdk.api",
+        "modelPackage": "ai.victorycode.sdk.model",
+        "scmConnection": "scm:git:https://github.com/victory-code-ai/victorycode-sdks.git",
+        "scmDeveloperConnection": "scm:git:git@github.com:victory-code-ai/victorycode-sdks.git",
+        "scmUrl": "https://github.com/victory-code-ai/victorycode-sdks",
+        "developerName": "Victory Code",
+        "developerEmail": "developers@victorycode.ai",
+        "developerOrganization": "Victory Code",
+        "developerOrganizationUrl": "https://victorycode.ai",
+        "licenseName": "MIT License",
+        "licenseUrl": "https://opensource.org/licenses/MIT",
+        "hideGenerationTimestamp": true,
+        "openApiNullable": false
+      }
+    },
+    "php": {
+      "generator": "php",
+      "output": "php",
+      "versionProperty": "artifactVersion",
+      "registry": "Packagist",
+      "package": "victorycode/sdk",
+      "properties": {
+        "invokerPackage": "VictoryCode\\SDK",
+        "composerPackageName": "victorycode/sdk",
+        "packageName": "VictoryCodeSDK"
+      }
+    },
+    "ios": {
+      "generator": "swift6",
+      "output": "ios",
+      "versionProperty": "podVersion",
+      "registry": "Swift Package Manager",
+      "package": "VictoryCodeSDK",
+      "properties": {
+        "projectName": "VictoryCodeSDK",
+        "library": "urlsession",
+        "responseAs": "AsyncAwait",
+        "useSPMFileStructure": true,
+        "hideGenerationTimestamp": true,
+        "apiStaticMethod": false,
+        "podSummary": "Victory Code API client for Swift",
+        "podHomepage": "https://github.com/victory-code-ai/victorycode-sdks",
+        "podLicense": "MIT"
+      }
+    },
+    "android": {
+      "generator": "kotlin",
+      "output": "android",
+      "versionProperty": "artifactVersion",
+      "registry": "Maven Central",
+      "package": "ai.victorycode:victorycode-sdk-kotlin",
+      "properties": {
+        "library": "jvm-okhttp4",
+        "groupId": "ai.victorycode",
+        "artifactId": "victorycode-sdk-kotlin",
+        "packageName": "ai.victorycode.sdk",
+        "serializationLibrary": "moshi",
+        "dateLibrary": "java8",
+        "omitGradleWrapper": false
+      }
+    }
+  }
+}
