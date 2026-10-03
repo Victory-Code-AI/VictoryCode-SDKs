@@ -66,6 +66,39 @@ function generate(name, language, workDir) {
   if (existsSync(overrides)) {
     cpSync(overrides, output, { recursive: true });
   }
+
+  applyPackageMetadata(name, output);
+}
+
+/** Ships the repository LICENSE in every package and sets license/author fields the generators leave out. */
+function applyPackageMetadata(name, output) {
+  cpSync(path.join(ROOT, "LICENSE"), path.join(output, "LICENSE"));
+
+  if (name === "python") {
+    const file = path.join(output, "pyproject.toml");
+    const pyproject = readFileSync(file, "utf8")
+      .replace(/authors = \[[\s\S]*?\]\n/, 'authors = [\n  {name = "Victory Code"},\n]\nlicense = "MIT"\n');
+    if (!pyproject.includes('license = "MIT"')) throw new Error("Could not set the license in python/pyproject.toml");
+    writeFileSync(file, pyproject);
+
+    const setupFile = path.join(output, "setup.py");
+    if (existsSync(setupFile)) {
+      const setup = readFileSync(setupFile, "utf8")
+        .replace(/author="[^"]*",/, 'author="Victory Code",')
+        .replace(/\n\s*author_email="[^"]*",/, "")
+        .replace(/(url="[^"]*",)/, '$1\n    license="MIT",');
+      writeFileSync(setupFile, setup);
+    }
+  }
+
+  if (name === "javascript") {
+    const file = path.join(output, "package.json");
+    const pkg = JSON.parse(readFileSync(file, "utf8"));
+    pkg.license = "MIT";
+    pkg.author = "Victory Code";
+    pkg.repository = { type: "git", url: `git+${config.repository.url}.git`, directory: "javascript" };
+    writeFileSync(file, `${JSON.stringify(pkg, null, 2)}\n`);
+  }
 }
 
 const COMPOSER_AUTHORS = [{ name: "Victory Code", homepage: config.repository.url }];
