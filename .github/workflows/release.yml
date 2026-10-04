@@ -3,12 +3,23 @@ name: Release SDKs
 # Publishes every SDK for a version tag (pushed by regenerate.yml, or manually).
 # Each registry is enabled with a repository variable so registries can be
 # onboarded one at a time; see README "Release setup".
+#
+# To publish (or retry publishing) an existing tag with the current workflow,
+# run it manually from main with that tag, e.g. v1.0.0.
 on:
   push:
     tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish, e.g. v1.0.0
+        required: true
 
 permissions:
   contents: read
+
+env:
+  TAG: ${{ inputs.tag || github.ref_name }}
 
 jobs:
   github-release:
@@ -17,11 +28,16 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
         run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists."
+            exit 0
+          fi
           version="${TAG#v}"
           # Release notes: this version's section of CHANGELOG.md.
           awk -v heading="## ${version} " 'index($0, heading) == 1 {found=1; next} found && /^## / {exit} found' CHANGELOG.md > notes.md
@@ -42,9 +58,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
+      contents: read # job-level permissions replace the defaults; checkout needs this
       id-token: write # PyPI trusted publishing
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -57,9 +76,12 @@ jobs:
     if: vars.PUBLISH_NPM == 'true'
     runs-on: ubuntu-latest
     permissions:
+      contents: read # job-level permissions replace the defaults; checkout needs this
       id-token: write # npm provenance
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -67,15 +89,23 @@ jobs:
       - working-directory: javascript
         run: |
           npm install --no-audit --no-fund
-          npm publish --access public --provenance
+          # npm only accepts provenance from public repositories.
+          if [ "$PRIVATE_REPO" = "true" ]; then
+            npm publish --access public
+          else
+            npm publish --access public --provenance
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PRIVATE_REPO: ${{ github.event.repository.private }}
 
   maven-central:
     if: vars.PUBLISH_MAVEN == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ env.TAG }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -94,7 +124,7 @@ jobs:
         with:
           arguments: deploy
         env:
-          JRELEASER_PROJECT_VERSION: ${{ github.ref_name }}
+          JRELEASER_PROJECT_VERSION: ${{ env.TAG }}
           JRELEASER_GITHUB_TOKEN: ${{ github.token }}
           JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           JRELEASER_MAVENCENTRAL_SONATYPE_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
