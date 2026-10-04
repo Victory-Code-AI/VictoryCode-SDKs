@@ -27,9 +27,14 @@ import java.io.IOException
 import okhttp3.Call
 import okhttp3.HttpUrl
 
-import ai.victorycode.sdk.models.GetGameRecapScoreResponse
-import ai.victorycode.sdk.models.GetGameRecapScoringSummaryResponse
-import ai.victorycode.sdk.models.GetGameRecapTeamStatsResponse
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.GameBoxScoreResponseDto
+import ai.victorycode.sdk.models.GameRecapScoringSummaryProResponse
+import ai.victorycode.sdk.models.GameRecapScoringSummaryResponse
+import ai.victorycode.sdk.models.GameRecapTeamStatsResponse
+import ai.victorycode.sdk.models.GameScoreResponse
+import ai.victorycode.sdk.models.NotFoundErrorResponseDto
+import ai.victorycode.sdk.models.UnauthorizedErrorResponseDto
 
 import com.squareup.moshi.Json
 
@@ -56,11 +61,11 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /api/v1/client/game-recap/{gameId}/score
-     * Get the Game Recap Score for a specific Game
-     * Retrieves the overall score for the specified game. This includes the final scoreline and also include period-by-period (quarters) breakdowns.
-     * @param gameId 
-     * @return GetGameRecapScoreResponse
+     * GET /api/v1/client/game-recap/{videoId}/game-box-score
+     * Get the Game Recap Game Box Score for a specific Game.
+     * Retrieves full game box score stats for both teams and players for a specific game.
+     * @param videoId 
+     * @return GameBoxScoreResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -69,11 +74,11 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getGameRecapScore(gameId: kotlin.String) : GetGameRecapScoreResponse {
-        val localVarResponse = getGameRecapScoreWithHttpInfo(gameId = gameId)
+    fun getGameRecapGameBoxScore(videoId: kotlin.String) : GameBoxScoreResponseDto {
+        val localVarResponse = getGameRecapGameBoxScoreWithHttpInfo(videoId = videoId)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GetGameRecapScoreResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GameBoxScoreResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -88,20 +93,93 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /api/v1/client/game-recap/{gameId}/score
-     * Get the Game Recap Score for a specific Game
-     * Retrieves the overall score for the specified game. This includes the final scoreline and also include period-by-period (quarters) breakdowns.
-     * @param gameId 
-     * @return ApiResponse<GetGameRecapScoreResponse?>
+     * GET /api/v1/client/game-recap/{videoId}/game-box-score
+     * Get the Game Recap Game Box Score for a specific Game.
+     * Retrieves full game box score stats for both teams and players for a specific game.
+     * @param videoId 
+     * @return ApiResponse<GameBoxScoreResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun getGameRecapScoreWithHttpInfo(gameId: kotlin.String) : ApiResponse<GetGameRecapScoreResponse?> {
-        val localVariableConfig = getGameRecapScoreRequestConfig(gameId = gameId)
+    fun getGameRecapGameBoxScoreWithHttpInfo(videoId: kotlin.String) : ApiResponse<GameBoxScoreResponseDto?> {
+        val localVariableConfig = getGameRecapGameBoxScoreRequestConfig(videoId = videoId)
 
-        return request<Unit, GetGameRecapScoreResponse>(
+        return request<Unit, GameBoxScoreResponseDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation getGameRecapGameBoxScore
+     *
+     * @param videoId 
+     * @return RequestConfig
+     */
+    fun getGameRecapGameBoxScoreRequestConfig(videoId: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/json"
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/api/v1/client/game-recap/{videoId}/game-box-score".replace("{"+"videoId"+"}", encodeURIComponent(videoId.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * GET /api/v1/client/game-recap/{videoId}/score
+     * Get the Game Recap Score for a specific Game.
+     * Retrieves the final score and the score breakdown by quarter and overtime periods for both the home and away teams.
+     * @param videoId 
+     * @return GameScoreResponse
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    fun getGameRecapScore(videoId: kotlin.String) : GameScoreResponse {
+        val localVarResponse = getGameRecapScoreWithHttpInfo(videoId = videoId)
+
+        return when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GameScoreResponse
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * GET /api/v1/client/game-recap/{videoId}/score
+     * Get the Game Recap Score for a specific Game.
+     * Retrieves the final score and the score breakdown by quarter and overtime periods for both the home and away teams.
+     * @param videoId 
+     * @return ApiResponse<GameScoreResponse?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    fun getGameRecapScoreWithHttpInfo(videoId: kotlin.String) : ApiResponse<GameScoreResponse?> {
+        val localVariableConfig = getGameRecapScoreRequestConfig(videoId = videoId)
+
+        return request<Unit, GameScoreResponse>(
             localVariableConfig
         )
     }
@@ -109,10 +187,10 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     /**
      * To obtain the request config of the operation getGameRecapScore
      *
-     * @param gameId 
+     * @param videoId 
      * @return RequestConfig
      */
-    fun getGameRecapScoreRequestConfig(gameId: kotlin.String) : RequestConfig<Unit> {
+    fun getGameRecapScoreRequestConfig(videoId: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -120,7 +198,7 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/api/v1/client/game-recap/{gameId}/score".replace("{"+"gameId"+"}", encodeURIComponent(gameId.toString())),
+            path = "/api/v1/client/game-recap/{videoId}/score".replace("{"+"videoId"+"}", encodeURIComponent(videoId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,
@@ -129,11 +207,11 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /api/v1/client/game-recap/{gameId}/scoring-summary
+     * GET /api/v1/client/game-recap/{videoId}/scoring-summary
      * Get the Game Recap Scoring Summary for a specific Game.
-     * Retrieves a chronological summary of all scoring plays for the specified game. Each record is linked to a playId, enabling clients to correlate the scoring event with detailed play data.
-     * @param gameId 
-     * @return GetGameRecapScoringSummaryResponse
+     * Retrieves a chronological list of all scoring plays for a specific game, including details about the play, the drive, and the resulting score.
+     * @param videoId 
+     * @return GameRecapScoringSummaryResponse
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -142,11 +220,11 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getGameRecapScoringSummary(gameId: kotlin.String) : GetGameRecapScoringSummaryResponse {
-        val localVarResponse = getGameRecapScoringSummaryWithHttpInfo(gameId = gameId)
+    fun getGameRecapScoringSummary(videoId: kotlin.String) : GameRecapScoringSummaryResponse {
+        val localVarResponse = getGameRecapScoringSummaryWithHttpInfo(videoId = videoId)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GetGameRecapScoringSummaryResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GameRecapScoringSummaryResponse
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -161,20 +239,20 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /api/v1/client/game-recap/{gameId}/scoring-summary
+     * GET /api/v1/client/game-recap/{videoId}/scoring-summary
      * Get the Game Recap Scoring Summary for a specific Game.
-     * Retrieves a chronological summary of all scoring plays for the specified game. Each record is linked to a playId, enabling clients to correlate the scoring event with detailed play data.
-     * @param gameId 
-     * @return ApiResponse<GetGameRecapScoringSummaryResponse?>
+     * Retrieves a chronological list of all scoring plays for a specific game, including details about the play, the drive, and the resulting score.
+     * @param videoId 
+     * @return ApiResponse<GameRecapScoringSummaryResponse?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun getGameRecapScoringSummaryWithHttpInfo(gameId: kotlin.String) : ApiResponse<GetGameRecapScoringSummaryResponse?> {
-        val localVariableConfig = getGameRecapScoringSummaryRequestConfig(gameId = gameId)
+    fun getGameRecapScoringSummaryWithHttpInfo(videoId: kotlin.String) : ApiResponse<GameRecapScoringSummaryResponse?> {
+        val localVariableConfig = getGameRecapScoringSummaryRequestConfig(videoId = videoId)
 
-        return request<Unit, GetGameRecapScoringSummaryResponse>(
+        return request<Unit, GameRecapScoringSummaryResponse>(
             localVariableConfig
         )
     }
@@ -182,10 +260,10 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     /**
      * To obtain the request config of the operation getGameRecapScoringSummary
      *
-     * @param gameId 
+     * @param videoId 
      * @return RequestConfig
      */
-    fun getGameRecapScoringSummaryRequestConfig(gameId: kotlin.String) : RequestConfig<Unit> {
+    fun getGameRecapScoringSummaryRequestConfig(videoId: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -193,7 +271,7 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/api/v1/client/game-recap/{gameId}/scoring-summary".replace("{"+"gameId"+"}", encodeURIComponent(gameId.toString())),
+            path = "/api/v1/client/game-recap/{videoId}/scoring-summary".replace("{"+"videoId"+"}", encodeURIComponent(videoId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,
@@ -202,11 +280,11 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /api/v1/client/game-recap/{gameId}/team-stats
-     * Get the Game Recap Team Stats for a specific Game.
-     * Retrieves a statistical summary for both the home and away teams in a specific game. The response includes key offensive and first-down metrics, allowing clients to analyze game efficiency, offensive output, and team balance between rushing and passing plays.
-     * @param gameId 
-     * @return GetGameRecapTeamStatsResponse
+     * GET /api/v1/client/game-recap/{videoId}/scoring-summary-pro
+     * Get the Game Recap Scoring Summary Pro for a specific Game.
+     * Retrieves the full pro scoring summary for a specific game with drive context and players involved for each scoring play.
+     * @param videoId 
+     * @return GameRecapScoringSummaryProResponse
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -215,11 +293,11 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getGameRecapTeamStats(gameId: kotlin.String) : GetGameRecapTeamStatsResponse {
-        val localVarResponse = getGameRecapTeamStatsWithHttpInfo(gameId = gameId)
+    fun getGameRecapScoringSummaryPro(videoId: kotlin.String) : GameRecapScoringSummaryProResponse {
+        val localVarResponse = getGameRecapScoringSummaryProWithHttpInfo(videoId = videoId)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GetGameRecapTeamStatsResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GameRecapScoringSummaryProResponse
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -234,31 +312,31 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
     }
 
     /**
-     * GET /api/v1/client/game-recap/{gameId}/team-stats
-     * Get the Game Recap Team Stats for a specific Game.
-     * Retrieves a statistical summary for both the home and away teams in a specific game. The response includes key offensive and first-down metrics, allowing clients to analyze game efficiency, offensive output, and team balance between rushing and passing plays.
-     * @param gameId 
-     * @return ApiResponse<GetGameRecapTeamStatsResponse?>
+     * GET /api/v1/client/game-recap/{videoId}/scoring-summary-pro
+     * Get the Game Recap Scoring Summary Pro for a specific Game.
+     * Retrieves the full pro scoring summary for a specific game with drive context and players involved for each scoring play.
+     * @param videoId 
+     * @return ApiResponse<GameRecapScoringSummaryProResponse?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun getGameRecapTeamStatsWithHttpInfo(gameId: kotlin.String) : ApiResponse<GetGameRecapTeamStatsResponse?> {
-        val localVariableConfig = getGameRecapTeamStatsRequestConfig(gameId = gameId)
+    fun getGameRecapScoringSummaryProWithHttpInfo(videoId: kotlin.String) : ApiResponse<GameRecapScoringSummaryProResponse?> {
+        val localVariableConfig = getGameRecapScoringSummaryProRequestConfig(videoId = videoId)
 
-        return request<Unit, GetGameRecapTeamStatsResponse>(
+        return request<Unit, GameRecapScoringSummaryProResponse>(
             localVariableConfig
         )
     }
 
     /**
-     * To obtain the request config of the operation getGameRecapTeamStats
+     * To obtain the request config of the operation getGameRecapScoringSummaryPro
      *
-     * @param gameId 
+     * @param videoId 
      * @return RequestConfig
      */
-    fun getGameRecapTeamStatsRequestConfig(gameId: kotlin.String) : RequestConfig<Unit> {
+    fun getGameRecapScoringSummaryProRequestConfig(videoId: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -266,7 +344,80 @@ open class GameRecapApi(basePath: kotlin.String = defaultBasePath, client: Call.
 
         return RequestConfig(
             method = RequestMethod.GET,
-            path = "/api/v1/client/game-recap/{gameId}/team-stats".replace("{"+"gameId"+"}", encodeURIComponent(gameId.toString())),
+            path = "/api/v1/client/game-recap/{videoId}/scoring-summary-pro".replace("{"+"videoId"+"}", encodeURIComponent(videoId.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * GET /api/v1/client/game-recap/{videoId}/team-stats
+     * Get the Game Recap Team Stats for a specific Game.
+     * Retrieves a detailed statistical breakdown for both the home and away teams, covering offense, defense, and special teams performance.
+     * @param videoId 
+     * @return GameRecapTeamStatsResponse
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    fun getGameRecapTeamStats(videoId: kotlin.String) : GameRecapTeamStatsResponse {
+        val localVarResponse = getGameRecapTeamStatsWithHttpInfo(videoId = videoId)
+
+        return when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GameRecapTeamStatsResponse
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * GET /api/v1/client/game-recap/{videoId}/team-stats
+     * Get the Game Recap Team Stats for a specific Game.
+     * Retrieves a detailed statistical breakdown for both the home and away teams, covering offense, defense, and special teams performance.
+     * @param videoId 
+     * @return ApiResponse<GameRecapTeamStatsResponse?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    fun getGameRecapTeamStatsWithHttpInfo(videoId: kotlin.String) : ApiResponse<GameRecapTeamStatsResponse?> {
+        val localVariableConfig = getGameRecapTeamStatsRequestConfig(videoId = videoId)
+
+        return request<Unit, GameRecapTeamStatsResponse>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation getGameRecapTeamStats
+     *
+     * @param videoId 
+     * @return RequestConfig
+     */
+    fun getGameRecapTeamStatsRequestConfig(videoId: kotlin.String) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/json"
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/api/v1/client/game-recap/{videoId}/team-stats".replace("{"+"videoId"+"}", encodeURIComponent(videoId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,

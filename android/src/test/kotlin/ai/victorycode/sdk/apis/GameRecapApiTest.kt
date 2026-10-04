@@ -27,36 +27,57 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import ai.victorycode.sdk.apis.GameRecapApi
-import ai.victorycode.sdk.models.GetGameRecapScoreResponse
-import ai.victorycode.sdk.models.GetGameRecapScoringSummaryResponse
-import ai.victorycode.sdk.models.GetGameRecapTeamStatsResponse
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.GameBoxScoreResponseDto
+import ai.victorycode.sdk.models.GameRecapScoringSummaryProResponse
+import ai.victorycode.sdk.models.GameRecapScoringSummaryResponse
+import ai.victorycode.sdk.models.GameRecapTeamStatsResponse
+import ai.victorycode.sdk.models.GameScoreResponse
+import ai.victorycode.sdk.models.NotFoundErrorResponseDto
+import ai.victorycode.sdk.models.UnauthorizedErrorResponseDto
 
 class GameRecapApiTest : ShouldSpec() {
     init {
         // uncomment below to create an instance of GameRecapApi
         //val apiInstance = GameRecapApi()
 
+        // to test getGameRecapGameBoxScore
+        should("test getGameRecapGameBoxScore") {
+            // uncomment below to test getGameRecapGameBoxScore
+            //val videoId : kotlin.String = videoId_example // kotlin.String | 
+            //val result : GameBoxScoreResponseDto = apiInstance.getGameRecapGameBoxScore(videoId)
+            //result shouldBe ("TODO")
+        }
+
         // to test getGameRecapScore
         should("test getGameRecapScore") {
             // uncomment below to test getGameRecapScore
-            //val gameId : kotlin.String = gameId_example // kotlin.String | 
-            //val result : GetGameRecapScoreResponse = apiInstance.getGameRecapScore(gameId)
+            //val videoId : kotlin.String = videoId_example // kotlin.String | 
+            //val result : GameScoreResponse = apiInstance.getGameRecapScore(videoId)
             //result shouldBe ("TODO")
         }
 
         // to test getGameRecapScoringSummary
         should("test getGameRecapScoringSummary") {
             // uncomment below to test getGameRecapScoringSummary
-            //val gameId : kotlin.String = gameId_example // kotlin.String | 
-            //val result : GetGameRecapScoringSummaryResponse = apiInstance.getGameRecapScoringSummary(gameId)
+            //val videoId : kotlin.String = videoId_example // kotlin.String | 
+            //val result : GameRecapScoringSummaryResponse = apiInstance.getGameRecapScoringSummary(videoId)
+            //result shouldBe ("TODO")
+        }
+
+        // to test getGameRecapScoringSummaryPro
+        should("test getGameRecapScoringSummaryPro") {
+            // uncomment below to test getGameRecapScoringSummaryPro
+            //val videoId : kotlin.String = videoId_example // kotlin.String | 
+            //val result : GameRecapScoringSummaryProResponse = apiInstance.getGameRecapScoringSummaryPro(videoId)
             //result shouldBe ("TODO")
         }
 
         // to test getGameRecapTeamStats
         should("test getGameRecapTeamStats") {
             // uncomment below to test getGameRecapTeamStats
-            //val gameId : kotlin.String = gameId_example // kotlin.String | 
-            //val result : GetGameRecapTeamStatsResponse = apiInstance.getGameRecapTeamStats(gameId)
+            //val videoId : kotlin.String = videoId_example // kotlin.String | 
+            //val result : GameRecapTeamStatsResponse = apiInstance.getGameRecapTeamStats(videoId)
             //result shouldBe ("TODO")
         }
 

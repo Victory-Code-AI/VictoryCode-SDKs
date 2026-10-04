@@ -27,8 +27,12 @@ import java.io.IOException
 import okhttp3.Call
 import okhttp3.HttpUrl
 
-import ai.victorycode.sdk.models.GetUploadStatusResponse
-import ai.victorycode.sdk.models.UploadVideoAndCreateGameResponse
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.CompleteMultipartUploadDto
+import ai.victorycode.sdk.models.CompleteMultipartUploadResponseDto
+import ai.victorycode.sdk.models.GetPartsPresignUrlResponseDto
+import ai.victorycode.sdk.models.InitiateMultipartUploadDto
+import ai.victorycode.sdk.models.InitiateMultipartUploadResponseDto
 
 import com.squareup.moshi.Json
 
@@ -55,11 +59,11 @@ open class UploadsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     }
 
     /**
-     * GET /api/v1/client/uploads/{uploadId}
-     * Video file upload status
-     * This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.
-     * @param uploadId 
-     * @return GetUploadStatusResponse
+     * POST /api/v1/client/complete-upload
+     * Complete a multipart upload to S3
+     * 
+     * @param completeMultipartUploadDto 
+     * @return CompleteMultipartUploadResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -68,11 +72,11 @@ open class UploadsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getUploadStatus(uploadId: kotlin.String) : GetUploadStatusResponse {
-        val localVarResponse = getUploadStatusWithHttpInfo(uploadId = uploadId)
+    fun completeMultipartUpload(completeMultipartUploadDto: CompleteMultipartUploadDto) : CompleteMultipartUploadResponseDto {
+        val localVarResponse = completeMultipartUploadWithHttpInfo(completeMultipartUploadDto = completeMultipartUploadDto)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GetUploadStatusResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as CompleteMultipartUploadResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -87,39 +91,40 @@ open class UploadsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     }
 
     /**
-     * GET /api/v1/client/uploads/{uploadId}
-     * Video file upload status
-     * This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.
-     * @param uploadId 
-     * @return ApiResponse<GetUploadStatusResponse?>
+     * POST /api/v1/client/complete-upload
+     * Complete a multipart upload to S3
+     * 
+     * @param completeMultipartUploadDto 
+     * @return ApiResponse<CompleteMultipartUploadResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun getUploadStatusWithHttpInfo(uploadId: kotlin.String) : ApiResponse<GetUploadStatusResponse?> {
-        val localVariableConfig = getUploadStatusRequestConfig(uploadId = uploadId)
+    fun completeMultipartUploadWithHttpInfo(completeMultipartUploadDto: CompleteMultipartUploadDto) : ApiResponse<CompleteMultipartUploadResponseDto?> {
+        val localVariableConfig = completeMultipartUploadRequestConfig(completeMultipartUploadDto = completeMultipartUploadDto)
 
-        return request<Unit, GetUploadStatusResponse>(
+        return request<CompleteMultipartUploadDto, CompleteMultipartUploadResponseDto>(
             localVariableConfig
         )
     }
 
     /**
-     * To obtain the request config of the operation getUploadStatus
+     * To obtain the request config of the operation completeMultipartUpload
      *
-     * @param uploadId 
+     * @param completeMultipartUploadDto 
      * @return RequestConfig
      */
-    fun getUploadStatusRequestConfig(uploadId: kotlin.String) : RequestConfig<Unit> {
-        val localVariableBody = null
+    fun completeMultipartUploadRequestConfig(completeMultipartUploadDto: CompleteMultipartUploadDto) : RequestConfig<CompleteMultipartUploadDto> {
+        val localVariableBody = completeMultipartUploadDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
         localVariableHeaders["Accept"] = "application/json"
 
         return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/api/v1/client/uploads/{uploadId}".replace("{"+"uploadId"+"}", encodeURIComponent(uploadId.toString())),
+            method = RequestMethod.POST,
+            path = "/api/v1/client/complete-upload",
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,
@@ -128,17 +133,12 @@ open class UploadsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     }
 
     /**
-     * POST /api/v1/client/uploads
-     * Upload video and create new game
-     * This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.
-     * @param name 
-     * @param video 
-     * @param homeTeam ObjectId of home team
-     * @param awayTeam ObjectId of away team
-     * @param venue 
-     * @param location 
-     * @param description  (optional)
-     * @return UploadVideoAndCreateGameResponse
+     * GET /api/v1/client/upload-presigned-url
+     * Get a presigned URL for a specific part of a multipart upload
+     * 
+     * @param uploadId 
+     * @param partNumber 
+     * @return GetPartsPresignUrlResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -147,11 +147,11 @@ open class UploadsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun uploadVideoAndCreateGame(name: kotlin.String, video: java.io.File, homeTeam: kotlin.String, awayTeam: kotlin.String, venue: kotlin.String, location: kotlin.String, description: kotlin.String? = null) : UploadVideoAndCreateGameResponse {
-        val localVarResponse = uploadVideoAndCreateGameWithHttpInfo(name = name, video = video, homeTeam = homeTeam, awayTeam = awayTeam, venue = venue, location = location, description = description)
+    fun getPresignedUrl(uploadId: kotlin.String, partNumber: java.math.BigDecimal) : GetPartsPresignUrlResponseDto {
+        val localVarResponse = getPresignedUrlWithHttpInfo(uploadId = uploadId, partNumber = partNumber)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as UploadVideoAndCreateGameResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GetPartsPresignUrlResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -166,58 +166,119 @@ open class UploadsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fa
     }
 
     /**
-     * POST /api/v1/client/uploads
-     * Upload video and create new game
-     * This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.
-     * @param name 
-     * @param video 
-     * @param homeTeam ObjectId of home team
-     * @param awayTeam ObjectId of away team
-     * @param venue 
-     * @param location 
-     * @param description  (optional)
-     * @return ApiResponse<UploadVideoAndCreateGameResponse?>
+     * GET /api/v1/client/upload-presigned-url
+     * Get a presigned URL for a specific part of a multipart upload
+     * 
+     * @param uploadId 
+     * @param partNumber 
+     * @return ApiResponse<GetPartsPresignUrlResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun uploadVideoAndCreateGameWithHttpInfo(name: kotlin.String, video: java.io.File, homeTeam: kotlin.String, awayTeam: kotlin.String, venue: kotlin.String, location: kotlin.String, description: kotlin.String?) : ApiResponse<UploadVideoAndCreateGameResponse?> {
-        val localVariableConfig = uploadVideoAndCreateGameRequestConfig(name = name, video = video, homeTeam = homeTeam, awayTeam = awayTeam, venue = venue, location = location, description = description)
+    fun getPresignedUrlWithHttpInfo(uploadId: kotlin.String, partNumber: java.math.BigDecimal) : ApiResponse<GetPartsPresignUrlResponseDto?> {
+        val localVariableConfig = getPresignedUrlRequestConfig(uploadId = uploadId, partNumber = partNumber)
 
-        return request<Map<String, PartConfig<*>>, UploadVideoAndCreateGameResponse>(
+        return request<Unit, GetPartsPresignUrlResponseDto>(
             localVariableConfig
         )
     }
 
     /**
-     * To obtain the request config of the operation uploadVideoAndCreateGame
+     * To obtain the request config of the operation getPresignedUrl
      *
-     * @param name 
-     * @param video 
-     * @param homeTeam ObjectId of home team
-     * @param awayTeam ObjectId of away team
-     * @param venue 
-     * @param location 
-     * @param description  (optional)
+     * @param uploadId 
+     * @param partNumber 
      * @return RequestConfig
      */
-    fun uploadVideoAndCreateGameRequestConfig(name: kotlin.String, video: java.io.File, homeTeam: kotlin.String, awayTeam: kotlin.String, venue: kotlin.String, location: kotlin.String, description: kotlin.String?) : RequestConfig<Map<String, PartConfig<*>>> {
-        val localVariableBody = mapOf(
-            "name" to PartConfig(body = name, headers = mutableMapOf()),
-            "video" to PartConfig(body = video, headers = mutableMapOf()),
-            "homeTeam" to PartConfig(body = homeTeam, headers = mutableMapOf()),
-            "awayTeam" to PartConfig(body = awayTeam, headers = mutableMapOf()),
-            "venue" to PartConfig(body = venue, headers = mutableMapOf()),
-            "location" to PartConfig(body = location, headers = mutableMapOf()),
-            "description" to PartConfig(body = description, headers = mutableMapOf()),)
+    fun getPresignedUrlRequestConfig(uploadId: kotlin.String, partNumber: java.math.BigDecimal) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
+            .apply {
+                put("uploadId", listOf(uploadId.toString()))
+                put("partNumber", listOf(partNumber.toString()))
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/json"
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/api/v1/client/upload-presigned-url",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * POST /api/v1/client/initiate-upload
+     * Initiate a multipart upload to S3 for a large file
+     * 
+     * @param initiateMultipartUploadDto 
+     * @return InitiateMultipartUploadResponseDto
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    fun initiateUpload(initiateMultipartUploadDto: InitiateMultipartUploadDto) : InitiateMultipartUploadResponseDto {
+        val localVarResponse = initiateUploadWithHttpInfo(initiateMultipartUploadDto = initiateMultipartUploadDto)
+
+        return when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as InitiateMultipartUploadResponseDto
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * POST /api/v1/client/initiate-upload
+     * Initiate a multipart upload to S3 for a large file
+     * 
+     * @param initiateMultipartUploadDto 
+     * @return ApiResponse<InitiateMultipartUploadResponseDto?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    fun initiateUploadWithHttpInfo(initiateMultipartUploadDto: InitiateMultipartUploadDto) : ApiResponse<InitiateMultipartUploadResponseDto?> {
+        val localVariableConfig = initiateUploadRequestConfig(initiateMultipartUploadDto = initiateMultipartUploadDto)
+
+        return request<InitiateMultipartUploadDto, InitiateMultipartUploadResponseDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation initiateUpload
+     *
+     * @param initiateMultipartUploadDto 
+     * @return RequestConfig
+     */
+    fun initiateUploadRequestConfig(initiateMultipartUploadDto: InitiateMultipartUploadDto) : RequestConfig<InitiateMultipartUploadDto> {
+        val localVariableBody = initiateMultipartUploadDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
         localVariableHeaders["Accept"] = "application/json"
 
         return RequestConfig(
             method = RequestMethod.POST,
-            path = "/api/v1/client/uploads",
+            path = "/api/v1/client/initiate-upload",
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,

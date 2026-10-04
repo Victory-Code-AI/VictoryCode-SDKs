@@ -14,37 +14,79 @@ open class UploadsAPI {
     }
 
     /**
-     Video file upload status
+     Complete a multipart upload to S3
      
-     - parameter uploadId: (path)  
-     - returns: GetUploadStatusResponse
+     - parameter completeMultipartUploadDto: (body)  
+     - returns: CompleteMultipartUploadResponseDto
      */
-    open func getUploadStatus(uploadId: String) async throws(ErrorResponse) -> GetUploadStatusResponse {
-        return try await getUploadStatusWithRequestBuilder(uploadId: uploadId).execute().body
+    open func completeMultipartUpload(completeMultipartUploadDto: CompleteMultipartUploadDto) async throws(ErrorResponse) -> CompleteMultipartUploadResponseDto {
+        return try await completeMultipartUploadWithRequestBuilder(completeMultipartUploadDto: completeMultipartUploadDto).execute().body
     }
 
     /**
-     Video file upload status
-     - GET /api/v1/client/uploads/{uploadId}
-     - This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     Complete a multipart upload to S3
+     - POST /api/v1/client/complete-upload
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter uploadId: (path)  
-     - returns: RequestBuilder<GetUploadStatusResponse> 
+       - name: Client-App-Id
+     - parameter completeMultipartUploadDto: (body)  
+     - returns: RequestBuilder<CompleteMultipartUploadResponseDto> 
      */
-    open func getUploadStatusWithRequestBuilder(uploadId: String) -> RequestBuilder<GetUploadStatusResponse> {
-        var localVariablePath = "/api/v1/client/uploads/{uploadId}"
-        let uploadIdPreEscape = "\(APIHelper.mapValueToPathItem(uploadId))"
-        let uploadIdPostEscape = uploadIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{uploadId}", with: uploadIdPostEscape, options: .literal, range: nil)
+    open func completeMultipartUploadWithRequestBuilder(completeMultipartUploadDto: CompleteMultipartUploadDto) -> RequestBuilder<CompleteMultipartUploadResponseDto> {
+        let localVariablePath = "/api/v1/client/complete-upload"
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: completeMultipartUploadDto, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: (any Sendable)?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<CompleteMultipartUploadResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Get a presigned URL for a specific part of a multipart upload
+     
+     - parameter uploadId: (query)  
+     - parameter partNumber: (query)  
+     - returns: GetPartsPresignUrlResponseDto
+     */
+    open func getPresignedUrl(uploadId: String, partNumber: Double) async throws(ErrorResponse) -> GetPartsPresignUrlResponseDto {
+        return try await getPresignedUrlWithRequestBuilder(uploadId: uploadId, partNumber: partNumber).execute().body
+    }
+
+    /**
+     Get a presigned URL for a specific part of a multipart upload
+     - GET /api/v1/client/upload-presigned-url
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
+     - API Key:
+       - type: apiKey App-Id (HEADER)
+       - name: Client-App-Id
+     - parameter uploadId: (query)  
+     - parameter partNumber: (query)  
+     - returns: RequestBuilder<GetPartsPresignUrlResponseDto> 
+     */
+    open func getPresignedUrlWithRequestBuilder(uploadId: String, partNumber: Double) -> RequestBuilder<GetPartsPresignUrlResponseDto> {
+        let localVariablePath = "/api/v1/client/upload-presigned-url"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: any Sendable]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "uploadId": (wrappedValue: uploadId.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "partNumber": (wrappedValue: partNumber.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: (any Sendable)?] = [
             :
@@ -52,71 +94,47 @@ open class UploadsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<GetUploadStatusResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GetPartsPresignUrlResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
 
     /**
-     Upload video and create new game
+     Initiate a multipart upload to S3 for a large file
      
-     - parameter name: (form)  
-     - parameter video: (form)  
-     - parameter homeTeam: (form) ObjectId of home team 
-     - parameter awayTeam: (form) ObjectId of away team 
-     - parameter venue: (form)  
-     - parameter location: (form)  
-     - parameter description: (form)  (optional)
-     - returns: UploadVideoAndCreateGameResponse
+     - parameter initiateMultipartUploadDto: (body)  
+     - returns: InitiateMultipartUploadResponseDto
      */
-    open func uploadVideoAndCreateGame(name: String, video: URL, homeTeam: String, awayTeam: String, venue: String, location: String, description: String? = nil) async throws(ErrorResponse) -> UploadVideoAndCreateGameResponse {
-        return try await uploadVideoAndCreateGameWithRequestBuilder(name: name, video: video, homeTeam: homeTeam, awayTeam: awayTeam, venue: venue, location: location, description: description).execute().body
+    open func initiateUpload(initiateMultipartUploadDto: InitiateMultipartUploadDto) async throws(ErrorResponse) -> InitiateMultipartUploadResponseDto {
+        return try await initiateUploadWithRequestBuilder(initiateMultipartUploadDto: initiateMultipartUploadDto).execute().body
     }
 
     /**
-     Upload video and create new game
-     - POST /api/v1/client/uploads
-     - This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     Initiate a multipart upload to S3 for a large file
+     - POST /api/v1/client/initiate-upload
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter name: (form)  
-     - parameter video: (form)  
-     - parameter homeTeam: (form) ObjectId of home team 
-     - parameter awayTeam: (form) ObjectId of away team 
-     - parameter venue: (form)  
-     - parameter location: (form)  
-     - parameter description: (form)  (optional)
-     - returns: RequestBuilder<UploadVideoAndCreateGameResponse> 
+       - name: Client-App-Id
+     - parameter initiateMultipartUploadDto: (body)  
+     - returns: RequestBuilder<InitiateMultipartUploadResponseDto> 
      */
-    open func uploadVideoAndCreateGameWithRequestBuilder(name: String, video: URL, homeTeam: String, awayTeam: String, venue: String, location: String, description: String? = nil) -> RequestBuilder<UploadVideoAndCreateGameResponse> {
-        let localVariablePath = "/api/v1/client/uploads"
+    open func initiateUploadWithRequestBuilder(initiateMultipartUploadDto: InitiateMultipartUploadDto) -> RequestBuilder<InitiateMultipartUploadResponseDto> {
+        let localVariablePath = "/api/v1/client/initiate-upload"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
-        let localVariableFormParams: [String: (any Sendable)?] = [
-            "name": name.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "video": video.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "homeTeam": homeTeam.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "awayTeam": awayTeam.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "venue": venue.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "location": location.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "description": description?.asParameter(codableHelper: apiConfiguration.codableHelper),
-        ]
-
-        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
-        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: initiateMultipartUploadDto, codableHelper: apiConfiguration.codableHelper)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: (any Sendable)?] = [
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<UploadVideoAndCreateGameResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<InitiateMultipartUploadResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }

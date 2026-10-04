@@ -27,8 +27,15 @@ import java.io.IOException
 import okhttp3.Call
 import okhttp3.HttpUrl
 
-import ai.victorycode.sdk.models.CreateTeamResponse
-import ai.victorycode.sdk.models.DeleteTeamResponse
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.ConflictErrorResponseDto
+import ai.victorycode.sdk.models.CreateTeamDto
+import ai.victorycode.sdk.models.DeleteResponseDto
+import ai.victorycode.sdk.models.ListTeamPaginatedResponseDto
+import ai.victorycode.sdk.models.NotFoundErrorResponseDto
+import ai.victorycode.sdk.models.SingleTeamResponseDto
+import ai.victorycode.sdk.models.UnauthorizedErrorResponseDto
+import ai.victorycode.sdk.models.UpdateTeamDto
 
 import com.squareup.moshi.Json
 
@@ -57,14 +64,9 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * POST /api/v1/client/teams
      * Create a new team
-     * Creates a new team record in the Tactix system. This endpoint allows clients to define a new team with key details such as name, short name, sport type, classification, mascot(s), and logo. Once created, the team can be referenced in other modules such as Games, Plays, or Game Recaps.
-     * @param name 
-     * @param sport (This can only be one of football,rugby,golf,soccer,nfl)
-     * @param shortName 
-     * @param mascots Array of Mascot IDs (must not be empty)
-     * @param classification Classification ID
-     * @param teamLogo  (optional)
-     * @return CreateTeamResponse
+     * Registers a new team in the system, including its name, short name, sport, mascots, classification.
+     * @param createTeamDto 
+     * @return SingleTeamResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -73,11 +75,11 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun createTeam(name: kotlin.String, sport: kotlin.String, shortName: kotlin.String, mascots: kotlin.String, classification: kotlin.String, teamLogo: java.io.File? = null) : CreateTeamResponse {
-        val localVarResponse = createTeamWithHttpInfo(name = name, sport = sport, shortName = shortName, mascots = mascots, classification = classification, teamLogo = teamLogo)
+    fun createTeam(createTeamDto: CreateTeamDto) : SingleTeamResponseDto {
+        val localVarResponse = createTeamWithHttpInfo(createTeamDto = createTeamDto)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as CreateTeamResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as SingleTeamResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -94,23 +96,18 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * POST /api/v1/client/teams
      * Create a new team
-     * Creates a new team record in the Tactix system. This endpoint allows clients to define a new team with key details such as name, short name, sport type, classification, mascot(s), and logo. Once created, the team can be referenced in other modules such as Games, Plays, or Game Recaps.
-     * @param name 
-     * @param sport (This can only be one of football,rugby,golf,soccer,nfl)
-     * @param shortName 
-     * @param mascots Array of Mascot IDs (must not be empty)
-     * @param classification Classification ID
-     * @param teamLogo  (optional)
-     * @return ApiResponse<CreateTeamResponse?>
+     * Registers a new team in the system, including its name, short name, sport, mascots, classification.
+     * @param createTeamDto 
+     * @return ApiResponse<SingleTeamResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun createTeamWithHttpInfo(name: kotlin.String, sport: kotlin.String, shortName: kotlin.String, mascots: kotlin.String, classification: kotlin.String, teamLogo: java.io.File?) : ApiResponse<CreateTeamResponse?> {
-        val localVariableConfig = createTeamRequestConfig(name = name, sport = sport, shortName = shortName, mascots = mascots, classification = classification, teamLogo = teamLogo)
+    fun createTeamWithHttpInfo(createTeamDto: CreateTeamDto) : ApiResponse<SingleTeamResponseDto?> {
+        val localVariableConfig = createTeamRequestConfig(createTeamDto = createTeamDto)
 
-        return request<Map<String, PartConfig<*>>, CreateTeamResponse>(
+        return request<CreateTeamDto, SingleTeamResponseDto>(
             localVariableConfig
         )
     }
@@ -118,24 +115,14 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * To obtain the request config of the operation createTeam
      *
-     * @param name 
-     * @param sport (This can only be one of football,rugby,golf,soccer,nfl)
-     * @param shortName 
-     * @param mascots Array of Mascot IDs (must not be empty)
-     * @param classification Classification ID
-     * @param teamLogo  (optional)
+     * @param createTeamDto 
      * @return RequestConfig
      */
-    fun createTeamRequestConfig(name: kotlin.String, sport: kotlin.String, shortName: kotlin.String, mascots: kotlin.String, classification: kotlin.String, teamLogo: java.io.File?) : RequestConfig<Map<String, PartConfig<*>>> {
-        val localVariableBody = mapOf(
-            "name" to PartConfig(body = name, headers = mutableMapOf()),
-            "sport" to PartConfig(body = sport, headers = mutableMapOf()),
-            "shortName" to PartConfig(body = shortName, headers = mutableMapOf()),
-            "mascots" to PartConfig(body = mascots, headers = mutableMapOf()),
-            "classification" to PartConfig(body = classification, headers = mutableMapOf()),
-            "teamLogo" to PartConfig(body = teamLogo, headers = mutableMapOf()),)
+    fun createTeamRequestConfig(createTeamDto: CreateTeamDto) : RequestConfig<CreateTeamDto> {
+        val localVariableBody = createTeamDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
         localVariableHeaders["Accept"] = "application/json"
 
         return RequestConfig(
@@ -151,9 +138,9 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * DELETE /api/v1/client/teams/{id}
      * Delete a team
-     * Deletes a specific team from the Tactix system using its unique id. This operation permanently removes the team record and its related metadata from the client’s accessible data scope. It should be used with caution, as deleted teams cannot be restored via the API.
+     * Permanently deletes a team record from the system.
      * @param id 
-     * @return DeleteTeamResponse
+     * @return DeleteResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -162,11 +149,11 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun deleteTeam(id: kotlin.String) : DeleteTeamResponse {
+    fun deleteTeam(id: kotlin.String) : DeleteResponseDto {
         val localVarResponse = deleteTeamWithHttpInfo(id = id)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as DeleteTeamResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as DeleteResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -183,18 +170,18 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * DELETE /api/v1/client/teams/{id}
      * Delete a team
-     * Deletes a specific team from the Tactix system using its unique id. This operation permanently removes the team record and its related metadata from the client’s accessible data scope. It should be used with caution, as deleted teams cannot be restored via the API.
+     * Permanently deletes a team record from the system.
      * @param id 
-     * @return ApiResponse<DeleteTeamResponse?>
+     * @return ApiResponse<DeleteResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun deleteTeamWithHttpInfo(id: kotlin.String) : ApiResponse<DeleteTeamResponse?> {
+    fun deleteTeamWithHttpInfo(id: kotlin.String) : ApiResponse<DeleteResponseDto?> {
         val localVariableConfig = deleteTeamRequestConfig(id = id)
 
-        return request<Unit, DeleteTeamResponse>(
+        return request<Unit, DeleteResponseDto>(
             localVariableConfig
         )
     }
@@ -224,10 +211,12 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * GET /api/v1/client/teams
      * Get teams
-     * Retrieves a paginated list of all teams available to the authenticated client. Each team object includes its name, short name, sport type, associated mascots, classification details, logo, and timestamps. This endpoint is typically used for team directories, selection lists, or administrative dashboards that require viewing multiple teams at once.
-     * @param limit  (optional)
-     * @param page  (optional)
-     * @return kotlin.String
+     * Retrieves a paginated list of all teams belonging to the client. Supports filters for search, sport, and state.
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @param search  (optional)
+     * @param state  (optional)
+     * @return ListTeamPaginatedResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -236,11 +225,11 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listTeams(limit: kotlin.Int? = null, page: kotlin.Int? = null) : kotlin.String {
-        val localVarResponse = listTeamsWithHttpInfo(limit = limit, page = page)
+    fun getTeams(limit: java.math.BigDecimal? = java.math.BigDecimal("50"), offset: java.math.BigDecimal? = java.math.BigDecimal("0"), search: kotlin.String? = null, state: kotlin.String? = null) : ListTeamPaginatedResponseDto {
+        val localVarResponse = getTeamsWithHttpInfo(limit = limit, offset = offset, search = search, state = state)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.String
+            ResponseType.Success -> (localVarResponse as Success<*>).data as ListTeamPaginatedResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -257,43 +246,53 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * GET /api/v1/client/teams
      * Get teams
-     * Retrieves a paginated list of all teams available to the authenticated client. Each team object includes its name, short name, sport type, associated mascots, classification details, logo, and timestamps. This endpoint is typically used for team directories, selection lists, or administrative dashboards that require viewing multiple teams at once.
-     * @param limit  (optional)
-     * @param page  (optional)
-     * @return ApiResponse<kotlin.String?>
+     * Retrieves a paginated list of all teams belonging to the client. Supports filters for search, sport, and state.
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @param search  (optional)
+     * @param state  (optional)
+     * @return ApiResponse<ListTeamPaginatedResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun listTeamsWithHttpInfo(limit: kotlin.Int?, page: kotlin.Int?) : ApiResponse<kotlin.String?> {
-        val localVariableConfig = listTeamsRequestConfig(limit = limit, page = page)
+    fun getTeamsWithHttpInfo(limit: java.math.BigDecimal?, offset: java.math.BigDecimal?, search: kotlin.String?, state: kotlin.String?) : ApiResponse<ListTeamPaginatedResponseDto?> {
+        val localVariableConfig = getTeamsRequestConfig(limit = limit, offset = offset, search = search, state = state)
 
-        return request<Unit, kotlin.String>(
+        return request<Unit, ListTeamPaginatedResponseDto>(
             localVariableConfig
         )
     }
 
     /**
-     * To obtain the request config of the operation listTeams
+     * To obtain the request config of the operation getTeams
      *
-     * @param limit  (optional)
-     * @param page  (optional)
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @param search  (optional)
+     * @param state  (optional)
      * @return RequestConfig
      */
-    fun listTeamsRequestConfig(limit: kotlin.Int?, page: kotlin.Int?) : RequestConfig<Unit> {
+    fun getTeamsRequestConfig(limit: java.math.BigDecimal?, offset: java.math.BigDecimal?, search: kotlin.String?, state: kotlin.String?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
             .apply {
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
                 }
-                if (page != null) {
-                    put("page", listOf(page.toString()))
+                if (offset != null) {
+                    put("offset", listOf(offset.toString()))
+                }
+                if (search != null) {
+                    put("search", listOf(search.toString()))
+                }
+                if (state != null) {
+                    put("state", listOf(state.toString()))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "text/plain"
+        localVariableHeaders["Accept"] = "application/json"
 
         return RequestConfig(
             method = RequestMethod.GET,
@@ -308,15 +307,10 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * PATCH /api/v1/client/teams/{id}
      * Update a team
-     * Updates the information of an existing team identified by its unique id. This endpoint allows clients to modify team attributes such as name, short name, sport type, classification, mascots, coach, or logo. Upon successful update, the response returns the updated team object and a confirmation message.
+     * Updates the details of an existing team identified by its ID. Allows updating the name, short name, coach, logo, and other details.
      * @param id 
-     * @param name  (optional)
-     * @param sport (This can only be one of football,rugby,golf,soccer,nfl) (optional)
-     * @param shortName  (optional)
-     * @param teamLogo  (optional)
-     * @param mascots Array of Mascot IDs (must not be empty) (optional)
-     * @param classification Classification ID (optional)
-     * @return kotlin.String
+     * @param updateTeamDto 
+     * @return SingleTeamResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -325,11 +319,11 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun updateTeam(id: kotlin.String, name: kotlin.String? = null, sport: kotlin.String? = null, shortName: kotlin.String? = null, teamLogo: java.io.File? = null, mascots: kotlin.String? = null, classification: kotlin.String? = null) : kotlin.String {
-        val localVarResponse = updateTeamWithHttpInfo(id = id, name = name, sport = sport, shortName = shortName, teamLogo = teamLogo, mascots = mascots, classification = classification)
+    fun updateTeam(id: kotlin.String, updateTeamDto: UpdateTeamDto) : SingleTeamResponseDto {
+        val localVarResponse = updateTeamWithHttpInfo(id = id, updateTeamDto = updateTeamDto)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as kotlin.String
+            ResponseType.Success -> (localVarResponse as Success<*>).data as SingleTeamResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -346,24 +340,19 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     /**
      * PATCH /api/v1/client/teams/{id}
      * Update a team
-     * Updates the information of an existing team identified by its unique id. This endpoint allows clients to modify team attributes such as name, short name, sport type, classification, mascots, coach, or logo. Upon successful update, the response returns the updated team object and a confirmation message.
+     * Updates the details of an existing team identified by its ID. Allows updating the name, short name, coach, logo, and other details.
      * @param id 
-     * @param name  (optional)
-     * @param sport (This can only be one of football,rugby,golf,soccer,nfl) (optional)
-     * @param shortName  (optional)
-     * @param teamLogo  (optional)
-     * @param mascots Array of Mascot IDs (must not be empty) (optional)
-     * @param classification Classification ID (optional)
-     * @return ApiResponse<kotlin.String?>
+     * @param updateTeamDto 
+     * @return ApiResponse<SingleTeamResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun updateTeamWithHttpInfo(id: kotlin.String, name: kotlin.String?, sport: kotlin.String?, shortName: kotlin.String?, teamLogo: java.io.File?, mascots: kotlin.String?, classification: kotlin.String?) : ApiResponse<kotlin.String?> {
-        val localVariableConfig = updateTeamRequestConfig(id = id, name = name, sport = sport, shortName = shortName, teamLogo = teamLogo, mascots = mascots, classification = classification)
+    fun updateTeamWithHttpInfo(id: kotlin.String, updateTeamDto: UpdateTeamDto) : ApiResponse<SingleTeamResponseDto?> {
+        val localVariableConfig = updateTeamRequestConfig(id = id, updateTeamDto = updateTeamDto)
 
-        return request<Map<String, PartConfig<*>>, kotlin.String>(
+        return request<UpdateTeamDto, SingleTeamResponseDto>(
             localVariableConfig
         )
     }
@@ -372,25 +361,15 @@ open class TeamsApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
      * To obtain the request config of the operation updateTeam
      *
      * @param id 
-     * @param name  (optional)
-     * @param sport (This can only be one of football,rugby,golf,soccer,nfl) (optional)
-     * @param shortName  (optional)
-     * @param teamLogo  (optional)
-     * @param mascots Array of Mascot IDs (must not be empty) (optional)
-     * @param classification Classification ID (optional)
+     * @param updateTeamDto 
      * @return RequestConfig
      */
-    fun updateTeamRequestConfig(id: kotlin.String, name: kotlin.String?, sport: kotlin.String?, shortName: kotlin.String?, teamLogo: java.io.File?, mascots: kotlin.String?, classification: kotlin.String?) : RequestConfig<Map<String, PartConfig<*>>> {
-        val localVariableBody = mapOf(
-            "name" to PartConfig(body = name, headers = mutableMapOf()),
-            "sport" to PartConfig(body = sport, headers = mutableMapOf()),
-            "shortName" to PartConfig(body = shortName, headers = mutableMapOf()),
-            "teamLogo" to PartConfig(body = teamLogo, headers = mutableMapOf()),
-            "mascots" to PartConfig(body = mascots, headers = mutableMapOf()),
-            "classification" to PartConfig(body = classification, headers = mutableMapOf()),)
+    fun updateTeamRequestConfig(id: kotlin.String, updateTeamDto: UpdateTeamDto) : RequestConfig<UpdateTeamDto> {
+        val localVariableBody = updateTeamDto
         val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf("Content-Type" to "multipart/form-data")
-        localVariableHeaders["Accept"] = "text/plain"
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json"
 
         return RequestConfig(
             method = RequestMethod.PATCH,

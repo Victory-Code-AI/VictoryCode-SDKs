@@ -4,18 +4,65 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getUploadStatus**](UploadsAPI.md#getuploadstatus) | **GET** /api/v1/client/uploads/{uploadId} | Video file upload status
-[**uploadVideoAndCreateGame**](UploadsAPI.md#uploadvideoandcreategame) | **POST** /api/v1/client/uploads | Upload video and create new game
+[**completeMultipartUpload**](UploadsAPI.md#completemultipartupload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3
+[**getPresignedUrl**](UploadsAPI.md#getpresignedurl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload
+[**initiateUpload**](UploadsAPI.md#initiateupload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file
 
 
-# **getUploadStatus**
+# **completeMultipartUpload**
 ```swift
-    open class func getUploadStatus(uploadId: String, completion: @escaping (_ data: GetUploadStatusResponse?, _ error: Error?) -> Void)
+    open class func completeMultipartUpload(completeMultipartUploadDto: CompleteMultipartUploadDto, completion: @escaping (_ data: CompleteMultipartUploadResponseDto?, _ error: Error?) -> Void)
 ```
 
-Video file upload status
+Complete a multipart upload to S3
 
-This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import VictoryCodeSDK
+
+let completeMultipartUploadDto = CompleteMultipartUploadDto(uploadId: "uploadId_example", parts: [CompletedPartDto(partNumber: 123, eTag: "eTag_example")]) // CompleteMultipartUploadDto | 
+
+// Complete a multipart upload to S3
+UploadsAPI.completeMultipartUpload(completeMultipartUploadDto: completeMultipartUploadDto) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **completeMultipartUploadDto** | [**CompleteMultipartUploadDto**](CompleteMultipartUploadDto.md) |  | 
+
+### Return type
+
+[**CompleteMultipartUploadResponseDto**](CompleteMultipartUploadResponseDto.md)
+
+### Authorization
+
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getPresignedUrl**
+```swift
+    open class func getPresignedUrl(uploadId: String, partNumber: Double, completion: @escaping (_ data: GetPartsPresignUrlResponseDto?, _ error: Error?) -> Void)
+```
+
+Get a presigned URL for a specific part of a multipart upload
 
 ### Example
 ```swift
@@ -23,9 +70,10 @@ This endpoint retrieves the status of an uploaded video file. It allows clients 
 import VictoryCodeSDK
 
 let uploadId = "uploadId_example" // String | 
+let partNumber = 987 // Double | 
 
-// Video file upload status
-UploadsAPI.getUploadStatus(uploadId: uploadId) { (response, error) in
+// Get a presigned URL for a specific part of a multipart upload
+UploadsAPI.getPresignedUrl(uploadId: uploadId, partNumber: partNumber) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -42,14 +90,15 @@ UploadsAPI.getUploadStatus(uploadId: uploadId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uploadId** | **String** |  | 
+ **partNumber** | **Double** |  | 
 
 ### Return type
 
-[**GetUploadStatusResponse**](GetUploadStatusResponse.md)
+[**GetPartsPresignUrlResponseDto**](GetPartsPresignUrlResponseDto.md)
 
 ### Authorization
 
-[AppToken](../README.md#AppToken), [AppId](../README.md#AppId)
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
 
 ### HTTP request headers
 
@@ -58,30 +107,22 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **uploadVideoAndCreateGame**
+# **initiateUpload**
 ```swift
-    open class func uploadVideoAndCreateGame(name: String, video: URL, homeTeam: String, awayTeam: String, venue: String, location: String, description: String? = nil, completion: @escaping (_ data: UploadVideoAndCreateGameResponse?, _ error: Error?) -> Void)
+    open class func initiateUpload(initiateMultipartUploadDto: InitiateMultipartUploadDto, completion: @escaping (_ data: InitiateMultipartUploadResponseDto?, _ error: Error?) -> Void)
 ```
 
-Upload video and create new game
-
-This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.
+Initiate a multipart upload to S3 for a large file
 
 ### Example
 ```swift
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import VictoryCodeSDK
 
-let name = "name_example" // String | 
-let video = URL(string: "https://example.com")! // URL | 
-let homeTeam = "homeTeam_example" // String | ObjectId of home team
-let awayTeam = "awayTeam_example" // String | ObjectId of away team
-let venue = "venue_example" // String | 
-let location = "location_example" // String | 
-let description = "description_example" // String |  (optional)
+let initiateMultipartUploadDto = InitiateMultipartUploadDto(filename: "filename_example", mimetype: "mimetype_example", gameId: "gameId_example") // InitiateMultipartUploadDto | 
 
-// Upload video and create new game
-UploadsAPI.uploadVideoAndCreateGame(name: name, video: video, homeTeam: homeTeam, awayTeam: awayTeam, venue: venue, location: location, description: description) { (response, error) in
+// Initiate a multipart upload to S3 for a large file
+UploadsAPI.initiateUpload(initiateMultipartUploadDto: initiateMultipartUploadDto) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -97,25 +138,19 @@ UploadsAPI.uploadVideoAndCreateGame(name: name, video: video, homeTeam: homeTeam
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **String** |  | 
- **video** | **URL** |  | 
- **homeTeam** | **String** | ObjectId of home team | 
- **awayTeam** | **String** | ObjectId of away team | 
- **venue** | **String** |  | 
- **location** | **String** |  | 
- **description** | **String** |  | [optional] 
+ **initiateMultipartUploadDto** | [**InitiateMultipartUploadDto**](InitiateMultipartUploadDto.md) |  | 
 
 ### Return type
 
-[**UploadVideoAndCreateGameResponse**](UploadVideoAndCreateGameResponse.md)
+[**InitiateMultipartUploadResponseDto**](InitiateMultipartUploadResponseDto.md)
 
 ### Authorization
 
-[AppToken](../README.md#AppToken), [AppId](../README.md#AppId)
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

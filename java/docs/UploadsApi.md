@@ -4,17 +4,16 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getUploadStatus**](UploadsApi.md#getUploadStatus) | **GET** /api/v1/client/uploads/{uploadId} | Video file upload status |
-| [**uploadVideoAndCreateGame**](UploadsApi.md#uploadVideoAndCreateGame) | **POST** /api/v1/client/uploads | Upload video and create new game |
+| [**completeMultipartUpload**](UploadsApi.md#completeMultipartUpload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3 |
+| [**getPresignedUrl**](UploadsApi.md#getPresignedUrl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload |
+| [**initiateUpload**](UploadsApi.md#initiateUpload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file |
 
 
-<a id="getUploadStatus"></a>
-# **getUploadStatus**
-> GetUploadStatusResponse getUploadStatus(uploadId)
+<a id="completeMultipartUpload"></a>
+# **completeMultipartUpload**
+> CompleteMultipartUploadResponseDto completeMultipartUpload(completeMultipartUploadDto)
 
-Video file upload status
-
-This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.
+Complete a multipart upload to S3
 
 ### Example
 ```java
@@ -31,25 +30,96 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://sandbox.api.tactixai.com");
     
-    // Configure API key authorization: AppToken
-    ApiKeyAuth AppToken = (ApiKeyAuth) defaultClient.getAuthentication("AppToken");
-    AppToken.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //AppToken.setApiKeyPrefix("Token");
+    // Configure HTTP bearer authorization: Client-App-Token
+    HttpBearerAuth Client-App-Token = (HttpBearerAuth) defaultClient.getAuthentication("Client-App-Token");
+    Client-App-Token.setBearerToken("BEARER TOKEN");
 
-    // Configure API key authorization: AppId
-    ApiKeyAuth AppId = (ApiKeyAuth) defaultClient.getAuthentication("AppId");
-    AppId.setApiKey("YOUR API KEY");
+    // Configure API key authorization: Client-App-Id
+    ApiKeyAuth Client-App-Id = (ApiKeyAuth) defaultClient.getAuthentication("Client-App-Id");
+    Client-App-Id.setApiKey("YOUR API KEY");
     // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //AppId.setApiKeyPrefix("Token");
+    //Client-App-Id.setApiKeyPrefix("Token");
+
+    UploadsApi apiInstance = new UploadsApi(defaultClient);
+    CompleteMultipartUploadDto completeMultipartUploadDto = new CompleteMultipartUploadDto(); // CompleteMultipartUploadDto | 
+    try {
+      CompleteMultipartUploadResponseDto result = apiInstance.completeMultipartUpload(completeMultipartUploadDto);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling UploadsApi#completeMultipartUpload");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **completeMultipartUploadDto** | [**CompleteMultipartUploadDto**](CompleteMultipartUploadDto.md)|  | |
+
+### Return type
+
+[**CompleteMultipartUploadResponseDto**](CompleteMultipartUploadResponseDto.md)
+
+### Authorization
+
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Presigned URL for part generated successfully. |  -  |
+| **400** | Validation error |  -  |
+
+<a id="getPresignedUrl"></a>
+# **getPresignedUrl**
+> GetPartsPresignUrlResponseDto getPresignedUrl(uploadId, partNumber)
+
+Get a presigned URL for a specific part of a multipart upload
+
+### Example
+```java
+// Import classes:
+import ai.victorycode.sdk.ApiClient;
+import ai.victorycode.sdk.ApiException;
+import ai.victorycode.sdk.Configuration;
+import ai.victorycode.sdk.auth.*;
+import ai.victorycode.sdk.models.*;
+import ai.victorycode.sdk.api.UploadsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://sandbox.api.tactixai.com");
+    
+    // Configure HTTP bearer authorization: Client-App-Token
+    HttpBearerAuth Client-App-Token = (HttpBearerAuth) defaultClient.getAuthentication("Client-App-Token");
+    Client-App-Token.setBearerToken("BEARER TOKEN");
+
+    // Configure API key authorization: Client-App-Id
+    ApiKeyAuth Client-App-Id = (ApiKeyAuth) defaultClient.getAuthentication("Client-App-Id");
+    Client-App-Id.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //Client-App-Id.setApiKeyPrefix("Token");
 
     UploadsApi apiInstance = new UploadsApi(defaultClient);
     String uploadId = "uploadId_example"; // String | 
+    BigDecimal partNumber = new BigDecimal(78); // BigDecimal | 
     try {
-      GetUploadStatusResponse result = apiInstance.getUploadStatus(uploadId);
+      GetPartsPresignUrlResponseDto result = apiInstance.getPresignedUrl(uploadId, partNumber);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling UploadsApi#getUploadStatus");
+      System.err.println("Exception when calling UploadsApi#getPresignedUrl");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -64,14 +134,15 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **uploadId** | **String**|  | |
+| **partNumber** | **BigDecimal**|  | |
 
 ### Return type
 
-[**GetUploadStatusResponse**](GetUploadStatusResponse.md)
+[**GetPartsPresignUrlResponseDto**](GetPartsPresignUrlResponseDto.md)
 
 ### Authorization
 
-[AppToken](../README.md#AppToken), [AppId](../README.md#AppId)
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
 
 ### HTTP request headers
 
@@ -81,15 +152,14 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | OK |  -  |
+| **200** | Presigned URL for part generated successfully. |  -  |
+| **400** | Validation error |  -  |
 
-<a id="uploadVideoAndCreateGame"></a>
-# **uploadVideoAndCreateGame**
-> UploadVideoAndCreateGameResponse uploadVideoAndCreateGame(name, video, homeTeam, awayTeam, venue, location, description)
+<a id="initiateUpload"></a>
+# **initiateUpload**
+> InitiateMultipartUploadResponseDto initiateUpload(initiateMultipartUploadDto)
 
-Upload video and create new game
-
-This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.
+Initiate a multipart upload to S3 for a large file
 
 ### Example
 ```java
@@ -106,31 +176,23 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://sandbox.api.tactixai.com");
     
-    // Configure API key authorization: AppToken
-    ApiKeyAuth AppToken = (ApiKeyAuth) defaultClient.getAuthentication("AppToken");
-    AppToken.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //AppToken.setApiKeyPrefix("Token");
+    // Configure HTTP bearer authorization: Client-App-Token
+    HttpBearerAuth Client-App-Token = (HttpBearerAuth) defaultClient.getAuthentication("Client-App-Token");
+    Client-App-Token.setBearerToken("BEARER TOKEN");
 
-    // Configure API key authorization: AppId
-    ApiKeyAuth AppId = (ApiKeyAuth) defaultClient.getAuthentication("AppId");
-    AppId.setApiKey("YOUR API KEY");
+    // Configure API key authorization: Client-App-Id
+    ApiKeyAuth Client-App-Id = (ApiKeyAuth) defaultClient.getAuthentication("Client-App-Id");
+    Client-App-Id.setApiKey("YOUR API KEY");
     // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //AppId.setApiKeyPrefix("Token");
+    //Client-App-Id.setApiKeyPrefix("Token");
 
     UploadsApi apiInstance = new UploadsApi(defaultClient);
-    String name = "name_example"; // String | 
-    File video = new File("/path/to/file"); // File | 
-    String homeTeam = "homeTeam_example"; // String | ObjectId of home team
-    String awayTeam = "awayTeam_example"; // String | ObjectId of away team
-    String venue = "venue_example"; // String | 
-    String location = "location_example"; // String | 
-    String description = "description_example"; // String | 
+    InitiateMultipartUploadDto initiateMultipartUploadDto = new InitiateMultipartUploadDto(); // InitiateMultipartUploadDto | 
     try {
-      UploadVideoAndCreateGameResponse result = apiInstance.uploadVideoAndCreateGame(name, video, homeTeam, awayTeam, venue, location, description);
+      InitiateMultipartUploadResponseDto result = apiInstance.initiateUpload(initiateMultipartUploadDto);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling UploadsApi#uploadVideoAndCreateGame");
+      System.err.println("Exception when calling UploadsApi#initiateUpload");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -144,29 +206,24 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **name** | **String**|  | |
-| **video** | **File**|  | |
-| **homeTeam** | **String**| ObjectId of home team | |
-| **awayTeam** | **String**| ObjectId of away team | |
-| **venue** | **String**|  | |
-| **location** | **String**|  | |
-| **description** | **String**|  | [optional] |
+| **initiateMultipartUploadDto** | [**InitiateMultipartUploadDto**](InitiateMultipartUploadDto.md)|  | |
 
 ### Return type
 
-[**UploadVideoAndCreateGameResponse**](UploadVideoAndCreateGameResponse.md)
+[**InitiateMultipartUploadResponseDto**](InitiateMultipartUploadResponseDto.md)
 
 ### Authorization
 
-[AppToken](../README.md#AppToken), [AppId](../README.md#AppId)
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | Created |  -  |
+| **201** | Multipart upload initiated successfully, returns uploadId. |  -  |
+| **400** | Validation error |  -  |
 

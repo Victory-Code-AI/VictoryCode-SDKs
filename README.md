@@ -44,8 +44,9 @@ level, an explicit version such as `1.0.0`, or force a release after a generator
 
 ## Quickstart
 
-All examples call the token endpoint with the App ID and App Secret, then call a protected
-endpoint with the App ID and the issued token.
+Every SDK uses the same flow: exchange the **App ID** and **App Secret** for a short-lived
+access token (`GET /api/v1/client/auth/token`, valid for `expiresIn` seconds), then call
+the API with the **App ID** and the token as `Authorization: Bearer <token>`.
 
 > **Keep the App Secret on servers.** For browser and mobile apps, issue tokens from your
 > backend and pass only the token (and App ID) to the client.
@@ -55,36 +56,37 @@ endpoint with the App ID and the issued token.
 ```python
 import os
 import victorycode_sdk
-from victorycode_sdk.api.auth_api import AuthApi
+from victorycode_sdk.api.authentication_api import AuthenticationApi
 from victorycode_sdk.api.game_recap_api import GameRecapApi
 
 config = victorycode_sdk.Configuration(
     host="https://sandbox.api.tactixai.com",
-    api_key={"AppId": os.environ["VICTORYCODE_APP_ID"], "AppSecret": os.environ["VICTORYCODE_APP_SECRET"]},
+    api_key={"Client-App-Id": os.environ["VICTORYCODE_APP_ID"], "AppSecret": os.environ["VICTORYCODE_APP_SECRET"]},
 )
 with victorycode_sdk.ApiClient(config) as client:
-    config.api_key["AppToken"] = AuthApi(client).generate_access_token().token
-    recap = GameRecapApi(client).get_game_recap_score("68d153065f30985c10760a68")
-    print(recap.data.home_team.total_score)
+    config.access_token = AuthenticationApi(client).get_access_token().access_token
+    score = GameRecapApi(client).get_game_recap_score("YOUR_VIDEO_ID")
 ```
 
 ### JavaScript / TypeScript
 
 ```ts
-import { AuthApi, Configuration, GameRecapApi } from "@victorycode/sdk";
+import { AuthenticationApi, Configuration, GameRecapApi } from "@victorycode/sdk";
 
-// apiKey is called with the header name of each security scheme.
+// apiKey is called with each API key's header name.
 const credentials: Record<string, string> = {
   "App-Id": process.env.VICTORYCODE_APP_ID!,
-  "app-secret": process.env.VICTORYCODE_APP_SECRET!,
+  "App-Secret": process.env.VICTORYCODE_APP_SECRET!,
 };
+let accessToken = "";
 const config = new Configuration({
   basePath: "https://sandbox.api.tactixai.com",
   apiKey: (name) => credentials[name],
+  accessToken: () => accessToken,
 });
 
-credentials["App-Token"] = (await new AuthApi(config).generateAccessToken()).token!;
-const recap = await new GameRecapApi(config).getGameRecapScore({ gameId: "68d153065f30985c10760a68" });
+accessToken = (await new AuthenticationApi(config).getAccessToken()).accessToken;
+const score = await new GameRecapApi(config).getGameRecapScore({ videoId: "YOUR_VIDEO_ID" });
 ```
 
 ### Java
@@ -92,50 +94,48 @@ const recap = await new GameRecapApi(config).getGameRecapScore({ gameId: "68d153
 ```java
 import ai.victorycode.sdk.ApiClient;
 import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.api.AuthApi;
+import ai.victorycode.sdk.api.AuthenticationApi;
 import ai.victorycode.sdk.api.GameRecapApi;
 import ai.victorycode.sdk.auth.ApiKeyAuth;
-import ai.victorycode.sdk.model.GetGameRecapScoreResponse;
+import ai.victorycode.sdk.auth.HttpBearerAuth;
+import ai.victorycode.sdk.model.GameScoreResponse;
 
 ApiClient client = Configuration.getDefaultApiClient();
 client.setBasePath("https://sandbox.api.tactixai.com");
-((ApiKeyAuth) client.getAuthentication("AppId")).setApiKey(System.getenv("VICTORYCODE_APP_ID"));
+((ApiKeyAuth) client.getAuthentication("Client-App-Id")).setApiKey(System.getenv("VICTORYCODE_APP_ID"));
 ((ApiKeyAuth) client.getAuthentication("AppSecret")).setApiKey(System.getenv("VICTORYCODE_APP_SECRET"));
 
-String token = new AuthApi(client).generateAccessToken().getToken();
-((ApiKeyAuth) client.getAuthentication("AppToken")).setApiKey(token);
-GetGameRecapScoreResponse recap = new GameRecapApi(client).getGameRecapScore("68d153065f30985c10760a68");
+String token = new AuthenticationApi(client).getAccessToken().getAccessToken();
+((HttpBearerAuth) client.getAuthentication("Client-App-Token")).setBearerToken(token);
+GameScoreResponse score = new GameRecapApi(client).getGameRecapScore("YOUR_VIDEO_ID");
 ```
 
 ### Kotlin / Android
 
 ```kotlin
-import ai.victorycode.sdk.apis.AuthApi
 import ai.victorycode.sdk.apis.GameRecapApi
 import ai.victorycode.sdk.infrastructure.ApiClient
 
-val basePath = "https://sandbox.api.tactixai.com"
-// Keys are the header names of the security schemes. Calls are blocking:
-// on Android, run them off the main thread (e.g. withContext(Dispatchers.IO)).
+// Calls are blocking: on Android run them off the main thread (e.g. Dispatchers.IO).
 ApiClient.apiKey["App-Id"] = appId
-ApiClient.apiKey["App-Token"] = tokenFromYourBackend
-val recap = GameRecapApi(basePath).getGameRecapScore("68d153065f30985c10760a68")
+ApiClient.accessToken = tokenFromYourBackend
+val score = GameRecapApi("https://sandbox.api.tactixai.com").getGameRecapScore("YOUR_VIDEO_ID")
 ```
 
 ### PHP
 
 ```php
-use VictoryCode\SDK\Api\AuthApi;
+use VictoryCode\SDK\Api\AuthenticationApi;
 use VictoryCode\SDK\Api\GameRecapApi;
 use VictoryCode\SDK\Configuration;
 
 $config = Configuration::getDefaultConfiguration()
     ->setHost('https://sandbox.api.tactixai.com')
     ->setApiKey('App-Id', getenv('VICTORYCODE_APP_ID'))
-    ->setApiKey('app-secret', getenv('VICTORYCODE_APP_SECRET'));
+    ->setApiKey('App-Secret', getenv('VICTORYCODE_APP_SECRET'));
 
-$config->setApiKey('App-Token', (new AuthApi(null, $config))->generateAccessToken()->getToken());
-$recap = (new GameRecapApi(null, $config))->getGameRecapScore('68d153065f30985c10760a68');
+$config->setAccessToken((new AuthenticationApi(null, $config))->getAccessToken()->getAccessToken());
+$score = (new GameRecapApi(null, $config))->getGameRecapScore('YOUR_VIDEO_ID');
 ```
 
 ### Swift
@@ -146,8 +146,8 @@ import VictoryCodeSDK
 
 let config = VictoryCodeSDKAPIConfiguration.shared
 config.basePath = "https://sandbox.api.tactixai.com"
-config.customHeaders = ["App-Id": appId, "App-Token": tokenFromYourBackend]
-let recap = try await GameRecapAPI().getGameRecapScore(gameId: "68d153065f30985c10760a68")
+config.customHeaders = ["App-Id": appId, "Authorization": "Bearer \(tokenFromYourBackend)"]
+let score = try await GameRecapAPI().getGameRecapScore(videoId: "YOUR_VIDEO_ID")
 ```
 
 Each folder's own `README.md` and `docs/` list every API class, method and model.

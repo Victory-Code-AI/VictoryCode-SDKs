@@ -4,17 +4,71 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**getUploadStatus**](UploadsApi.md#getUploadStatus) | **GET** /api/v1/client/uploads/{uploadId} | Video file upload status |
-| [**uploadVideoAndCreateGame**](UploadsApi.md#uploadVideoAndCreateGame) | **POST** /api/v1/client/uploads | Upload video and create new game |
+| [**completeMultipartUpload**](UploadsApi.md#completeMultipartUpload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3 |
+| [**getPresignedUrl**](UploadsApi.md#getPresignedUrl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload |
+| [**initiateUpload**](UploadsApi.md#initiateUpload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file |
 
 
-<a id="getUploadStatus"></a>
-# **getUploadStatus**
-> GetUploadStatusResponse getUploadStatus(uploadId)
+<a id="completeMultipartUpload"></a>
+# **completeMultipartUpload**
+> CompleteMultipartUploadResponseDto completeMultipartUpload(completeMultipartUploadDto)
 
-Video file upload status
+Complete a multipart upload to S3
 
-This endpoint retrieves the status of an uploaded video file. It allows clients to check if their upload is still in progress, successfully processed, or failed.
+### Example
+```kotlin
+// Import classes:
+//import ai.victorycode.sdk.infrastructure.*
+//import ai.victorycode.sdk.models.*
+
+val apiInstance = UploadsApi()
+val completeMultipartUploadDto : CompleteMultipartUploadDto =  // CompleteMultipartUploadDto | 
+try {
+    val result : CompleteMultipartUploadResponseDto = apiInstance.completeMultipartUpload(completeMultipartUploadDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UploadsApi#completeMultipartUpload")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UploadsApi#completeMultipartUpload")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **completeMultipartUploadDto** | [**CompleteMultipartUploadDto**](CompleteMultipartUploadDto.md)|  | |
+
+### Return type
+
+[**CompleteMultipartUploadResponseDto**](CompleteMultipartUploadResponseDto.md)
+
+### Authorization
+
+
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
+    ApiClient.apiKey["App-Id"] = ""
+    ApiClient.apiKeyPrefix["App-Id"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a id="getPresignedUrl"></a>
+# **getPresignedUrl**
+> GetPartsPresignUrlResponseDto getPresignedUrl(uploadId, partNumber)
+
+Get a presigned URL for a specific part of a multipart upload
 
 ### Example
 ```kotlin
@@ -24,14 +78,15 @@ This endpoint retrieves the status of an uploaded video file. It allows clients 
 
 val apiInstance = UploadsApi()
 val uploadId : kotlin.String = uploadId_example // kotlin.String | 
+val partNumber : java.math.BigDecimal = 8.14 // java.math.BigDecimal | 
 try {
-    val result : GetUploadStatusResponse = apiInstance.getUploadStatus(uploadId)
+    val result : GetPartsPresignUrlResponseDto = apiInstance.getPresignedUrl(uploadId, partNumber)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling UploadsApi#getUploadStatus")
+    println("4xx response calling UploadsApi#getPresignedUrl")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling UploadsApi#getUploadStatus")
+    println("5xx response calling UploadsApi#getPresignedUrl")
     e.printStackTrace()
 }
 ```
@@ -40,18 +95,24 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **uploadId** | **kotlin.String**|  | |
+| **partNumber** | **java.math.BigDecimal**|  | |
 
 ### Return type
 
-[**GetUploadStatusResponse**](GetUploadStatusResponse.md)
+[**GetPartsPresignUrlResponseDto**](GetPartsPresignUrlResponseDto.md)
 
 ### Authorization
 
 
-Configure AppToken:
-    ApiClient.apiKey["App-Token"] = ""
-    ApiClient.apiKeyPrefix["App-Token"] = ""
-Configure AppId:
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
     ApiClient.apiKey["App-Id"] = ""
     ApiClient.apiKeyPrefix["App-Id"] = ""
 
@@ -60,13 +121,11 @@ Configure AppId:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a id="uploadVideoAndCreateGame"></a>
-# **uploadVideoAndCreateGame**
-> UploadVideoAndCreateGameResponse uploadVideoAndCreateGame(name, video, homeTeam, awayTeam, venue, location, description)
+<a id="initiateUpload"></a>
+# **initiateUpload**
+> InitiateMultipartUploadResponseDto initiateUpload(initiateMultipartUploadDto)
 
-Upload video and create new game
-
-This endpoint is used to upload a game video along with its metadata (teams, venue, location, etc.). Once uploaded, the video will be processed by the Tactix AI platform to generate clips, stats, and summaries.
+Initiate a multipart upload to S3 for a large file
 
 ### Example
 ```kotlin
@@ -75,21 +134,15 @@ This endpoint is used to upload a game video along with its metadata (teams, ven
 //import ai.victorycode.sdk.models.*
 
 val apiInstance = UploadsApi()
-val name : kotlin.String = name_example // kotlin.String | 
-val video : java.io.File = BINARY_DATA_HERE // java.io.File | 
-val homeTeam : kotlin.String = homeTeam_example // kotlin.String | ObjectId of home team
-val awayTeam : kotlin.String = awayTeam_example // kotlin.String | ObjectId of away team
-val venue : kotlin.String = venue_example // kotlin.String | 
-val location : kotlin.String = location_example // kotlin.String | 
-val description : kotlin.String = description_example // kotlin.String | 
+val initiateMultipartUploadDto : InitiateMultipartUploadDto =  // InitiateMultipartUploadDto | 
 try {
-    val result : UploadVideoAndCreateGameResponse = apiInstance.uploadVideoAndCreateGame(name, video, homeTeam, awayTeam, venue, location, description)
+    val result : InitiateMultipartUploadResponseDto = apiInstance.initiateUpload(initiateMultipartUploadDto)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling UploadsApi#uploadVideoAndCreateGame")
+    println("4xx response calling UploadsApi#initiateUpload")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling UploadsApi#uploadVideoAndCreateGame")
+    println("5xx response calling UploadsApi#initiateUpload")
     e.printStackTrace()
 }
 ```
@@ -97,30 +150,29 @@ try {
 ### Parameters
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **name** | **kotlin.String**|  | |
-| **video** | **java.io.File**|  | |
-| **homeTeam** | **kotlin.String**| ObjectId of home team | |
-| **awayTeam** | **kotlin.String**| ObjectId of away team | |
-| **venue** | **kotlin.String**|  | |
-| **location** | **kotlin.String**|  | |
-| **description** | **kotlin.String**|  | [optional] |
+| **initiateMultipartUploadDto** | [**InitiateMultipartUploadDto**](InitiateMultipartUploadDto.md)|  | |
 
 ### Return type
 
-[**UploadVideoAndCreateGameResponse**](UploadVideoAndCreateGameResponse.md)
+[**InitiateMultipartUploadResponseDto**](InitiateMultipartUploadResponseDto.md)
 
 ### Authorization
 
 
-Configure AppToken:
-    ApiClient.apiKey["App-Token"] = ""
-    ApiClient.apiKeyPrefix["App-Token"] = ""
-Configure AppId:
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
     ApiClient.apiKey["App-Id"] = ""
     ApiClient.apiKeyPrefix["App-Id"] = ""
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
+ - **Content-Type**: application/json
  - **Accept**: application/json
 

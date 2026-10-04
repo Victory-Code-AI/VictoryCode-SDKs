@@ -14,7 +14,7 @@
  * version pinned in openapitools.json (fetched by @openapitools/openapi-generator-cli).
  */
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
@@ -65,6 +65,65 @@ function generate(name, language, workDir) {
   const overrides = path.join(ROOT, "overrides", name);
   if (existsSync(overrides)) {
     cpSync(overrides, output, { recursive: true });
+  }
+
+  applyPackageMetadata(name, output);
+}
+
+/** Ships the repository LICENSE in every package and sets license/author fields the generators leave out. */
+function applyPackageMetadata(name, output) {
+  cpSync(path.join(ROOT, "LICENSE"), path.join(output, "LICENSE"));
+
+  if (name === "python") {
+    const file = path.join(output, "pyproject.toml");
+    const pyproject = readFileSync(file, "utf8")
+      .replace(/authors = \[[\s\S]*?\]\n/, 'authors = [\n  {name = "Victory Code"},\n]\nlicense = "MIT"\n');
+    if (!pyproject.includes('license = "MIT"')) throw new Error("Could not set the license in python/pyproject.toml");
+    writeFileSync(file, pyproject);
+
+    const setupFile = path.join(output, "setup.py");
+    if (existsSync(setupFile)) {
+      const setup = readFileSync(setupFile, "utf8")
+        .replace(/author="[^"]*",/, 'author="Victory Code",')
+        .replace(/\n\s*author_email="[^"]*",/, "")
+        .replace(/(url="[^"]*",)/, '$1\n    license="MIT",');
+      writeFileSync(setupFile, setup);
+    }
+  }
+
+  if (name === "javascript") {
+    const file = path.join(output, "package.json");
+    const pkg = JSON.parse(readFileSync(file, "utf8"));
+    pkg.license = "MIT";
+    pkg.author = "Victory Code";
+    pkg.repository = { type: "git", url: `git+${config.repository.url}.git`, directory: "javascript" };
+    writeFileSync(file, `${JSON.stringify(pkg, null, 2)}\n`);
+    for (const dir of ["apis", "models"]) pruneUnusedImports(path.join(output, "src", dir));
+  }
+}
+
+/**
+ * typescript-fetch imports every converter (and mapValues) of each model a
+ * file mentions, whether or not the file uses them. Drop the named imports a
+ * file never references so static analysis stays quiet.
+ */
+function pruneUnusedImports(dir) {
+  const namedImport = /^import \{([^}]*)\} from '([^']+)';\n/gm;
+  for (const entry of readdirSync(dir)) {
+    if (!entry.endsWith(".ts")) continue;
+    const file = path.join(dir, entry);
+    const source = readFileSync(file, "utf8");
+    const body = source.replace(namedImport, "");
+    const pruned = source.replace(namedImport, (statement, list, from) => {
+      const names = list.split(",").map((item) => item.trim()).filter(Boolean);
+      const used = names.filter((item) => new RegExp(`\\b${item.replace(/^type\s+/, "")}\\b`).test(body));
+      if (used.length === names.length) return statement;
+      if (used.length === 0) return "";
+      return list.includes("\n")
+        ? `import {\n${used.map((item) => `    ${item},`).join("\n")}\n} from '${from}';\n`
+        : `import { ${used.join(", ")} } from '${from}';\n`;
+    });
+    if (pruned !== source) writeFileSync(file, pruned);
   }
 }
 

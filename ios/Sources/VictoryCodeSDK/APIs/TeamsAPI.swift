@@ -16,60 +16,40 @@ open class TeamsAPI {
     /**
      Create a new team
      
-     - parameter name: (form)  
-     - parameter sport: (form) (This can only be one of football,rugby,golf,soccer,nfl) 
-     - parameter shortName: (form)  
-     - parameter mascots: (form) Array of Mascot IDs (must not be empty) 
-     - parameter classification: (form) Classification ID 
-     - parameter teamLogo: (form)  (optional)
-     - returns: CreateTeamResponse
+     - parameter createTeamDto: (body)  
+     - returns: SingleTeamResponseDto
      */
-    open func createTeam(name: String, sport: String, shortName: String, mascots: String, classification: String, teamLogo: URL? = nil) async throws(ErrorResponse) -> CreateTeamResponse {
-        return try await createTeamWithRequestBuilder(name: name, sport: sport, shortName: shortName, mascots: mascots, classification: classification, teamLogo: teamLogo).execute().body
+    open func createTeam(createTeamDto: CreateTeamDto) async throws(ErrorResponse) -> SingleTeamResponseDto {
+        return try await createTeamWithRequestBuilder(createTeamDto: createTeamDto).execute().body
     }
 
     /**
      Create a new team
      - POST /api/v1/client/teams
-     - Creates a new team record in the Tactix system. This endpoint allows clients to define a new team with key details such as name, short name, sport type, classification, mascot(s), and logo. Once created, the team can be referenced in other modules such as Games, Plays, or Game Recaps.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     - Registers a new team in the system, including its name, short name, sport, mascots, classification.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter name: (form)  
-     - parameter sport: (form) (This can only be one of football,rugby,golf,soccer,nfl) 
-     - parameter shortName: (form)  
-     - parameter mascots: (form) Array of Mascot IDs (must not be empty) 
-     - parameter classification: (form) Classification ID 
-     - parameter teamLogo: (form)  (optional)
-     - returns: RequestBuilder<CreateTeamResponse> 
+       - name: Client-App-Id
+     - parameter createTeamDto: (body)  
+     - returns: RequestBuilder<SingleTeamResponseDto> 
      */
-    open func createTeamWithRequestBuilder(name: String, sport: String, shortName: String, mascots: String, classification: String, teamLogo: URL? = nil) -> RequestBuilder<CreateTeamResponse> {
+    open func createTeamWithRequestBuilder(createTeamDto: CreateTeamDto) -> RequestBuilder<SingleTeamResponseDto> {
         let localVariablePath = "/api/v1/client/teams"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
-        let localVariableFormParams: [String: (any Sendable)?] = [
-            "name": name.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "sport": sport.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "shortName": shortName.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "mascots": mascots.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "classification": classification.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "teamLogo": teamLogo?.asParameter(codableHelper: apiConfiguration.codableHelper),
-        ]
-
-        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
-        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: createTeamDto, codableHelper: apiConfiguration.codableHelper)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: (any Sendable)?] = [
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<CreateTeamResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleTeamResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
@@ -78,26 +58,26 @@ open class TeamsAPI {
      Delete a team
      
      - parameter id: (path)  
-     - returns: DeleteTeamResponse
+     - returns: DeleteResponseDto
      */
-    open func deleteTeam(id: String) async throws(ErrorResponse) -> DeleteTeamResponse {
+    open func deleteTeam(id: String) async throws(ErrorResponse) -> DeleteResponseDto {
         return try await deleteTeamWithRequestBuilder(id: id).execute().body
     }
 
     /**
      Delete a team
      - DELETE /api/v1/client/teams/{id}
-     - Deletes a specific team from the Tactix system using its unique id. This operation permanently removes the team record and its related metadata from the client’s accessible data scope. It should be used with caution, as deleted teams cannot be restored via the API.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     - Permanently deletes a team record from the system.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
+       - name: Client-App-Id
      - parameter id: (path)  
-     - returns: RequestBuilder<DeleteTeamResponse> 
+     - returns: RequestBuilder<DeleteResponseDto> 
      */
-    open func deleteTeamWithRequestBuilder(id: String) -> RequestBuilder<DeleteTeamResponse> {
+    open func deleteTeamWithRequestBuilder(id: String) -> RequestBuilder<DeleteResponseDto> {
         var localVariablePath = "/api/v1/client/teams/{id}"
         let idPreEscape = "\(APIHelper.mapValueToPathItem(id))"
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -113,7 +93,7 @@ open class TeamsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<DeleteTeamResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<DeleteResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
@@ -121,29 +101,33 @@ open class TeamsAPI {
     /**
      Get teams
      
-     - parameter limit: (query)  (optional)
-     - parameter page: (query)  (optional)
-     - returns: String
+     - parameter limit: (query) The number of results to return per page. (optional, default to 50)
+     - parameter offset: (query) The number of results to skip for pagination. (optional, default to 0)
+     - parameter search: (query)  (optional)
+     - parameter state: (query)  (optional)
+     - returns: ListTeamPaginatedResponseDto
      */
-    open func listTeams(limit: Int? = nil, page: Int? = nil) async throws(ErrorResponse) -> String {
-        return try await listTeamsWithRequestBuilder(limit: limit, page: page).execute().body
+    open func getTeams(limit: Double? = nil, offset: Double? = nil, search: String? = nil, state: String? = nil) async throws(ErrorResponse) -> ListTeamPaginatedResponseDto {
+        return try await getTeamsWithRequestBuilder(limit: limit, offset: offset, search: search, state: state).execute().body
     }
 
     /**
      Get teams
      - GET /api/v1/client/teams
-     - Retrieves a paginated list of all teams available to the authenticated client. Each team object includes its name, short name, sport type, associated mascots, classification details, logo, and timestamps. This endpoint is typically used for team directories, selection lists, or administrative dashboards that require viewing multiple teams at once.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     - Retrieves a paginated list of all teams belonging to the client. Supports filters for search, sport, and state.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter limit: (query)  (optional)
-     - parameter page: (query)  (optional)
-     - returns: RequestBuilder<String> 
+       - name: Client-App-Id
+     - parameter limit: (query) The number of results to return per page. (optional, default to 50)
+     - parameter offset: (query) The number of results to skip for pagination. (optional, default to 0)
+     - parameter search: (query)  (optional)
+     - parameter state: (query)  (optional)
+     - returns: RequestBuilder<ListTeamPaginatedResponseDto> 
      */
-    open func listTeamsWithRequestBuilder(limit: Int? = nil, page: Int? = nil) -> RequestBuilder<String> {
+    open func getTeamsWithRequestBuilder(limit: Double? = nil, offset: Double? = nil, search: String? = nil, state: String? = nil) -> RequestBuilder<ListTeamPaginatedResponseDto> {
         let localVariablePath = "/api/v1/client/teams"
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: any Sendable]? = nil
@@ -151,7 +135,9 @@ open class TeamsAPI {
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
         localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
             "limit": (wrappedValue: limit?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
-            "page": (wrappedValue: page?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "offset": (wrappedValue: offset?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "search": (wrappedValue: search?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
+            "state": (wrappedValue: state?.asParameter(codableHelper: apiConfiguration.codableHelper), isExplode: true),
         ])
 
         let localVariableNillableHeaders: [String: (any Sendable)?] = [
@@ -160,7 +146,7 @@ open class TeamsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<String>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListTeamPaginatedResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
@@ -169,64 +155,44 @@ open class TeamsAPI {
      Update a team
      
      - parameter id: (path)  
-     - parameter name: (form)  (optional)
-     - parameter sport: (form) (This can only be one of football,rugby,golf,soccer,nfl) (optional)
-     - parameter shortName: (form)  (optional)
-     - parameter teamLogo: (form)  (optional)
-     - parameter mascots: (form) Array of Mascot IDs (must not be empty) (optional)
-     - parameter classification: (form) Classification ID (optional)
-     - returns: String
+     - parameter updateTeamDto: (body)  
+     - returns: SingleTeamResponseDto
      */
-    open func updateTeam(id: String, name: String? = nil, sport: String? = nil, shortName: String? = nil, teamLogo: URL? = nil, mascots: String? = nil, classification: String? = nil) async throws(ErrorResponse) -> String {
-        return try await updateTeamWithRequestBuilder(id: id, name: name, sport: sport, shortName: shortName, teamLogo: teamLogo, mascots: mascots, classification: classification).execute().body
+    open func updateTeam(id: String, updateTeamDto: UpdateTeamDto) async throws(ErrorResponse) -> SingleTeamResponseDto {
+        return try await updateTeamWithRequestBuilder(id: id, updateTeamDto: updateTeamDto).execute().body
     }
 
     /**
      Update a team
      - PATCH /api/v1/client/teams/{id}
-     - Updates the information of an existing team identified by its unique id. This endpoint allows clients to modify team attributes such as name, short name, sport type, classification, mascots, coach, or logo. Upon successful update, the response returns the updated team object and a confirmation message.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     - Updates the details of an existing team identified by its ID. Allows updating the name, short name, coach, logo, and other details.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
+       - name: Client-App-Id
      - parameter id: (path)  
-     - parameter name: (form)  (optional)
-     - parameter sport: (form) (This can only be one of football,rugby,golf,soccer,nfl) (optional)
-     - parameter shortName: (form)  (optional)
-     - parameter teamLogo: (form)  (optional)
-     - parameter mascots: (form) Array of Mascot IDs (must not be empty) (optional)
-     - parameter classification: (form) Classification ID (optional)
-     - returns: RequestBuilder<String> 
+     - parameter updateTeamDto: (body)  
+     - returns: RequestBuilder<SingleTeamResponseDto> 
      */
-    open func updateTeamWithRequestBuilder(id: String, name: String? = nil, sport: String? = nil, shortName: String? = nil, teamLogo: URL? = nil, mascots: String? = nil, classification: String? = nil) -> RequestBuilder<String> {
+    open func updateTeamWithRequestBuilder(id: String, updateTeamDto: UpdateTeamDto) -> RequestBuilder<SingleTeamResponseDto> {
         var localVariablePath = "/api/v1/client/teams/{id}"
         let idPreEscape = "\(APIHelper.mapValueToPathItem(id))"
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
-        let localVariableFormParams: [String: (any Sendable)?] = [
-            "name": name?.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "sport": sport?.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "shortName": shortName?.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "teamLogo": teamLogo?.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "mascots": mascots?.asParameter(codableHelper: apiConfiguration.codableHelper),
-            "classification": classification?.asParameter(codableHelper: apiConfiguration.codableHelper),
-        ]
-
-        let localVariableNonNullParameters = APIHelper.rejectNil(localVariableFormParams)
-        let localVariableParameters = APIHelper.convertBoolToString(localVariableNonNullParameters)
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: updateTeamDto, codableHelper: apiConfiguration.codableHelper)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: (any Sendable)?] = [
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<String>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SingleTeamResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }

@@ -14,33 +14,33 @@ open class GameRecapAPI {
     }
 
     /**
-     Get the Game Recap Score for a specific Game
+     Get the Game Recap Game Box Score for a specific Game.
      
-     - parameter gameId: (path)  
-     - returns: GetGameRecapScoreResponse
+     - parameter videoId: (path)  
+     - returns: GameBoxScoreResponseDto
      */
-    open func getGameRecapScore(gameId: String) async throws(ErrorResponse) -> GetGameRecapScoreResponse {
-        return try await getGameRecapScoreWithRequestBuilder(gameId: gameId).execute().body
+    open func getGameRecapGameBoxScore(videoId: String) async throws(ErrorResponse) -> GameBoxScoreResponseDto {
+        return try await getGameRecapGameBoxScoreWithRequestBuilder(videoId: videoId).execute().body
     }
 
     /**
-     Get the Game Recap Score for a specific Game
-     - GET /api/v1/client/game-recap/{gameId}/score
-     - Retrieves the overall score for the specified game. This includes the final scoreline and also include period-by-period (quarters) breakdowns.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     Get the Game Recap Game Box Score for a specific Game.
+     - GET /api/v1/client/game-recap/{videoId}/game-box-score
+     - Retrieves full game box score stats for both teams and players for a specific game.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter gameId: (path)  
-     - returns: RequestBuilder<GetGameRecapScoreResponse> 
+       - name: Client-App-Id
+     - parameter videoId: (path)  
+     - returns: RequestBuilder<GameBoxScoreResponseDto> 
      */
-    open func getGameRecapScoreWithRequestBuilder(gameId: String) -> RequestBuilder<GetGameRecapScoreResponse> {
-        var localVariablePath = "/api/v1/client/game-recap/{gameId}/score"
-        let gameIdPreEscape = "\(APIHelper.mapValueToPathItem(gameId))"
-        let gameIdPostEscape = gameIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{gameId}", with: gameIdPostEscape, options: .literal, range: nil)
+    open func getGameRecapGameBoxScoreWithRequestBuilder(videoId: String) -> RequestBuilder<GameBoxScoreResponseDto> {
+        var localVariablePath = "/api/v1/client/game-recap/{videoId}/game-box-score"
+        let videoIdPreEscape = "\(APIHelper.mapValueToPathItem(videoId))"
+        let videoIdPostEscape = videoIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{videoId}", with: videoIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: any Sendable]? = nil
 
@@ -52,7 +52,51 @@ open class GameRecapAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<GetGameRecapScoreResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GameBoxScoreResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Get the Game Recap Score for a specific Game.
+     
+     - parameter videoId: (path)  
+     - returns: GameScoreResponse
+     */
+    open func getGameRecapScore(videoId: String) async throws(ErrorResponse) -> GameScoreResponse {
+        return try await getGameRecapScoreWithRequestBuilder(videoId: videoId).execute().body
+    }
+
+    /**
+     Get the Game Recap Score for a specific Game.
+     - GET /api/v1/client/game-recap/{videoId}/score
+     - Retrieves the final score and the score breakdown by quarter and overtime periods for both the home and away teams.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
+     - API Key:
+       - type: apiKey App-Id (HEADER)
+       - name: Client-App-Id
+     - parameter videoId: (path)  
+     - returns: RequestBuilder<GameScoreResponse> 
+     */
+    open func getGameRecapScoreWithRequestBuilder(videoId: String) -> RequestBuilder<GameScoreResponse> {
+        var localVariablePath = "/api/v1/client/game-recap/{videoId}/score"
+        let videoIdPreEscape = "\(APIHelper.mapValueToPathItem(videoId))"
+        let videoIdPostEscape = videoIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{videoId}", with: videoIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters: [String: any Sendable]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: (any Sendable)?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<GameScoreResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
@@ -60,31 +104,31 @@ open class GameRecapAPI {
     /**
      Get the Game Recap Scoring Summary for a specific Game.
      
-     - parameter gameId: (path)  
-     - returns: GetGameRecapScoringSummaryResponse
+     - parameter videoId: (path)  
+     - returns: GameRecapScoringSummaryResponse
      */
-    open func getGameRecapScoringSummary(gameId: String) async throws(ErrorResponse) -> GetGameRecapScoringSummaryResponse {
-        return try await getGameRecapScoringSummaryWithRequestBuilder(gameId: gameId).execute().body
+    open func getGameRecapScoringSummary(videoId: String) async throws(ErrorResponse) -> GameRecapScoringSummaryResponse {
+        return try await getGameRecapScoringSummaryWithRequestBuilder(videoId: videoId).execute().body
     }
 
     /**
      Get the Game Recap Scoring Summary for a specific Game.
-     - GET /api/v1/client/game-recap/{gameId}/scoring-summary
-     - Retrieves a chronological summary of all scoring plays for the specified game. Each record is linked to a playId, enabling clients to correlate the scoring event with detailed play data.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     - GET /api/v1/client/game-recap/{videoId}/scoring-summary
+     - Retrieves a chronological list of all scoring plays for a specific game, including details about the play, the drive, and the resulting score.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter gameId: (path)  
-     - returns: RequestBuilder<GetGameRecapScoringSummaryResponse> 
+       - name: Client-App-Id
+     - parameter videoId: (path)  
+     - returns: RequestBuilder<GameRecapScoringSummaryResponse> 
      */
-    open func getGameRecapScoringSummaryWithRequestBuilder(gameId: String) -> RequestBuilder<GetGameRecapScoringSummaryResponse> {
-        var localVariablePath = "/api/v1/client/game-recap/{gameId}/scoring-summary"
-        let gameIdPreEscape = "\(APIHelper.mapValueToPathItem(gameId))"
-        let gameIdPostEscape = gameIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{gameId}", with: gameIdPostEscape, options: .literal, range: nil)
+    open func getGameRecapScoringSummaryWithRequestBuilder(videoId: String) -> RequestBuilder<GameRecapScoringSummaryResponse> {
+        var localVariablePath = "/api/v1/client/game-recap/{videoId}/scoring-summary"
+        let videoIdPreEscape = "\(APIHelper.mapValueToPathItem(videoId))"
+        let videoIdPostEscape = videoIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{videoId}", with: videoIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: any Sendable]? = nil
 
@@ -96,7 +140,51 @@ open class GameRecapAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<GetGameRecapScoringSummaryResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GameRecapScoringSummaryResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
+     Get the Game Recap Scoring Summary Pro for a specific Game.
+     
+     - parameter videoId: (path)  
+     - returns: GameRecapScoringSummaryProResponse
+     */
+    open func getGameRecapScoringSummaryPro(videoId: String) async throws(ErrorResponse) -> GameRecapScoringSummaryProResponse {
+        return try await getGameRecapScoringSummaryProWithRequestBuilder(videoId: videoId).execute().body
+    }
+
+    /**
+     Get the Game Recap Scoring Summary Pro for a specific Game.
+     - GET /api/v1/client/game-recap/{videoId}/scoring-summary-pro
+     - Retrieves the full pro scoring summary for a specific game with drive context and players involved for each scoring play.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
+     - API Key:
+       - type: apiKey App-Id (HEADER)
+       - name: Client-App-Id
+     - parameter videoId: (path)  
+     - returns: RequestBuilder<GameRecapScoringSummaryProResponse> 
+     */
+    open func getGameRecapScoringSummaryProWithRequestBuilder(videoId: String) -> RequestBuilder<GameRecapScoringSummaryProResponse> {
+        var localVariablePath = "/api/v1/client/game-recap/{videoId}/scoring-summary-pro"
+        let videoIdPreEscape = "\(APIHelper.mapValueToPathItem(videoId))"
+        let videoIdPostEscape = videoIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{videoId}", with: videoIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters: [String: any Sendable]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: (any Sendable)?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<GameRecapScoringSummaryProResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }
@@ -104,31 +192,31 @@ open class GameRecapAPI {
     /**
      Get the Game Recap Team Stats for a specific Game.
      
-     - parameter gameId: (path)  
-     - returns: GetGameRecapTeamStatsResponse
+     - parameter videoId: (path)  
+     - returns: GameRecapTeamStatsResponse
      */
-    open func getGameRecapTeamStats(gameId: String) async throws(ErrorResponse) -> GetGameRecapTeamStatsResponse {
-        return try await getGameRecapTeamStatsWithRequestBuilder(gameId: gameId).execute().body
+    open func getGameRecapTeamStats(videoId: String) async throws(ErrorResponse) -> GameRecapTeamStatsResponse {
+        return try await getGameRecapTeamStatsWithRequestBuilder(videoId: videoId).execute().body
     }
 
     /**
      Get the Game Recap Team Stats for a specific Game.
-     - GET /api/v1/client/game-recap/{gameId}/team-stats
-     - Retrieves a statistical summary for both the home and away teams in a specific game. The response includes key offensive and first-down metrics, allowing clients to analyze game efficiency, offensive output, and team balance between rushing and passing plays.
-     - API Key:
-       - type: apiKey App-Token (HEADER)
-       - name: AppToken
+     - GET /api/v1/client/game-recap/{videoId}/team-stats
+     - Retrieves a detailed statistical breakdown for both the home and away teams, covering offense, defense, and special teams performance.
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
      - API Key:
        - type: apiKey App-Id (HEADER)
-       - name: AppId
-     - parameter gameId: (path)  
-     - returns: RequestBuilder<GetGameRecapTeamStatsResponse> 
+       - name: Client-App-Id
+     - parameter videoId: (path)  
+     - returns: RequestBuilder<GameRecapTeamStatsResponse> 
      */
-    open func getGameRecapTeamStatsWithRequestBuilder(gameId: String) -> RequestBuilder<GetGameRecapTeamStatsResponse> {
-        var localVariablePath = "/api/v1/client/game-recap/{gameId}/team-stats"
-        let gameIdPreEscape = "\(APIHelper.mapValueToPathItem(gameId))"
-        let gameIdPostEscape = gameIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{gameId}", with: gameIdPostEscape, options: .literal, range: nil)
+    open func getGameRecapTeamStatsWithRequestBuilder(videoId: String) -> RequestBuilder<GameRecapTeamStatsResponse> {
+        var localVariablePath = "/api/v1/client/game-recap/{videoId}/team-stats"
+        let videoIdPreEscape = "\(APIHelper.mapValueToPathItem(videoId))"
+        let videoIdPostEscape = videoIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{videoId}", with: videoIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = apiConfiguration.basePath + localVariablePath
         let localVariableParameters: [String: any Sendable]? = nil
 
@@ -140,7 +228,7 @@ open class GameRecapAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<GetGameRecapTeamStatsResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GameRecapTeamStatsResponse>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
     }

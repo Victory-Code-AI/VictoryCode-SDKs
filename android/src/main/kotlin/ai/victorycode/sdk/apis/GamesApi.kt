@@ -27,8 +27,16 @@ import java.io.IOException
 import okhttp3.Call
 import okhttp3.HttpUrl
 
-import ai.victorycode.sdk.models.GetGameResponse
-import ai.victorycode.sdk.models.ListGamesResponse
+import ai.victorycode.sdk.models.AddVideoToGameWithS3LinkDto
+import ai.victorycode.sdk.models.BadRequestErrorResponseDto
+import ai.victorycode.sdk.models.ClientCreateGameWithVideoUrlDto
+import ai.victorycode.sdk.models.ConflictErrorResponseDto
+import ai.victorycode.sdk.models.GameDetailsResponse
+import ai.victorycode.sdk.models.ListGamesPaginatedResponseDto
+import ai.victorycode.sdk.models.ListVideoPaginatedResponseDto
+import ai.victorycode.sdk.models.NotFoundErrorResponseDto
+import ai.victorycode.sdk.models.SingleVideoResponseDto
+import ai.victorycode.sdk.models.UnauthorizedErrorResponseDto
 
 import com.squareup.moshi.Json
 
@@ -55,11 +63,12 @@ open class GamesApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
     }
 
     /**
-     * GET /api/v1/client/games/{gameId}
-     * Get single game
-     * Retrieves metadata for a specific game by gameId. The response includes core identifiers, participating teams, venue/location, timestamps, processing status, and any available high-level attributes required to render a game detail view.
+     * POST /api/v1/client/games/{gameId}/video
+     * Add new video to a game
+     * Adds a new video to game.
      * @param gameId 
-     * @return GetGameResponse
+     * @param addVideoToGameWithS3LinkDto 
+     * @return SingleVideoResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -68,11 +77,161 @@ open class GamesApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun getGame(gameId: kotlin.String) : GetGameResponse {
-        val localVarResponse = getGameWithHttpInfo(gameId = gameId)
+    fun addVideoToGame(gameId: kotlin.String, addVideoToGameWithS3LinkDto: AddVideoToGameWithS3LinkDto) : SingleVideoResponseDto {
+        val localVarResponse = addVideoToGameWithHttpInfo(gameId = gameId, addVideoToGameWithS3LinkDto = addVideoToGameWithS3LinkDto)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as GetGameResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as SingleVideoResponseDto
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * POST /api/v1/client/games/{gameId}/video
+     * Add new video to a game
+     * Adds a new video to game.
+     * @param gameId 
+     * @param addVideoToGameWithS3LinkDto 
+     * @return ApiResponse<SingleVideoResponseDto?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    fun addVideoToGameWithHttpInfo(gameId: kotlin.String, addVideoToGameWithS3LinkDto: AddVideoToGameWithS3LinkDto) : ApiResponse<SingleVideoResponseDto?> {
+        val localVariableConfig = addVideoToGameRequestConfig(gameId = gameId, addVideoToGameWithS3LinkDto = addVideoToGameWithS3LinkDto)
+
+        return request<AddVideoToGameWithS3LinkDto, SingleVideoResponseDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation addVideoToGame
+     *
+     * @param gameId 
+     * @param addVideoToGameWithS3LinkDto 
+     * @return RequestConfig
+     */
+    fun addVideoToGameRequestConfig(gameId: kotlin.String, addVideoToGameWithS3LinkDto: AddVideoToGameWithS3LinkDto) : RequestConfig<AddVideoToGameWithS3LinkDto> {
+        val localVariableBody = addVideoToGameWithS3LinkDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json"
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/api/v1/client/games/{gameId}/video".replace("{"+"gameId"+"}", encodeURIComponent(gameId.toString())),
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * POST /api/v1/client/games
+     * Create a new Game with Video URL
+     * Registers a new game and associates a video URL (e.g., from a third-party source) with it in a single step.
+     * @param clientCreateGameWithVideoUrlDto 
+     * @return GameDetailsResponse
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    fun createGameWithVideoUrl(clientCreateGameWithVideoUrlDto: ClientCreateGameWithVideoUrlDto) : GameDetailsResponse {
+        val localVarResponse = createGameWithVideoUrlWithHttpInfo(clientCreateGameWithVideoUrlDto = clientCreateGameWithVideoUrlDto)
+
+        return when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GameDetailsResponse
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * POST /api/v1/client/games
+     * Create a new Game with Video URL
+     * Registers a new game and associates a video URL (e.g., from a third-party source) with it in a single step.
+     * @param clientCreateGameWithVideoUrlDto 
+     * @return ApiResponse<GameDetailsResponse?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    fun createGameWithVideoUrlWithHttpInfo(clientCreateGameWithVideoUrlDto: ClientCreateGameWithVideoUrlDto) : ApiResponse<GameDetailsResponse?> {
+        val localVariableConfig = createGameWithVideoUrlRequestConfig(clientCreateGameWithVideoUrlDto = clientCreateGameWithVideoUrlDto)
+
+        return request<ClientCreateGameWithVideoUrlDto, GameDetailsResponse>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation createGameWithVideoUrl
+     *
+     * @param clientCreateGameWithVideoUrlDto 
+     * @return RequestConfig
+     */
+    fun createGameWithVideoUrlRequestConfig(clientCreateGameWithVideoUrlDto: ClientCreateGameWithVideoUrlDto) : RequestConfig<ClientCreateGameWithVideoUrlDto> {
+        val localVariableBody = clientCreateGameWithVideoUrlDto
+        val localVariableQuery: MultiValueMap = mutableMapOf()
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Content-Type"] = "application/json"
+        localVariableHeaders["Accept"] = "application/json"
+
+        return RequestConfig(
+            method = RequestMethod.POST,
+            path = "/api/v1/client/games",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * GET /api/v1/client/games/{gameId}
+     * Get a Single Game.
+     * Retrieves the core metadata for a single game, including date, time, location, and teams who participated.
+     * @param gameId 
+     * @return GameDetailsResponse
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    fun getGameDetails(gameId: kotlin.String) : GameDetailsResponse {
+        val localVarResponse = getGameDetailsWithHttpInfo(gameId = gameId)
+
+        return when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as GameDetailsResponse
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -88,30 +247,30 @@ open class GamesApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
 
     /**
      * GET /api/v1/client/games/{gameId}
-     * Get single game
-     * Retrieves metadata for a specific game by gameId. The response includes core identifiers, participating teams, venue/location, timestamps, processing status, and any available high-level attributes required to render a game detail view.
+     * Get a Single Game.
+     * Retrieves the core metadata for a single game, including date, time, location, and teams who participated.
      * @param gameId 
-     * @return ApiResponse<GetGameResponse?>
+     * @return ApiResponse<GameDetailsResponse?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun getGameWithHttpInfo(gameId: kotlin.String) : ApiResponse<GetGameResponse?> {
-        val localVariableConfig = getGameRequestConfig(gameId = gameId)
+    fun getGameDetailsWithHttpInfo(gameId: kotlin.String) : ApiResponse<GameDetailsResponse?> {
+        val localVariableConfig = getGameDetailsRequestConfig(gameId = gameId)
 
-        return request<Unit, GetGameResponse>(
+        return request<Unit, GameDetailsResponse>(
             localVariableConfig
         )
     }
 
     /**
-     * To obtain the request config of the operation getGame
+     * To obtain the request config of the operation getGameDetails
      *
      * @param gameId 
      * @return RequestConfig
      */
-    fun getGameRequestConfig(gameId: kotlin.String) : RequestConfig<Unit> {
+    fun getGameDetailsRequestConfig(gameId: kotlin.String) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf()
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -129,11 +288,12 @@ open class GamesApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
 
     /**
      * GET /api/v1/client/games
-     * Get All Games
-     * Returns a paginated list of games accessible to the client. Useful for building game pickers and dashboards, or to obtain a gameId before fetching detailed resources.
-     * @param limit  (optional)
-     * @param page  (optional)
-     * @return ListGamesResponse
+     * List and Filter Games.
+     * Retrieves a paginated list of games, with optional filters for team, upload status, and date-time range.
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @param search  (optional)
+     * @return ListGamesPaginatedResponseDto
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      * @throws UnsupportedOperationException If the API returns an informational or redirection response
@@ -142,11 +302,11 @@ open class GamesApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    fun listGames(limit: kotlin.Int? = null, page: kotlin.Int? = null) : ListGamesResponse {
-        val localVarResponse = listGamesWithHttpInfo(limit = limit, page = page)
+    fun getGames(limit: java.math.BigDecimal? = java.math.BigDecimal("50"), offset: java.math.BigDecimal? = java.math.BigDecimal("0"), search: kotlin.String? = null) : ListGamesPaginatedResponseDto {
+        val localVarResponse = getGamesWithHttpInfo(limit = limit, offset = offset, search = search)
 
         return when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as ListGamesResponse
+            ResponseType.Success -> (localVarResponse as Success<*>).data as ListGamesPaginatedResponseDto
             ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
             ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
             ResponseType.ClientError -> {
@@ -162,40 +322,45 @@ open class GamesApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
 
     /**
      * GET /api/v1/client/games
-     * Get All Games
-     * Returns a paginated list of games accessible to the client. Useful for building game pickers and dashboards, or to obtain a gameId before fetching detailed resources.
-     * @param limit  (optional)
-     * @param page  (optional)
-     * @return ApiResponse<ListGamesResponse?>
+     * List and Filter Games.
+     * Retrieves a paginated list of games, with optional filters for team, upload status, and date-time range.
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @param search  (optional)
+     * @return ApiResponse<ListGamesPaginatedResponseDto?>
      * @throws IllegalStateException If the request is not correctly configured
      * @throws IOException Rethrows the OkHttp execute method exception
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(IllegalStateException::class, IOException::class)
-    fun listGamesWithHttpInfo(limit: kotlin.Int?, page: kotlin.Int?) : ApiResponse<ListGamesResponse?> {
-        val localVariableConfig = listGamesRequestConfig(limit = limit, page = page)
+    fun getGamesWithHttpInfo(limit: java.math.BigDecimal?, offset: java.math.BigDecimal?, search: kotlin.String?) : ApiResponse<ListGamesPaginatedResponseDto?> {
+        val localVariableConfig = getGamesRequestConfig(limit = limit, offset = offset, search = search)
 
-        return request<Unit, ListGamesResponse>(
+        return request<Unit, ListGamesPaginatedResponseDto>(
             localVariableConfig
         )
     }
 
     /**
-     * To obtain the request config of the operation listGames
+     * To obtain the request config of the operation getGames
      *
-     * @param limit  (optional)
-     * @param page  (optional)
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @param search  (optional)
      * @return RequestConfig
      */
-    fun listGamesRequestConfig(limit: kotlin.Int?, page: kotlin.Int?) : RequestConfig<Unit> {
+    fun getGamesRequestConfig(limit: java.math.BigDecimal?, offset: java.math.BigDecimal?, search: kotlin.String?) : RequestConfig<Unit> {
         val localVariableBody = null
         val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
             .apply {
                 if (limit != null) {
                     put("limit", listOf(limit.toString()))
                 }
-                if (page != null) {
-                    put("page", listOf(page.toString()))
+                if (offset != null) {
+                    put("offset", listOf(offset.toString()))
+                }
+                if (search != null) {
+                    put("search", listOf(search.toString()))
                 }
             }
         val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
@@ -204,6 +369,93 @@ open class GamesApi(basePath: kotlin.String = defaultBasePath, client: Call.Fact
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/api/v1/client/games",
+            query = localVariableQuery,
+            headers = localVariableHeaders,
+            requiresAuthentication = true,
+            body = localVariableBody
+        )
+    }
+
+    /**
+     * GET /api/v1/client/games/{gameId}/videos
+     * Get a list of videos of a game
+     * Retrieves a list of videos of a game.
+     * @param gameId 
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @return ListVideoPaginatedResponseDto
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     * @throws UnsupportedOperationException If the API returns an informational or redirection response
+     * @throws ClientException If the API returns a client error response
+     * @throws ServerException If the API returns a server error response
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
+    fun getVideosOfGame(gameId: kotlin.String, limit: java.math.BigDecimal? = java.math.BigDecimal("50"), offset: java.math.BigDecimal? = java.math.BigDecimal("0")) : ListVideoPaginatedResponseDto {
+        val localVarResponse = getVideosOfGameWithHttpInfo(gameId = gameId, limit = limit, offset = offset)
+
+        return when (localVarResponse.responseType) {
+            ResponseType.Success -> (localVarResponse as Success<*>).data as ListVideoPaginatedResponseDto
+            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
+            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
+            ResponseType.ClientError -> {
+                val localVarError = localVarResponse as ClientError<*>
+                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
+            }
+            ResponseType.ServerError -> {
+                val localVarError = localVarResponse as ServerError<*>
+                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
+            }
+        }
+    }
+
+    /**
+     * GET /api/v1/client/games/{gameId}/videos
+     * Get a list of videos of a game
+     * Retrieves a list of videos of a game.
+     * @param gameId 
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @return ApiResponse<ListVideoPaginatedResponseDto?>
+     * @throws IllegalStateException If the request is not correctly configured
+     * @throws IOException Rethrows the OkHttp execute method exception
+     */
+    @Suppress("UNCHECKED_CAST")
+    @Throws(IllegalStateException::class, IOException::class)
+    fun getVideosOfGameWithHttpInfo(gameId: kotlin.String, limit: java.math.BigDecimal?, offset: java.math.BigDecimal?) : ApiResponse<ListVideoPaginatedResponseDto?> {
+        val localVariableConfig = getVideosOfGameRequestConfig(gameId = gameId, limit = limit, offset = offset)
+
+        return request<Unit, ListVideoPaginatedResponseDto>(
+            localVariableConfig
+        )
+    }
+
+    /**
+     * To obtain the request config of the operation getVideosOfGame
+     *
+     * @param gameId 
+     * @param limit The number of results to return per page. (optional, default to 50)
+     * @param offset The number of results to skip for pagination. (optional, default to 0)
+     * @return RequestConfig
+     */
+    fun getVideosOfGameRequestConfig(gameId: kotlin.String, limit: java.math.BigDecimal?, offset: java.math.BigDecimal?) : RequestConfig<Unit> {
+        val localVariableBody = null
+        val localVariableQuery: MultiValueMap = mutableMapOf<kotlin.String, kotlin.collections.List<kotlin.String>>()
+            .apply {
+                if (limit != null) {
+                    put("limit", listOf(limit.toString()))
+                }
+                if (offset != null) {
+                    put("offset", listOf(offset.toString()))
+                }
+            }
+        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
+        localVariableHeaders["Accept"] = "application/json"
+
+        return RequestConfig(
+            method = RequestMethod.GET,
+            path = "/api/v1/client/games/{gameId}/videos".replace("{"+"gameId"+"}", encodeURIComponent(gameId.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,
