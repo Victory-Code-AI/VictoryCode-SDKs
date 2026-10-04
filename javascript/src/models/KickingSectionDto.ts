@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { KickingTotalsDto } from './KickingTotalsDto';
 import {
     KickingTotalsDtoFromJSON,
-    KickingTotalsDtoFromJSONTyped,
     KickingTotalsDtoToJSON,
-    KickingTotalsDtoToJSONTyped,
 } from './KickingTotalsDto';
 import type { KickingStatsDto } from './KickingStatsDto';
 import {
     KickingStatsDtoFromJSON,
-    KickingStatsDtoFromJSONTyped,
     KickingStatsDtoToJSON,
-    KickingStatsDtoToJSONTyped,
 } from './KickingStatsDto';
 
 /**

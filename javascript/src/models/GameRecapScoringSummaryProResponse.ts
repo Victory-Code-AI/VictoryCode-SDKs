@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { ProScoringPlayDto } from './ProScoringPlayDto';
 import {
     ProScoringPlayDtoFromJSON,
-    ProScoringPlayDtoFromJSONTyped,
     ProScoringPlayDtoToJSON,
-    ProScoringPlayDtoToJSONTyped,
 } from './ProScoringPlayDto';
 
 /**

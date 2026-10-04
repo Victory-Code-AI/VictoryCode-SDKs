@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { PeriodScoreDto } from './PeriodScoreDto';
 import {
     PeriodScoreDtoFromJSON,
-    PeriodScoreDtoFromJSONTyped,
     PeriodScoreDtoToJSON,
-    PeriodScoreDtoToJSONTyped,
 } from './PeriodScoreDto';
 
 /**

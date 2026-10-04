@@ -14,34 +14,24 @@
 
 import * as runtime from '../runtime';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
     type CompleteMultipartUploadDto,
-    CompleteMultipartUploadDtoFromJSON,
     CompleteMultipartUploadDtoToJSON,
 } from '../models/CompleteMultipartUploadDto';
 import {
     type CompleteMultipartUploadResponseDto,
     CompleteMultipartUploadResponseDtoFromJSON,
-    CompleteMultipartUploadResponseDtoToJSON,
 } from '../models/CompleteMultipartUploadResponseDto';
 import {
     type GetPartsPresignUrlResponseDto,
     GetPartsPresignUrlResponseDtoFromJSON,
-    GetPartsPresignUrlResponseDtoToJSON,
 } from '../models/GetPartsPresignUrlResponseDto';
 import {
     type InitiateMultipartUploadDto,
-    InitiateMultipartUploadDtoFromJSON,
     InitiateMultipartUploadDtoToJSON,
 } from '../models/InitiateMultipartUploadDto';
 import {
     type InitiateMultipartUploadResponseDto,
     InitiateMultipartUploadResponseDtoFromJSON,
-    InitiateMultipartUploadResponseDtoToJSON,
 } from '../models/InitiateMultipartUploadResponseDto';
 
 export interface CompleteMultipartUploadRequest {

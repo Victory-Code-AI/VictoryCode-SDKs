@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { CompletedPartDto } from './CompletedPartDto';
 import {
     CompletedPartDtoFromJSON,
-    CompletedPartDtoFromJSONTyped,
     CompletedPartDtoToJSON,
-    CompletedPartDtoToJSONTyped,
 } from './CompletedPartDto';
 
 /**

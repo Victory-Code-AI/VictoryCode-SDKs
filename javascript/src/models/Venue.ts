@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Address } from './Address';
 import {
     AddressFromJSON,
-    AddressFromJSONTyped,
     AddressToJSON,
-    AddressToJSONTyped,
 } from './Address';
 import type { Coordinates } from './Coordinates';
 import {
     CoordinatesFromJSON,
-    CoordinatesFromJSONTyped,
     CoordinatesToJSON,
-    CoordinatesToJSONTyped,
 } from './Coordinates';
 
 /**

@@ -14,48 +14,23 @@
 
 import * as runtime from '../runtime';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
-    type ConflictErrorResponseDto,
-    ConflictErrorResponseDtoFromJSON,
-    ConflictErrorResponseDtoToJSON,
-} from '../models/ConflictErrorResponseDto';
-import {
     type CreateVenueDto,
-    CreateVenueDtoFromJSON,
     CreateVenueDtoToJSON,
 } from '../models/CreateVenueDto';
 import {
     type DeleteResponseDto,
     DeleteResponseDtoFromJSON,
-    DeleteResponseDtoToJSON,
 } from '../models/DeleteResponseDto';
 import {
     type ListVenuePaginatedResponseDto,
     ListVenuePaginatedResponseDtoFromJSON,
-    ListVenuePaginatedResponseDtoToJSON,
 } from '../models/ListVenuePaginatedResponseDto';
-import {
-    type NotFoundErrorResponseDto,
-    NotFoundErrorResponseDtoFromJSON,
-    NotFoundErrorResponseDtoToJSON,
-} from '../models/NotFoundErrorResponseDto';
 import {
     type SingleVenueResponseDto,
     SingleVenueResponseDtoFromJSON,
-    SingleVenueResponseDtoToJSON,
 } from '../models/SingleVenueResponseDto';
 import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
-import {
     type UpdateVenueDto,
-    UpdateVenueDtoFromJSON,
     UpdateVenueDtoToJSON,
 } from '../models/UpdateVenueDto';
 

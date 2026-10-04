@@ -14,48 +14,23 @@
 
 import * as runtime from '../runtime';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
-    type ConflictErrorResponseDto,
-    ConflictErrorResponseDtoFromJSON,
-    ConflictErrorResponseDtoToJSON,
-} from '../models/ConflictErrorResponseDto';
-import {
     type CreateTeamDto,
-    CreateTeamDtoFromJSON,
     CreateTeamDtoToJSON,
 } from '../models/CreateTeamDto';
 import {
     type DeleteResponseDto,
     DeleteResponseDtoFromJSON,
-    DeleteResponseDtoToJSON,
 } from '../models/DeleteResponseDto';
 import {
     type ListTeamPaginatedResponseDto,
     ListTeamPaginatedResponseDtoFromJSON,
-    ListTeamPaginatedResponseDtoToJSON,
 } from '../models/ListTeamPaginatedResponseDto';
-import {
-    type NotFoundErrorResponseDto,
-    NotFoundErrorResponseDtoFromJSON,
-    NotFoundErrorResponseDtoToJSON,
-} from '../models/NotFoundErrorResponseDto';
 import {
     type SingleTeamResponseDto,
     SingleTeamResponseDtoFromJSON,
-    SingleTeamResponseDtoToJSON,
 } from '../models/SingleTeamResponseDto';
 import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
-import {
     type UpdateTeamDto,
-    UpdateTeamDtoFromJSON,
     UpdateTeamDtoToJSON,
 } from '../models/UpdateTeamDto';
 

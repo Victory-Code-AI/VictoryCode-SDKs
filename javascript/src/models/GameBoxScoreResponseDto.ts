@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { GameBoxScoreTeamsDto } from './GameBoxScoreTeamsDto';
 import {
     GameBoxScoreTeamsDtoFromJSON,
-    GameBoxScoreTeamsDtoFromJSONTyped,
     GameBoxScoreTeamsDtoToJSON,
-    GameBoxScoreTeamsDtoToJSONTyped,
 } from './GameBoxScoreTeamsDto';
 import type { GameBoxScoreMetaDto } from './GameBoxScoreMetaDto';
 import {
     GameBoxScoreMetaDtoFromJSON,
-    GameBoxScoreMetaDtoFromJSONTyped,
     GameBoxScoreMetaDtoToJSON,
-    GameBoxScoreMetaDtoToJSONTyped,
 } from './GameBoxScoreMetaDto';
 
 /**

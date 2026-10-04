@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { LineOfScrimmageDto } from './LineOfScrimmageDto';
 import {
     LineOfScrimmageDtoFromJSON,
-    LineOfScrimmageDtoFromJSONTyped,
     LineOfScrimmageDtoToJSON,
-    LineOfScrimmageDtoToJSONTyped,
 } from './LineOfScrimmageDto';
 
 /**

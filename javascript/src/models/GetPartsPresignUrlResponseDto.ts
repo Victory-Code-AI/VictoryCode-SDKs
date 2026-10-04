@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { GetPartsPresignUrlResponse } from './GetPartsPresignUrlResponse';
 import {
     GetPartsPresignUrlResponseFromJSON,
-    GetPartsPresignUrlResponseFromJSONTyped,
     GetPartsPresignUrlResponseToJSON,
-    GetPartsPresignUrlResponseToJSONTyped,
 } from './GetPartsPresignUrlResponse';
 
 /**

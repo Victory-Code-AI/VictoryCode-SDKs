@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { TeamBoxScoreDto } from './TeamBoxScoreDto';
 import {
     TeamBoxScoreDtoFromJSON,
-    TeamBoxScoreDtoFromJSONTyped,
     TeamBoxScoreDtoToJSON,
-    TeamBoxScoreDtoToJSONTyped,
 } from './TeamBoxScoreDto';
 
 /**

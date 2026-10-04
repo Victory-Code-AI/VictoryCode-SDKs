@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { InterceptionTotalsDto } from './InterceptionTotalsDto';
 import {
     InterceptionTotalsDtoFromJSON,
-    InterceptionTotalsDtoFromJSONTyped,
     InterceptionTotalsDtoToJSON,
-    InterceptionTotalsDtoToJSONTyped,
 } from './InterceptionTotalsDto';
 import type { InterceptionStatsDto } from './InterceptionStatsDto';
 import {
     InterceptionStatsDtoFromJSON,
-    InterceptionStatsDtoFromJSONTyped,
     InterceptionStatsDtoToJSON,
-    InterceptionStatsDtoToJSONTyped,
 } from './InterceptionStatsDto';
 
 /**

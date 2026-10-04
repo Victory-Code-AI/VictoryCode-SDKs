@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Venue } from './Venue';
 import {
     VenueFromJSON,
-    VenueFromJSONTyped,
     VenueToJSON,
-    VenueToJSONTyped,
 } from './Venue';
 
 /**

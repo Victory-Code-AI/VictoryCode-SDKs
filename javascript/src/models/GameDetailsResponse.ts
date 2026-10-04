@@ -12,13 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
+import { parseDateTime, serializeDateTime } from '../runtime';
 import type { TeamBasicInfoDto } from './TeamBasicInfoDto';
 import {
     TeamBasicInfoDtoFromJSON,
-    TeamBasicInfoDtoFromJSONTyped,
     TeamBasicInfoDtoToJSON,
-    TeamBasicInfoDtoToJSONTyped,
 } from './TeamBasicInfoDto';
 
 /**

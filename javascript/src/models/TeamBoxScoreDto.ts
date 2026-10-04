@@ -12,55 +12,40 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { RushingSectionDto } from './RushingSectionDto';
 import {
     RushingSectionDtoFromJSON,
-    RushingSectionDtoFromJSONTyped,
     RushingSectionDtoToJSON,
-    RushingSectionDtoToJSONTyped,
 } from './RushingSectionDto';
 import type { DefenseSectionDto } from './DefenseSectionDto';
 import {
     DefenseSectionDtoFromJSON,
-    DefenseSectionDtoFromJSONTyped,
     DefenseSectionDtoToJSON,
-    DefenseSectionDtoToJSONTyped,
 } from './DefenseSectionDto';
 import type { FumbleSectionDto } from './FumbleSectionDto';
 import {
     FumbleSectionDtoFromJSON,
-    FumbleSectionDtoFromJSONTyped,
     FumbleSectionDtoToJSON,
-    FumbleSectionDtoToJSONTyped,
 } from './FumbleSectionDto';
 import type { InterceptionSectionDto } from './InterceptionSectionDto';
 import {
     InterceptionSectionDtoFromJSON,
-    InterceptionSectionDtoFromJSONTyped,
     InterceptionSectionDtoToJSON,
-    InterceptionSectionDtoToJSONTyped,
 } from './InterceptionSectionDto';
 import type { KickingSectionDto } from './KickingSectionDto';
 import {
     KickingSectionDtoFromJSON,
-    KickingSectionDtoFromJSONTyped,
     KickingSectionDtoToJSON,
-    KickingSectionDtoToJSONTyped,
 } from './KickingSectionDto';
 import type { ReceivingSectionDto } from './ReceivingSectionDto';
 import {
     ReceivingSectionDtoFromJSON,
-    ReceivingSectionDtoFromJSONTyped,
     ReceivingSectionDtoToJSON,
-    ReceivingSectionDtoToJSONTyped,
 } from './ReceivingSectionDto';
 import type { PassingSectionDto } from './PassingSectionDto';
 import {
     PassingSectionDtoFromJSON,
-    PassingSectionDtoFromJSONTyped,
     PassingSectionDtoToJSON,
-    PassingSectionDtoToJSONTyped,
 } from './PassingSectionDto';
 
 /**

@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { GameAllPlayListItemDto } from './GameAllPlayListItemDto';
 import {
     GameAllPlayListItemDtoFromJSON,
-    GameAllPlayListItemDtoFromJSONTyped,
     GameAllPlayListItemDtoToJSON,
-    GameAllPlayListItemDtoToJSONTyped,
 } from './GameAllPlayListItemDto';
 
 /**

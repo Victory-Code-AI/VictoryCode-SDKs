@@ -15,54 +15,28 @@
 import * as runtime from '../runtime';
 import {
     type AddVideoToGameWithS3LinkDto,
-    AddVideoToGameWithS3LinkDtoFromJSON,
     AddVideoToGameWithS3LinkDtoToJSON,
 } from '../models/AddVideoToGameWithS3LinkDto';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
     type ClientCreateGameWithVideoUrlDto,
-    ClientCreateGameWithVideoUrlDtoFromJSON,
     ClientCreateGameWithVideoUrlDtoToJSON,
 } from '../models/ClientCreateGameWithVideoUrlDto';
 import {
-    type ConflictErrorResponseDto,
-    ConflictErrorResponseDtoFromJSON,
-    ConflictErrorResponseDtoToJSON,
-} from '../models/ConflictErrorResponseDto';
-import {
     type GameDetailsResponse,
     GameDetailsResponseFromJSON,
-    GameDetailsResponseToJSON,
 } from '../models/GameDetailsResponse';
 import {
     type ListGamesPaginatedResponseDto,
     ListGamesPaginatedResponseDtoFromJSON,
-    ListGamesPaginatedResponseDtoToJSON,
 } from '../models/ListGamesPaginatedResponseDto';
 import {
     type ListVideoPaginatedResponseDto,
     ListVideoPaginatedResponseDtoFromJSON,
-    ListVideoPaginatedResponseDtoToJSON,
 } from '../models/ListVideoPaginatedResponseDto';
-import {
-    type NotFoundErrorResponseDto,
-    NotFoundErrorResponseDtoFromJSON,
-    NotFoundErrorResponseDtoToJSON,
-} from '../models/NotFoundErrorResponseDto';
 import {
     type SingleVideoResponseDto,
     SingleVideoResponseDtoFromJSON,
-    SingleVideoResponseDtoToJSON,
 } from '../models/SingleVideoResponseDto';
-import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
 
 export interface AddVideoToGameRequest {
     /**

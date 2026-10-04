@@ -12,48 +12,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { RedZoneDto } from './RedZoneDto';
 import {
     RedZoneDtoFromJSON,
-    RedZoneDtoFromJSONTyped,
     RedZoneDtoToJSON,
-    RedZoneDtoToJSONTyped,
 } from './RedZoneDto';
 import type { RushingDto } from './RushingDto';
 import {
     RushingDtoFromJSON,
-    RushingDtoFromJSONTyped,
     RushingDtoToJSON,
-    RushingDtoToJSONTyped,
 } from './RushingDto';
 import type { OffenseDto } from './OffenseDto';
 import {
     OffenseDtoFromJSON,
-    OffenseDtoFromJSONTyped,
     OffenseDtoToJSON,
-    OffenseDtoToJSONTyped,
 } from './OffenseDto';
 import type { DownEfficiencyDto } from './DownEfficiencyDto';
 import {
     DownEfficiencyDtoFromJSON,
-    DownEfficiencyDtoFromJSONTyped,
     DownEfficiencyDtoToJSON,
-    DownEfficiencyDtoToJSONTyped,
 } from './DownEfficiencyDto';
 import type { PassingDto } from './PassingDto';
 import {
     PassingDtoFromJSON,
-    PassingDtoFromJSONTyped,
     PassingDtoToJSON,
-    PassingDtoToJSONTyped,
 } from './PassingDto';
 import type { TurnoversDto } from './TurnoversDto';
 import {
     TurnoversDtoFromJSON,
-    TurnoversDtoFromJSONTyped,
     TurnoversDtoToJSON,
-    TurnoversDtoToJSONTyped,
 } from './TurnoversDto';
 
 /**

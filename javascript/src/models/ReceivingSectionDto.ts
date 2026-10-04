@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { ReceivingStatsDto } from './ReceivingStatsDto';
 import {
     ReceivingStatsDtoFromJSON,
-    ReceivingStatsDtoFromJSONTyped,
     ReceivingStatsDtoToJSON,
-    ReceivingStatsDtoToJSONTyped,
 } from './ReceivingStatsDto';
 import type { ReceivingTotalsDto } from './ReceivingTotalsDto';
 import {
     ReceivingTotalsDtoFromJSON,
-    ReceivingTotalsDtoFromJSONTyped,
     ReceivingTotalsDtoToJSON,
-    ReceivingTotalsDtoToJSONTyped,
 } from './ReceivingTotalsDto';
 
 /**

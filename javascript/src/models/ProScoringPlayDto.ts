@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { ScoringPlayPlayerInvolvedDto } from './ScoringPlayPlayerInvolvedDto';
 import {
     ScoringPlayPlayerInvolvedDtoFromJSON,
-    ScoringPlayPlayerInvolvedDtoFromJSONTyped,
     ScoringPlayPlayerInvolvedDtoToJSON,
-    ScoringPlayPlayerInvolvedDtoToJSONTyped,
 } from './ScoringPlayPlayerInvolvedDto';
 import type { ScoringSummaryProTeamDto } from './ScoringSummaryProTeamDto';
 import {
     ScoringSummaryProTeamDtoFromJSON,
-    ScoringSummaryProTeamDtoFromJSONTyped,
     ScoringSummaryProTeamDtoToJSON,
-    ScoringSummaryProTeamDtoToJSONTyped,
 } from './ScoringSummaryProTeamDto';
 
 /**

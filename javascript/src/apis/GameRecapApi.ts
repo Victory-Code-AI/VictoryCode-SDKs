@@ -14,45 +14,25 @@
 
 import * as runtime from '../runtime';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
     type GameBoxScoreResponseDto,
     GameBoxScoreResponseDtoFromJSON,
-    GameBoxScoreResponseDtoToJSON,
 } from '../models/GameBoxScoreResponseDto';
 import {
     type GameRecapScoringSummaryProResponse,
     GameRecapScoringSummaryProResponseFromJSON,
-    GameRecapScoringSummaryProResponseToJSON,
 } from '../models/GameRecapScoringSummaryProResponse';
 import {
     type GameRecapScoringSummaryResponse,
     GameRecapScoringSummaryResponseFromJSON,
-    GameRecapScoringSummaryResponseToJSON,
 } from '../models/GameRecapScoringSummaryResponse';
 import {
     type GameRecapTeamStatsResponse,
     GameRecapTeamStatsResponseFromJSON,
-    GameRecapTeamStatsResponseToJSON,
 } from '../models/GameRecapTeamStatsResponse';
 import {
     type GameScoreResponse,
     GameScoreResponseFromJSON,
-    GameScoreResponseToJSON,
 } from '../models/GameScoreResponse';
-import {
-    type NotFoundErrorResponseDto,
-    NotFoundErrorResponseDtoFromJSON,
-    NotFoundErrorResponseDtoToJSON,
-} from '../models/NotFoundErrorResponseDto';
-import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
 
 export interface GetGameRecapGameBoxScoreRequest {
     /**

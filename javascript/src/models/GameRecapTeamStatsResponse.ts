@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { TeamStatsDto } from './TeamStatsDto';
 import {
     TeamStatsDtoFromJSON,
-    TeamStatsDtoFromJSONTyped,
     TeamStatsDtoToJSON,
-    TeamStatsDtoToJSONTyped,
 } from './TeamStatsDto';
 
 /**

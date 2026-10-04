@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { MascotResponseDto } from './MascotResponseDto';
 import {
     MascotResponseDtoFromJSON,
-    MascotResponseDtoFromJSONTyped,
     MascotResponseDtoToJSON,
-    MascotResponseDtoToJSONTyped,
 } from './MascotResponseDto';
 
 /**

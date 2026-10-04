@@ -14,35 +14,17 @@
 
 import * as runtime from '../runtime';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
     type ListGameAllPlaysResponseDto,
     ListGameAllPlaysResponseDtoFromJSON,
-    ListGameAllPlaysResponseDtoToJSON,
 } from '../models/ListGameAllPlaysResponseDto';
 import {
     type ListPlayClipsResponseDto,
     ListPlayClipsResponseDtoFromJSON,
-    ListPlayClipsResponseDtoToJSON,
 } from '../models/ListPlayClipsResponseDto';
-import {
-    type NotFoundErrorResponseDto,
-    NotFoundErrorResponseDtoFromJSON,
-    NotFoundErrorResponseDtoToJSON,
-} from '../models/NotFoundErrorResponseDto';
 import {
     type PlayClipListItemDto,
     PlayClipListItemDtoFromJSON,
-    PlayClipListItemDtoToJSON,
 } from '../models/PlayClipListItemDto';
-import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
 
 export interface GetPlayByIdRequest {
     /**

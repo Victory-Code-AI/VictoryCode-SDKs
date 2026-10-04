@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { PassingTotalsDto } from './PassingTotalsDto';
 import {
     PassingTotalsDtoFromJSON,
-    PassingTotalsDtoFromJSONTyped,
     PassingTotalsDtoToJSON,
-    PassingTotalsDtoToJSONTyped,
 } from './PassingTotalsDto';
 import type { PassingStatsDto } from './PassingStatsDto';
 import {
     PassingStatsDtoFromJSON,
-    PassingStatsDtoFromJSONTyped,
     PassingStatsDtoToJSON,
-    PassingStatsDtoToJSONTyped,
 } from './PassingStatsDto';
 
 /**

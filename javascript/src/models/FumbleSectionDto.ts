@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { FumbleTotalsDto } from './FumbleTotalsDto';
 import {
     FumbleTotalsDtoFromJSON,
-    FumbleTotalsDtoFromJSONTyped,
     FumbleTotalsDtoToJSON,
-    FumbleTotalsDtoToJSONTyped,
 } from './FumbleTotalsDto';
 import type { FumbleStatsDto } from './FumbleStatsDto';
 import {
     FumbleStatsDtoFromJSON,
-    FumbleStatsDtoFromJSONTyped,
     FumbleStatsDtoToJSON,
-    FumbleStatsDtoToJSONTyped,
 } from './FumbleStatsDto';
 
 /**

@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { PlayAttributesListDto } from './PlayAttributesListDto';
 import {
     PlayAttributesListDtoFromJSON,
-    PlayAttributesListDtoFromJSONTyped,
     PlayAttributesListDtoToJSON,
-    PlayAttributesListDtoToJSONTyped,
 } from './PlayAttributesListDto';
 import type { PlayClipListDetailsDto } from './PlayClipListDetailsDto';
 import {
     PlayClipListDetailsDtoFromJSON,
-    PlayClipListDetailsDtoFromJSONTyped,
     PlayClipListDetailsDtoToJSON,
-    PlayClipListDetailsDtoToJSONTyped,
 } from './PlayClipListDetailsDto';
 
 /**

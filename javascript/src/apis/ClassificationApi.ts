@@ -14,48 +14,23 @@
 
 import * as runtime from '../runtime';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
-    type ConflictErrorResponseDto,
-    ConflictErrorResponseDtoFromJSON,
-    ConflictErrorResponseDtoToJSON,
-} from '../models/ConflictErrorResponseDto';
-import {
     type CreateClassificationDto,
-    CreateClassificationDtoFromJSON,
     CreateClassificationDtoToJSON,
 } from '../models/CreateClassificationDto';
 import {
     type DeleteResponseDto,
     DeleteResponseDtoFromJSON,
-    DeleteResponseDtoToJSON,
 } from '../models/DeleteResponseDto';
 import {
     type ListClassificationPaginatedResponseDto,
     ListClassificationPaginatedResponseDtoFromJSON,
-    ListClassificationPaginatedResponseDtoToJSON,
 } from '../models/ListClassificationPaginatedResponseDto';
-import {
-    type NotFoundErrorResponseDto,
-    NotFoundErrorResponseDtoFromJSON,
-    NotFoundErrorResponseDtoToJSON,
-} from '../models/NotFoundErrorResponseDto';
 import {
     type SingleClassificationResponseDto,
     SingleClassificationResponseDtoFromJSON,
-    SingleClassificationResponseDtoToJSON,
 } from '../models/SingleClassificationResponseDto';
 import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
-import {
     type UpdateClassificationDto,
-    UpdateClassificationDtoFromJSON,
     UpdateClassificationDtoToJSON,
 } from '../models/UpdateClassificationDto';
 

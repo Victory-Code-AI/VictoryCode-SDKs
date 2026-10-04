@@ -16,13 +16,7 @@ import * as runtime from '../runtime';
 import {
     type TokenResponse,
     TokenResponseFromJSON,
-    TokenResponseToJSON,
 } from '../models/TokenResponse';
-import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
 
 /**
  * 

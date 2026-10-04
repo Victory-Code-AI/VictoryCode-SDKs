@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { DefenseTotalsDto } from './DefenseTotalsDto';
 import {
     DefenseTotalsDtoFromJSON,
-    DefenseTotalsDtoFromJSONTyped,
     DefenseTotalsDtoToJSON,
-    DefenseTotalsDtoToJSONTyped,
 } from './DefenseTotalsDto';
 import type { DefenseStatsDto } from './DefenseStatsDto';
 import {
     DefenseStatsDtoFromJSON,
-    DefenseStatsDtoFromJSONTyped,
     DefenseStatsDtoToJSON,
-    DefenseStatsDtoToJSONTyped,
 } from './DefenseStatsDto';
 
 /**

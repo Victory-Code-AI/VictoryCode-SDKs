@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { InitiateMultipartUploadResponse } from './InitiateMultipartUploadResponse';
 import {
     InitiateMultipartUploadResponseFromJSON,
-    InitiateMultipartUploadResponseFromJSONTyped,
     InitiateMultipartUploadResponseToJSON,
-    InitiateMultipartUploadResponseToJSONTyped,
 } from './InitiateMultipartUploadResponse';
 
 /**

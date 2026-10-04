@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Classification } from './Classification';
 import {
     ClassificationFromJSON,
-    ClassificationFromJSONTyped,
     ClassificationToJSON,
-    ClassificationToJSONTyped,
 } from './Classification';
 import type { Mascot } from './Mascot';
 import {
     MascotFromJSON,
-    MascotFromJSONTyped,
     MascotToJSON,
-    MascotToJSONTyped,
 } from './Mascot';
 
 /**

@@ -12,20 +12,15 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { RushingTotalsDto } from './RushingTotalsDto';
 import {
     RushingTotalsDtoFromJSON,
-    RushingTotalsDtoFromJSONTyped,
     RushingTotalsDtoToJSON,
-    RushingTotalsDtoToJSONTyped,
 } from './RushingTotalsDto';
 import type { RushingStatsDto } from './RushingStatsDto';
 import {
     RushingStatsDtoFromJSON,
-    RushingStatsDtoFromJSONTyped,
     RushingStatsDtoToJSON,
-    RushingStatsDtoToJSONTyped,
 } from './RushingStatsDto';
 
 /**

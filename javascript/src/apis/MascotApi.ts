@@ -14,48 +14,23 @@
 
 import * as runtime from '../runtime';
 import {
-    type BadRequestErrorResponseDto,
-    BadRequestErrorResponseDtoFromJSON,
-    BadRequestErrorResponseDtoToJSON,
-} from '../models/BadRequestErrorResponseDto';
-import {
-    type ConflictErrorResponseDto,
-    ConflictErrorResponseDtoFromJSON,
-    ConflictErrorResponseDtoToJSON,
-} from '../models/ConflictErrorResponseDto';
-import {
     type CreateMascotDto,
-    CreateMascotDtoFromJSON,
     CreateMascotDtoToJSON,
 } from '../models/CreateMascotDto';
 import {
     type DeleteResponseDto,
     DeleteResponseDtoFromJSON,
-    DeleteResponseDtoToJSON,
 } from '../models/DeleteResponseDto';
 import {
     type ListMascotPaginatedResponseDto,
     ListMascotPaginatedResponseDtoFromJSON,
-    ListMascotPaginatedResponseDtoToJSON,
 } from '../models/ListMascotPaginatedResponseDto';
-import {
-    type NotFoundErrorResponseDto,
-    NotFoundErrorResponseDtoFromJSON,
-    NotFoundErrorResponseDtoToJSON,
-} from '../models/NotFoundErrorResponseDto';
 import {
     type SingleMascotResponseDto,
     SingleMascotResponseDtoFromJSON,
-    SingleMascotResponseDtoToJSON,
 } from '../models/SingleMascotResponseDto';
 import {
-    type UnauthorizedErrorResponseDto,
-    UnauthorizedErrorResponseDtoFromJSON,
-    UnauthorizedErrorResponseDtoToJSON,
-} from '../models/UnauthorizedErrorResponseDto';
-import {
     type UpdateMascotDto,
-    UpdateMascotDtoFromJSON,
     UpdateMascotDtoToJSON,
 } from '../models/UpdateMascotDto';
 
