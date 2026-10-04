@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>ai.victorycode</groupId>
   <artifactId>victorycode-sdk</artifactId>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -56,7 +56,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "ai.victorycode:victorycode-sdk:0.1.0"
+     implementation "ai.victorycode:victorycode-sdk:1.0.0"
   }
 ```
 
@@ -70,7 +70,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/victorycode-sdk-0.1.0.jar`
+* `target/victorycode-sdk-1.0.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
