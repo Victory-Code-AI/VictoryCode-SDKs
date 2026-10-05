@@ -22,12 +22,12 @@ Adds a new video to game.
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.GamesApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.GamesApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -99,12 +99,12 @@ Registers a new game and associates a video URL (e.g., from a third-party source
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.GamesApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.GamesApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -174,12 +174,12 @@ Retrieves the core metadata for a single game, including date, time, location, a
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.GamesApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.GamesApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -249,12 +249,12 @@ Retrieves a paginated list of games, with optional filters for team, upload stat
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.GamesApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.GamesApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -328,12 +328,12 @@ Retrieves a list of videos of a game.
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.GamesApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.GamesApi;
 
 public class Example {
   public static void main(String[] args) {

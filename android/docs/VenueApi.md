@@ -21,8 +21,8 @@ Registers a new venue where games are held, including details about the venue na
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = VenueApi()
 val createVenueDto : CreateVenueDto =  // CreateVenueDto | 
@@ -78,8 +78,8 @@ Permanently removes a venue registration from the system.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = VenueApi()
 val id : kotlin.String = id_example // kotlin.String | 
@@ -135,8 +135,8 @@ Retrieves a paginated list of all venues where sports events or games are conduc
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = VenueApi()
 val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | 
@@ -196,8 +196,8 @@ Updates the information of an existing venue currently registered in the system.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = VenueApi()
 val id : kotlin.String = id_example // kotlin.String | 

@@ -46,8 +46,8 @@ jobs:
             echo "### Install"
             echo "- Python: \`pip install victorycode-sdk==${version}\`"
             echo "- JavaScript/TypeScript: \`npm install @victorycode/sdk@${version}\`"
-            echo "- Java: \`ai.victorycode:victorycode-sdk:${version}\`"
-            echo "- Kotlin/Android: \`ai.victorycode:victorycode-sdk-kotlin:${version}\`"
+            echo "- Java: \`com.tactixai:victorycode-sdk:${version}\`"
+            echo "- Kotlin/Android: \`com.tactixai:victorycode-sdk-kotlin:${version}\`"
             echo "- PHP: \`composer require victorycode/sdk:${version}\`"
             echo "- Swift: \`.package(url: \"https://github.com/${GITHUB_REPOSITORY}\", from: \"${version}\")\`"
           } >> notes.md

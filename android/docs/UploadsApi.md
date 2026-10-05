@@ -18,8 +18,8 @@ Complete a multipart upload to S3
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = UploadsApi()
 val completeMultipartUploadDto : CompleteMultipartUploadDto =  // CompleteMultipartUploadDto | 
@@ -73,8 +73,8 @@ Get a presigned URL for a specific part of a multipart upload
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = UploadsApi()
 val uploadId : kotlin.String = uploadId_example // kotlin.String | 
@@ -130,8 +130,8 @@ Initiate a multipart upload to S3 for a large file
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = UploadsApi()
 val initiateMultipartUploadDto : InitiateMultipartUploadDto =  // InitiateMultipartUploadDto | 

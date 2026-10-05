@@ -21,12 +21,12 @@ Creates a new mascot record with a name and description. An optional mascot imag
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.MascotApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.MascotApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -97,12 +97,12 @@ Permanently deletes a mascot record from the system.
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.MascotApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.MascotApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -173,12 +173,12 @@ Retrieves a paginated list of all mascots. Supports searching by name and pagina
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.MascotApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.MascotApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -252,12 +252,12 @@ Updates the details of an existing mascot identified by its ID. Allows updating 
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.MascotApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.MascotApi;
 
 public class Example {
   public static void main(String[] args) {

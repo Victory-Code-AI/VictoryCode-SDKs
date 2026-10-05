@@ -10,7 +10,7 @@ project:
   links:
     homepage: https://github.com/victory-code-ai/victorycode-sdks
   java:
-    groupId: ai.victorycode
+    groupId: com.tactixai
 
 signing:
   active: ALWAYS

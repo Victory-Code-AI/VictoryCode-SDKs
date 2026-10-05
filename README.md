@@ -8,10 +8,10 @@ with [OpenAPI Generator](https://openapi-generator.tech) 7.25.0.
 | --- | --- | --- | --- |
 | Python 3.10+ | `python/` | PyPI `victorycode-sdk` | `python` (urllib3, Pydantic v2) |
 | JavaScript / TypeScript | `javascript/` | npm `@victorycode/sdk` | `typescript-fetch` |
-| Java 8+ | `java/` | Maven Central `ai.victorycode:victorycode-sdk` | `java` (OkHttp + Gson) |
+| Java 8+ | `java/` | Maven Central `com.tactixai:victorycode-sdk` | `java` (OkHttp + Gson) |
 | PHP 8.1+ | `php/` | Packagist `victorycode/sdk` | `php` (Guzzle 7) |
 | Swift (iOS, macOS) | `ios/` | Swift Package Manager `VictoryCodeSDK` | `swift6` (async/await) |
-| Kotlin / Android | `android/` | Maven Central `ai.victorycode:victorycode-sdk-kotlin` | `kotlin` (OkHttp 4, Moshi) |
+| Kotlin / Android | `android/` | Maven Central `com.tactixai:victorycode-sdk-kotlin` | `kotlin` (OkHttp 4, Moshi) |
 
 **Do not edit generated folders by hand.** They are wiped on every regeneration. Change
 the API spec (via the portal admin), the generator options in `sdk.config.json`, or add
@@ -92,13 +92,13 @@ const score = await new GameRecapApi(config).getGameRecapScore({ videoId: "YOUR_
 ### Java
 
 ```java
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.api.AuthenticationApi;
-import ai.victorycode.sdk.api.GameRecapApi;
-import ai.victorycode.sdk.auth.ApiKeyAuth;
-import ai.victorycode.sdk.auth.HttpBearerAuth;
-import ai.victorycode.sdk.model.GameScoreResponse;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.api.AuthenticationApi;
+import com.tactixai.victorycode.sdk.api.GameRecapApi;
+import com.tactixai.victorycode.sdk.auth.ApiKeyAuth;
+import com.tactixai.victorycode.sdk.auth.HttpBearerAuth;
+import com.tactixai.victorycode.sdk.model.GameScoreResponse;
 
 ApiClient client = Configuration.getDefaultApiClient();
 client.setBasePath("https://sandbox.api.tactixai.com");
@@ -113,8 +113,8 @@ GameScoreResponse score = new GameRecapApi(client).getGameRecapScore("YOUR_VIDEO
 ### Kotlin / Android
 
 ```kotlin
-import ai.victorycode.sdk.apis.GameRecapApi
-import ai.victorycode.sdk.infrastructure.ApiClient
+import com.tactixai.victorycode.sdk.apis.GameRecapApi
+import com.tactixai.victorycode.sdk.infrastructure.ApiClient
 
 // Calls are blocking: on Android run them off the main thread (e.g. Dispatchers.IO).
 ApiClient.apiKey["App-Id"] = appId
@@ -173,7 +173,7 @@ The pipeline needs these one-time settings in this repository:
 | Variable | `PORTAL_REPO` | Optional, defaults to `victory-code-ai/developers-portal`. |
 | Variable | `PUBLISH_PYPI` = `true` | Enables PyPI. Configure a [trusted publisher](https://docs.pypi.org/trusted-publishers/) for workflow `release.yml`, environment `pypi`. |
 | Variable + secret | `PUBLISH_NPM` = `true`, `NPM_TOKEN` | Enables npm (automation token for the `@victorycode` scope). |
-| Variable + secrets | `PUBLISH_MAVEN` = `true`, `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `GPG_PUBLIC_KEY`, `GPG_SECRET_KEY`, `GPG_PASSPHRASE` | Enables Maven Central for Java and Kotlin (Central Portal user token, verified `ai.victorycode` namespace, armored GPG keys). |
+| Variable + secrets | `PUBLISH_MAVEN` = `true`, `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `GPG_PUBLIC_KEY`, `GPG_SECRET_KEY`, `GPG_PASSPHRASE` | Enables Maven Central for Java and Kotlin (Central Portal user token, verified `com.tactixai` namespace, armored GPG keys). |
 | Variable + secrets | `PUBLISH_PACKAGIST` = `true`, `PACKAGIST_USERNAME`, `PACKAGIST_TOKEN` | Optional immediate Packagist refresh. Register the package once on Packagist from this repository (the root `composer.json` points to `php/`). |
 
 Swift needs no credentials: Swift Package Manager installs from the tags and the root

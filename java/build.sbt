@@ -1,6 +1,6 @@
 lazy val root = (project in file(".")).
   settings(
-    organization := "ai.victorycode",
+    organization := "com.tactixai",
     name := "victorycode-sdk",
     version := "1.0.0",
     scalaVersion := "2.13.6",

@@ -21,8 +21,8 @@ Registers a new team in the system, including its name, short name, sport, masco
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = TeamsApi()
 val createTeamDto : CreateTeamDto =  // CreateTeamDto | 
@@ -78,8 +78,8 @@ Permanently deletes a team record from the system.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = TeamsApi()
 val id : kotlin.String = id_example // kotlin.String | 
@@ -135,8 +135,8 @@ Retrieves a paginated list of all teams belonging to the client. Supports filter
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = TeamsApi()
 val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to return per page.
@@ -198,8 +198,8 @@ Updates the details of an existing team identified by its ID. Allows updating th
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = TeamsApi()
 val id : kotlin.String = id_example // kotlin.String | 
