@@ -71,6 +71,7 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: python/dist
+          skip-existing: true # re-running a release only uploads what is missing
 
   npm:
     if: vars.PUBLISH_NPM == 'true'
@@ -88,6 +89,13 @@ jobs:
           registry-url: https://registry.npmjs.org
       - working-directory: javascript
         run: |
+          name=$(node -p "require('./package.json').name")
+          version=$(node -p "require('./package.json').version")
+          # npm never accepts the same version twice; re-running a release skips it.
+          if npm view "${name}@${version}" version --prefer-online >/dev/null 2>&1; then
+            echo "${name}@${version} is already on npm."
+            exit 0
+          fi
           npm install --no-audit --no-fund
           # npm only accepts provenance from public repositories.
           if [ "$PRIVATE_REPO" = "true" ]; then
