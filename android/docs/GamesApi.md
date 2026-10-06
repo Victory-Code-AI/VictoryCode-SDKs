@@ -22,8 +22,8 @@ Adds a new video to game.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GamesApi()
 val gameId : kotlin.String = gameId_example // kotlin.String | 
@@ -81,8 +81,8 @@ Registers a new game and associates a video URL (e.g., from a third-party source
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GamesApi()
 val clientCreateGameWithVideoUrlDto : ClientCreateGameWithVideoUrlDto =  // ClientCreateGameWithVideoUrlDto | 
@@ -138,8 +138,8 @@ Retrieves the core metadata for a single game, including date, time, location, a
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GamesApi()
 val gameId : kotlin.String = gameId_example // kotlin.String | 
@@ -195,8 +195,8 @@ Retrieves a paginated list of games, with optional filters for team, upload stat
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GamesApi()
 val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | The number of results to return per page.
@@ -256,8 +256,8 @@ Retrieves a list of videos of a game.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GamesApi()
 val gameId : kotlin.String = gameId_example // kotlin.String | 

@@ -18,12 +18,12 @@ Complete a multipart upload to S3
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.UploadsApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.UploadsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -90,12 +90,12 @@ Get a presigned URL for a specific part of a multipart upload
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.UploadsApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.UploadsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -164,12 +164,12 @@ Initiate a multipart upload to S3 for a large file
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.UploadsApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.UploadsApi;
 
 public class Example {
   public static void main(String[] args) {

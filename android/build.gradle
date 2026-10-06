@@ -1,4 +1,4 @@
-group 'ai.victorycode'
+group 'com.tactixai'
 version '1.0.0'
 
 wrapper {
@@ -68,7 +68,7 @@ java {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'ai.victorycode'
+            groupId = 'com.tactixai'
             artifactId = 'victorycode-sdk-kotlin'
             version = '1.0.0'
             from components.java

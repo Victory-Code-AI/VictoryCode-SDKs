@@ -21,12 +21,12 @@ Registers a new team in the system, including its name, short name, sport, masco
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.TeamsApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.TeamsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -97,12 +97,12 @@ Permanently deletes a team record from the system.
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.TeamsApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.TeamsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -173,12 +173,12 @@ Retrieves a paginated list of all teams belonging to the client. Supports filter
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.TeamsApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.TeamsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -254,12 +254,12 @@ Updates the details of an existing team identified by its ID. Allows updating th
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.TeamsApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.TeamsApi;
 
 public class Example {
   public static void main(String[] args) {

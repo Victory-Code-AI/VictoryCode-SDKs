@@ -22,8 +22,8 @@ Retrieves full game box score stats for both teams and players for a specific ga
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GameRecapApi()
 val videoId : kotlin.String = videoId_example // kotlin.String | 
@@ -79,8 +79,8 @@ Retrieves the final score and the score breakdown by quarter and overtime period
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GameRecapApi()
 val videoId : kotlin.String = videoId_example // kotlin.String | 
@@ -136,8 +136,8 @@ Retrieves a chronological list of all scoring plays for a specific game, includi
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GameRecapApi()
 val videoId : kotlin.String = videoId_example // kotlin.String | 
@@ -193,8 +193,8 @@ Retrieves the full pro scoring summary for a specific game with drive context an
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GameRecapApi()
 val videoId : kotlin.String = videoId_example // kotlin.String | 
@@ -250,8 +250,8 @@ Retrieves a detailed statistical breakdown for both the home and away teams, cov
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = GameRecapApi()
 val videoId : kotlin.String = videoId_example // kotlin.String | 

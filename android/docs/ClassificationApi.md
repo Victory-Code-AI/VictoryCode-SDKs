@@ -21,8 +21,8 @@ Creates a new classification entry for categorizing teams.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = ClassificationApi()
 val createClassificationDto : CreateClassificationDto =  // CreateClassificationDto | 
@@ -78,8 +78,8 @@ Permanently deletes a team classification from the system.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = ClassificationApi()
 val id : kotlin.String = id_example // kotlin.String | 
@@ -135,8 +135,8 @@ Retrieves a paginated list of all team classifications available in the system.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = ClassificationApi()
 val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | 
@@ -196,8 +196,8 @@ Updates an existing team classification entry identified by its ID.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = ClassificationApi()
 val id : kotlin.String = id_example // kotlin.String | 

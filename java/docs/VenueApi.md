@@ -21,12 +21,12 @@ Registers a new venue where games are held, including details about the venue na
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.VenueApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.VenueApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -97,12 +97,12 @@ Permanently removes a venue registration from the system.
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.VenueApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.VenueApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -173,12 +173,12 @@ Retrieves a paginated list of all venues where sports events or games are conduc
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.VenueApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.VenueApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -252,12 +252,12 @@ Updates the information of an existing venue currently registered in the system.
 ### Example
 ```java
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.models.*;
-import ai.victorycode.sdk.api.VenueApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.VenueApi;
 
 public class Example {
   public static void main(String[] args) {

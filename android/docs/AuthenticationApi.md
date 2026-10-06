@@ -18,8 +18,8 @@ Exchanges client credentials for a temporary bearer token.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = AuthenticationApi()
 try {

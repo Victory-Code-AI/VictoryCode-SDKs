@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>ai.victorycode</groupId>
+  <groupId>com.tactixai</groupId>
   <artifactId>victorycode-sdk</artifactId>
   <version>1.0.0</version>
   <scope>compile</scope>
@@ -56,7 +56,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "ai.victorycode:victorycode-sdk:1.0.0"
+     implementation "com.tactixai:victorycode-sdk:1.0.0"
   }
 ```
 
@@ -80,12 +80,12 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```java
 
 // Import classes:
-import ai.victorycode.sdk.ApiClient;
-import ai.victorycode.sdk.ApiException;
-import ai.victorycode.sdk.Configuration;
-import ai.victorycode.sdk.auth.*;
-import ai.victorycode.sdk.model.*;
-import ai.victorycode.sdk.api.AuthenticationApi;
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.model.*;
+import com.tactixai.victorycode.sdk.api.AuthenticationApi;
 
 public class Example {
   public static void main(String[] args) {

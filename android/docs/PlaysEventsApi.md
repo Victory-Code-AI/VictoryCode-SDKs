@@ -20,8 +20,8 @@ Retrieves the complete metadata for a single play clip by its unique ID.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = PlaysEventsApi()
 val playId : kotlin.String = playId_example // kotlin.String | 
@@ -77,8 +77,8 @@ Retrieves a paginated list of all plays for a given game. The results can be fil
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = PlaysEventsApi()
 val gameId : kotlin.String = gameId_example // kotlin.String | 
@@ -146,8 +146,8 @@ Retrieves a paginated list of all play clips for a given video. The results can 
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = PlaysEventsApi()
 val videoId : kotlin.String = videoId_example // kotlin.String | 

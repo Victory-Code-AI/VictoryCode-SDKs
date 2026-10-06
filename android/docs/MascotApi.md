@@ -21,8 +21,8 @@ Creates a new mascot record with a name and description. An optional mascot imag
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = MascotApi()
 val createMascotDto : CreateMascotDto =  // CreateMascotDto | 
@@ -78,8 +78,8 @@ Permanently deletes a mascot record from the system.
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = MascotApi()
 val id : kotlin.String = id_example // kotlin.String | 
@@ -135,8 +135,8 @@ Retrieves a paginated list of all mascots. Supports searching by name and pagina
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = MascotApi()
 val limit : java.math.BigDecimal = 8.14 // java.math.BigDecimal | 
@@ -196,8 +196,8 @@ Updates the details of an existing mascot identified by its ID. Allows updating 
 ### Example
 ```kotlin
 // Import classes:
-//import ai.victorycode.sdk.infrastructure.*
-//import ai.victorycode.sdk.models.*
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
 
 val apiInstance = MascotApi()
 val id : kotlin.String = id_example // kotlin.String | 
