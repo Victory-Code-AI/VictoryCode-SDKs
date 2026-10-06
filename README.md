@@ -141,7 +141,7 @@ $score = (new GameRecapApi(null, $config))->getGameRecapScore('YOUR_VIDEO_ID');
 ### Swift
 
 ```swift
-// Package.swift: .package(url: "https://github.com/victory-code-ai/victorycode-sdks", from: "<version>")
+// Package.swift: .package(url: "https://github.com/Victory-Code-AI/VictoryCode-SDKs", from: "<version>")
 import VictoryCodeSDK
 
 let config = VictoryCodeSDKAPIConfiguration.shared

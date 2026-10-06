@@ -5,7 +5,7 @@
   "author": "Victory Code",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/victory-code-ai/victorycode-sdks.git",
+    "url": "git+https://github.com/Victory-Code-AI/VictoryCode-SDKs.git",
     "directory": "javascript"
   },
   "main": "./dist/index.js",

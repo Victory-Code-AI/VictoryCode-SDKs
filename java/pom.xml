@@ -6,12 +6,12 @@
     <packaging>jar</packaging>
     <name>victorycode-sdk</name>
     <version>1.0.1</version>
-    <url>https://github.com/victory-code-ai/victorycode-sdks</url>
+    <url>https://github.com/Victory-Code-AI/VictoryCode-SDKs</url>
     <description>Victory Code API client for Java</description>
     <scm>
-        <connection>scm:git:https://github.com/victory-code-ai/victorycode-sdks.git</connection>
-        <developerConnection>scm:git:git@github.com:victory-code-ai/victorycode-sdks.git</developerConnection>
-        <url>https://github.com/victory-code-ai/victorycode-sdks</url>
+        <connection>scm:git:https://github.com/Victory-Code-AI/VictoryCode-SDKs.git</connection>
+        <developerConnection>scm:git:git@github.com:Victory-Code-AI/VictoryCode-SDKs.git</developerConnection>
+        <url>https://github.com/Victory-Code-AI/VictoryCode-SDKs</url>
     </scm>
 
     <licenses>

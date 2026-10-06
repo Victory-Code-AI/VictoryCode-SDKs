@@ -18,11 +18,11 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/victory-code-ai/victorycode-sdks.git"
+      "url": "https://github.com/Victory-Code-AI/VictoryCode-SDKs.git"
     }
   ],
   "require": {
-    "victory-code-ai/victorycode-sdks": "*@dev"
+    "Victory-Code-AI/VictoryCode-SDKs": "*@dev"
   }
 }
 ```

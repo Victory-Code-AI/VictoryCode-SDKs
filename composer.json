@@ -10,12 +10,12 @@
         "rest",
         "api"
     ],
-    "homepage": "https://github.com/victory-code-ai/victorycode-sdks",
+    "homepage": "https://github.com/Victory-Code-AI/VictoryCode-SDKs",
     "license": "MIT",
     "authors": [
         {
             "name": "Victory Code",
-            "homepage": "https://github.com/victory-code-ai/victorycode-sdks"
+            "homepage": "https://github.com/Victory-Code-AI/VictoryCode-SDKs"
         }
     ],
     "require": {

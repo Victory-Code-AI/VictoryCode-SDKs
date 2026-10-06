@@ -18,9 +18,9 @@ Python 3.10+
 If the python package is hosted on a repository, you can install directly using:
 
 ```sh
-pip install git+https://github.com/victory-code-ai/victorycode-sdks.git
+pip install git+https://github.com/Victory-Code-AI/VictoryCode-SDKs.git
 ```
-(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/victory-code-ai/victorycode-sdks.git`)
+(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/Victory-Code-AI/VictoryCode-SDKs.git`)
 
 Then import the package:
 ```python
