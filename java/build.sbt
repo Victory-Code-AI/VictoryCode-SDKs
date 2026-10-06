@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).
   settings(
     organization := "com.tactixai",
     name := "victorycode-sdk",
-    version := "1.0.0",
+    version := "1.0.1",
     scalaVersion := "2.13.6",
     scalacOptions ++= Seq("-feature"),
     compile / javacOptions ++= Seq("-Xlint:deprecation"),
