@@ -33,7 +33,7 @@ setup(
     version=VERSION,
     description="Victory Code Client API",
     author="Victory Code",
-    url="https://github.com/victory-code-ai/victorycode-sdks",
+    url="https://github.com/Victory-Code-AI/VictoryCode-SDKs",
     license="MIT",
     keywords=["OpenAPI", "OpenAPI-Generator", "Victory Code Client API"],
     install_requires=REQUIRES,

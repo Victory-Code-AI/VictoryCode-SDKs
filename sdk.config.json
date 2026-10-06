@@ -1,9 +1,9 @@
 {
   "version": "1.0.1",
   "repository": {
-    "owner": "victory-code-ai",
-    "name": "victorycode-sdks",
-    "url": "https://github.com/victory-code-ai/victorycode-sdks"
+    "owner": "Victory-Code-AI",
+    "name": "VictoryCode-SDKs",
+    "url": "https://github.com/Victory-Code-AI/VictoryCode-SDKs"
   },
   "languages": {
     "python": {
@@ -15,7 +15,7 @@
       "properties": {
         "packageName": "victorycode_sdk",
         "projectName": "victorycode-sdk",
-        "packageUrl": "https://github.com/victory-code-ai/victorycode-sdks",
+        "packageUrl": "https://github.com/Victory-Code-AI/VictoryCode-SDKs",
         "library": "urllib3"
       }
     },
@@ -42,14 +42,14 @@
         "library": "okhttp-gson",
         "groupId": "com.tactixai",
         "artifactId": "victorycode-sdk",
-        "artifactUrl": "https://github.com/victory-code-ai/victorycode-sdks",
+        "artifactUrl": "https://github.com/Victory-Code-AI/VictoryCode-SDKs",
         "artifactDescription": "Victory Code API client for Java",
         "invokerPackage": "com.tactixai.victorycode.sdk",
         "apiPackage": "com.tactixai.victorycode.sdk.api",
         "modelPackage": "com.tactixai.victorycode.sdk.model",
-        "scmConnection": "scm:git:https://github.com/victory-code-ai/victorycode-sdks.git",
-        "scmDeveloperConnection": "scm:git:git@github.com:victory-code-ai/victorycode-sdks.git",
-        "scmUrl": "https://github.com/victory-code-ai/victorycode-sdks",
+        "scmConnection": "scm:git:https://github.com/Victory-Code-AI/VictoryCode-SDKs.git",
+        "scmDeveloperConnection": "scm:git:git@github.com:Victory-Code-AI/VictoryCode-SDKs.git",
+        "scmUrl": "https://github.com/Victory-Code-AI/VictoryCode-SDKs",
         "developerName": "Victory Code",
         "developerEmail": "developers@victorycode.ai",
         "developerOrganization": "Victory Code",
@@ -86,7 +86,7 @@
         "hideGenerationTimestamp": true,
         "apiStaticMethod": false,
         "podSummary": "Victory Code API client for Swift",
-        "podHomepage": "https://github.com/victory-code-ai/victorycode-sdks",
+        "podHomepage": "https://github.com/Victory-Code-AI/VictoryCode-SDKs",
         "podLicense": "MIT"
       }
     },

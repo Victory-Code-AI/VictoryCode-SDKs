@@ -8,7 +8,7 @@ project:
   authors:
     - Victory Code
   links:
-    homepage: https://github.com/victory-code-ai/victorycode-sdks
+    homepage: https://github.com/Victory-Code-AI/VictoryCode-SDKs
   java:
     groupId: com.tactixai
 

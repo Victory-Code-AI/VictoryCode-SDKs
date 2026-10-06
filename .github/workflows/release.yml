@@ -97,6 +97,8 @@ jobs:
             exit 0
           fi
           npm install --no-audit --no-fund
+          # Provenance requires repository.url to match this repository exactly (case included).
+          npm pkg set repository.url="git+https://github.com/${GITHUB_REPOSITORY}.git"
           # npm only accepts provenance from public repositories.
           if [ "$PRIVATE_REPO" = "true" ]; then
             npm publish --access public
@@ -127,12 +129,14 @@ jobs:
       - name: Stage Kotlin artifacts
         working-directory: android
         run: gradle --no-daemon --init-script ../ci/maven-central.init.gradle publishAllPublicationsToStagingRepository
+      - name: Version from tag
+        run: echo "VERSION=${TAG#v}" >> "$GITHUB_ENV" # JReleaser wants 1.2.3, not v1.2.3
       - name: Sign and upload to Maven Central
         uses: jreleaser/release-action@v2
         with:
           arguments: deploy
         env:
-          JRELEASER_PROJECT_VERSION: ${{ env.TAG }}
+          JRELEASER_PROJECT_VERSION: ${{ env.VERSION }}
           JRELEASER_GITHUB_TOKEN: ${{ github.token }}
           JRELEASER_MAVENCENTRAL_SONATYPE_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           JRELEASER_MAVENCENTRAL_SONATYPE_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}

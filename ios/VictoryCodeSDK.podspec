@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'git@github.com:OpenAPITools/openapi-generator.git', :tag => 'v1.0' }
   s.authors = 'OpenAPI Generator'
   s.license = MIT
-  s.homepage = 'https://github.com/victory-code-ai/victorycode-sdks'
+  s.homepage = 'https://github.com/Victory-Code-AI/VictoryCode-SDKs'
   s.summary = 'Victory Code API client for Swift'
   s.source_files = 'Sources/VictoryCodeSDK/**/*.swift'
 end
