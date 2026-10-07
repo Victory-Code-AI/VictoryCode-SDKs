@@ -24,7 +24,8 @@ Portal admin publishes a spec
   └─► repository_dispatch "api-spec-published"
         └─► regenerate.yml
               1. checks out the portal at the published commit
-              2. continues only if that version is the portal's latest version
+              2. continues only for the stable production API: the portal's latest version,
+                 status "current", with a Production server (betas on Sandbox/UAT never ship)
               3. copies specs/<version>/openapi.json to spec/ (skips if the API surface is unchanged)
               4. bumps the shared SDK version: breaking -> major, otherwise minor
                  (while on 0.x, breaking -> minor)
