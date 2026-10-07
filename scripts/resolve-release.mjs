@@ -9,8 +9,10 @@
  * Reads the triggering event from $GITHUB_EVENT_PATH:
  *  - repository_dispatch "api-spec-published" (sent by the portal admin), or
  *  - workflow_dispatch with optional `version` / `breaking` inputs.
- * SDKs always track the portal's latest version; events for other versions
- * (e.g. a beta) resolve to release=false.
+ * SDKs only ship the stable production API: the version must be the portal's
+ * latest, have status "current" (not beta, deprecated or sunset) and list a
+ * Production server. Anything else (e.g. a beta on Sandbox/UAT) resolves to
+ * release=false with the reason.
  * Writes key=value lines to stdout and $GITHUB_OUTPUT.
  */
 import { appendFileSync, existsSync, readFileSync } from "node:fs";
@@ -36,14 +38,23 @@ if (!entry) {
   process.exit(1);
 }
 
-const latest = manifest.latest === entry.id;
+const specPath = path.join(portalDir, "specs", entry.id, "openapi.json");
+const servers = existsSync(specPath) ? (JSON.parse(readFileSync(specPath, "utf8")).servers ?? []) : [];
+const onProduction = servers.some((server) => /^prod/i.test(server.description ?? ""));
+
+const blockers = [
+  manifest.latest === entry.id ? null : `it is not the latest version (${manifest.latest})`,
+  entry.status === "current" ? null : `its status is ${entry.status}, not current`,
+  onProduction ? null : "its spec lists no Production server",
+].filter(Boolean);
+const release = blockers.length === 0;
 const outputs = {
-  release: latest ? "true" : "false",
-  reason: latest ? "" : `API ${entry.id} is not the latest version (${manifest.latest}); SDKs follow the latest version.`,
+  release: release ? "true" : "false",
+  reason: release ? "" : `No SDK release for API ${entry.id}: ${blockers.join("; ")}. SDKs only ship the latest, current, Production version.`,
   version_id: entry.id,
   revision: String(entry.revision),
   api_version: entry.apiVersion,
-  spec_path: path.join(portalDir, "specs", entry.id, "openapi.json"),
+  spec_path: specPath,
   breaking: String(payload.breaking === true || inputs.breaking === true || inputs.breaking === "true"),
   published_by: payload.publishedBy || event.sender?.login || "",
 };
