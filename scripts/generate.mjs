@@ -66,8 +66,21 @@ function generate(name, language, workDir) {
   if (existsSync(overrides)) {
     cpSync(overrides, output, { recursive: true });
   }
+  if (name === "javascript") exportJavascriptHelpers(output);
 
   applyPackageMetadata(name, output);
+}
+
+/** The hand-written helpers in overrides/javascript/src are exported from the package entry point. */
+function exportJavascriptHelpers(output) {
+  const index = path.join(output, "src", "index.ts");
+  let source = readFileSync(index, "utf8");
+  for (const helper of ["victorycode"]) {
+    if (!existsSync(path.join(output, "src", `${helper}.ts`))) continue;
+    const line = `export * from './${helper}';`;
+    if (!source.includes(line)) source = `${source.trimEnd()}\n${line}\n`;
+  }
+  writeFileSync(index, source);
 }
 
 /** Ships the repository LICENSE in every package and sets license/author fields the generators leave out. */

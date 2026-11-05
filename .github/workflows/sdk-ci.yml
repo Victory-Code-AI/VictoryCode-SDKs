@@ -85,3 +85,37 @@ jobs:
           (cd javascript && npm install --no-audit --no-fund && npm run build)
       - name: Call the Prism mock of spec/openapi.json through the SDKs
         run: tests/smoke/run.sh python javascript
+
+  client-helpers:
+    name: auth and retry helpers (mock API)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.14.3"
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          tools: composer:v2
+      - name: Install SDKs
+        run: |
+          pip install ./python
+          (cd javascript && npm install --no-audit --no-fund && npm run build)
+          (cd php && composer install --no-interaction --quiet)
+      - name: Token reuse, 401 renewal, 429 retry and no POST retries in every SDK
+        run: tests/client/run.sh javascript python php java android
+
