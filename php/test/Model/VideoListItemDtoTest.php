@@ -123,4 +123,22 @@ class VideoListItemDtoTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "is_clipping_completed"
+     */
+    public function testPropertyIsClippingCompleted()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "analysis_status"
+     */
+    public function testPropertyAnalysisStatus()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

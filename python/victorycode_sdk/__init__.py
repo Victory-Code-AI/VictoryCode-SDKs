@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 
 # Define package exports
 __all__ = [
@@ -36,9 +36,12 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "AbortMultipartUploadDto",
+    "AbortMultipartUploadResponseDto",
     "AddVideoToGameWithS3LinkDto",
     "Address",
     "AddressDto",
+    "AnalysisStatus",
     "BadRequestErrorResponseDto",
     "Classification",
     "ClientCreateGameWithVideoUrlDto",
@@ -159,9 +162,12 @@ from victorycode_sdk.exceptions import ApiAttributeError as ApiAttributeError
 from victorycode_sdk.exceptions import ApiException as ApiException
 
 # import models into sdk package
+from victorycode_sdk.models.abort_multipart_upload_dto import AbortMultipartUploadDto as AbortMultipartUploadDto
+from victorycode_sdk.models.abort_multipart_upload_response_dto import AbortMultipartUploadResponseDto as AbortMultipartUploadResponseDto
 from victorycode_sdk.models.add_video_to_game_with_s3_link_dto import AddVideoToGameWithS3LinkDto as AddVideoToGameWithS3LinkDto
 from victorycode_sdk.models.address import Address as Address
 from victorycode_sdk.models.address_dto import AddressDto as AddressDto
+from victorycode_sdk.models.analysis_status import AnalysisStatus as AnalysisStatus
 from victorycode_sdk.models.bad_request_error_response_dto import BadRequestErrorResponseDto as BadRequestErrorResponseDto
 from victorycode_sdk.models.classification import Classification as Classification
 from victorycode_sdk.models.client_create_game_with_video_url_dto import ClientCreateGameWithVideoUrlDto as ClientCreateGameWithVideoUrlDto

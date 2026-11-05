@@ -1,6 +1,54 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/api/v1/client/abort-upload": {
+      "post": {
+        "operationId": "abortMultipartUpload",
+        "summary": "Abort a s3 multipart upload",
+        "tags": [
+          "Uploads"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AbortMultipartUploadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully aborted multipart upload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbortMultipartUploadResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Client-App-Token": [],
+            "Client-App-Id": []
+          }
+        ]
+      }
+    },
     "/api/v1/client/auth/token": {
       "get": {
         "operationId": "getAccessToken",
@@ -2474,7 +2522,7 @@
     },
     {
       "name": "Plays & Events",
-      "x-displayName": "Plays Events"
+      "x-displayName": "Plays & Events"
     },
     {
       "name": "Game Recap",
@@ -2503,6 +2551,10 @@
       "description": "Sandbox"
     },
     {
+      "url": "https://uat.api.tactixai.com",
+      "description": "UAT"
+    },
+    {
       "url": "https://api.tactixai.com",
       "description": "Production"
     }
@@ -2526,6 +2578,34 @@
       }
     },
     "schemas": {
+      "AbortMultipartUploadDto": {
+        "type": "object",
+        "properties": {
+          "uploadId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uploadId"
+        ]
+      },
+      "AbortMultipartUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Operation successful"
+          },
+          "data": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "message",
+          "data"
+        ]
+      },
       "Address": {
         "type": "object",
         "properties": {
@@ -2600,11 +2680,22 @@
           "s3Link": {
             "type": "string",
             "example": "https://tactix-bucket.s3.amazonaws.com/games/2023/week5/game-video.mp4"
+          },
+          "uploadId": {
+            "type": "string"
           }
         },
         "required": [
           "viewType",
           "s3Link"
+        ]
+      },
+      "AnalysisStatus": {
+        "type": "string",
+        "enum": [
+          "not_analyzed",
+          "in_progress",
+          "analyzed"
         ]
       },
       "BadRequestErrorResponseDto": {
@@ -4122,6 +4213,14 @@
             "type": "string",
             "example": "video-id"
           },
+          "isClippingCompleted": {
+            "type": "boolean",
+            "example": true
+          },
+          "analysisStatus": {
+            "example": "in_progress",
+            "$ref": "#/components/schemas/AnalysisStatus"
+          },
           "data": {
             "type": "array",
             "items": {
@@ -4135,6 +4234,8 @@
           "offset",
           "gameId",
           "videoId",
+          "isClippingCompleted",
+          "analysisStatus",
           "data"
         ]
       },
@@ -5572,6 +5673,14 @@
           "isDefaultVideo": {
             "type": "boolean",
             "example": false
+          },
+          "isClippingCompleted": {
+            "type": "boolean",
+            "example": true
+          },
+          "analysisStatus": {
+            "example": "in_progress",
+            "$ref": "#/components/schemas/AnalysisStatus"
           }
         },
         "required": [
@@ -5579,7 +5688,9 @@
           "videoId",
           "viewType",
           "sourceUrl",
-          "isDefaultVideo"
+          "isDefaultVideo",
+          "isClippingCompleted",
+          "analysisStatus"
         ]
       }
     }

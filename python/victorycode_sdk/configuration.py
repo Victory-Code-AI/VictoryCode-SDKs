@@ -602,7 +602,7 @@ conf = victorycode_sdk.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0\n"\
-               "SDK Package Version: 1.0.1".\
+               "SDK Package Version: 1.1.0".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:
@@ -614,6 +614,10 @@ conf = victorycode_sdk.Configuration(
             {
                 'url': "https://sandbox.api.tactixai.com",
                 'description': "Sandbox",
+            },
+            {
+                'url': "https://uat.api.tactixai.com",
+                'description': "UAT",
             },
             {
                 'url': "https://api.tactixai.com",

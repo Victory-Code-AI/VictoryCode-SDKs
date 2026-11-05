@@ -12,6 +12,8 @@
 |**viewType** | **String** |  |  |
 |**sourceUrl** | **String** |  |  |
 |**isDefaultVideo** | **Boolean** |  |  |
+|**isClippingCompleted** | **Boolean** |  |  |
+|**analysisStatus** | **AnalysisStatus** |  |  |
 
 
 

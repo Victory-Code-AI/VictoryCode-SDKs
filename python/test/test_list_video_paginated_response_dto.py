@@ -45,7 +45,9 @@ class TestListVideoPaginatedResponseDto(unittest.TestCase):
                         video_id = 'video-id', 
                         view_type = 'All-22 Sideline', 
                         source_url = 'https://example.com/video.mp4', 
-                        is_default_video = False, )
+                        is_default_video = False, 
+                        is_clipping_completed = True, 
+                        analysis_status = 'not_analyzed', )
                     ]
             )
         else:
@@ -60,7 +62,9 @@ class TestListVideoPaginatedResponseDto(unittest.TestCase):
                         video_id = 'video-id', 
                         view_type = 'All-22 Sideline', 
                         source_url = 'https://example.com/video.mp4', 
-                        is_default_video = False, )
+                        is_default_video = False, 
+                        is_clipping_completed = True, 
+                        analysis_status = 'not_analyzed', )
                     ],
         )
         """

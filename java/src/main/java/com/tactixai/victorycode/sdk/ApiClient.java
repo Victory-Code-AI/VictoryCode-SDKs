@@ -69,6 +69,11 @@ public class ApiClient {
       new HashMap<String, ServerVariable>()
     ),
     new ServerConfiguration(
+      "https://uat.api.tactixai.com",
+      "UAT",
+      new HashMap<String, ServerVariable>()
+    ),
+    new ServerConfiguration(
       "https://api.tactixai.com",
       "Production",
       new HashMap<String, ServerVariable>()
@@ -151,7 +156,7 @@ public class ApiClient {
         json = new JSON();
 
         // Set default User-Agent.
-        setUserAgent("OpenAPI-Generator/1.0.1/java");
+        setUserAgent("OpenAPI-Generator/1.1.0/java");
 
         authentications = new HashMap<String, Authentication>();
     }

@@ -4,10 +4,59 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**abortMultipartUpload**](UploadsAPI.md#abortmultipartupload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload
 [**completeMultipartUpload**](UploadsAPI.md#completemultipartupload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3
 [**getPresignedUrl**](UploadsAPI.md#getpresignedurl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload
 [**initiateUpload**](UploadsAPI.md#initiateupload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file
 
+
+# **abortMultipartUpload**
+```swift
+    open class func abortMultipartUpload(abortMultipartUploadDto: AbortMultipartUploadDto, completion: @escaping (_ data: AbortMultipartUploadResponseDto?, _ error: Error?) -> Void)
+```
+
+Abort a s3 multipart upload
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import VictoryCodeSDK
+
+let abortMultipartUploadDto = AbortMultipartUploadDto(uploadId: "uploadId_example") // AbortMultipartUploadDto | 
+
+// Abort a s3 multipart upload
+UploadsAPI.abortMultipartUpload(abortMultipartUploadDto: abortMultipartUploadDto) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abortMultipartUploadDto** | [**AbortMultipartUploadDto**](AbortMultipartUploadDto.md) |  | 
+
+### Return type
+
+[**AbortMultipartUploadResponseDto**](AbortMultipartUploadResponseDto.md)
+
+### Authorization
+
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **completeMultipartUpload**
 ```swift

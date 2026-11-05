@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **offset** | **float** |  | 
 **game_id** | **str** |  | 
 **video_id** | **str** |  | 
+**is_clipping_completed** | **bool** |  | 
+**analysis_status** | [**AnalysisStatus**](AnalysisStatus.md) |  | 
 **data** | [**List[PlayClipListItemDto]**](PlayClipListItemDto.md) |  | 
 
 ## Example

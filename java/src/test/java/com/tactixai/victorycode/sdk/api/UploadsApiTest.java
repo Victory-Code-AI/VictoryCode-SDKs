@@ -14,6 +14,8 @@
 package com.tactixai.victorycode.sdk.api;
 
 import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.model.AbortMultipartUploadDto;
+import com.tactixai.victorycode.sdk.model.AbortMultipartUploadResponseDto;
 import com.tactixai.victorycode.sdk.model.BadRequestErrorResponseDto;
 import java.math.BigDecimal;
 import com.tactixai.victorycode.sdk.model.CompleteMultipartUploadDto;
@@ -36,6 +38,18 @@ import java.util.Map;
 public class UploadsApiTest {
 
     private final UploadsApi api = new UploadsApi();
+
+    /**
+     * Abort a s3 multipart upload
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void abortMultipartUploadTest() throws ApiException {
+        AbortMultipartUploadDto abortMultipartUploadDto = null;
+        AbortMultipartUploadResponseDto response = api.abortMultipartUpload(abortMultipartUploadDto);
+        // TODO: test validations
+    }
 
     /**
      * Complete a multipart upload to S3

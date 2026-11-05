@@ -62,6 +62,8 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         'offset' => 'float',
         'game_id' => 'string',
         'video_id' => 'string',
+        'is_clipping_completed' => 'bool',
+        'analysis_status' => '\VictoryCode\SDK\Model\AnalysisStatus',
         'data' => '\VictoryCode\SDK\Model\PlayClipListItemDto[]'
     ];
 
@@ -78,6 +80,8 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         'offset' => null,
         'game_id' => null,
         'video_id' => null,
+        'is_clipping_completed' => null,
+        'analysis_status' => null,
         'data' => null
     ];
 
@@ -92,6 +96,8 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         'offset' => false,
         'game_id' => false,
         'video_id' => false,
+        'is_clipping_completed' => false,
+        'analysis_status' => false,
         'data' => false
     ];
 
@@ -186,6 +192,8 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         'offset' => 'offset',
         'game_id' => 'gameId',
         'video_id' => 'videoId',
+        'is_clipping_completed' => 'isClippingCompleted',
+        'analysis_status' => 'analysisStatus',
         'data' => 'data'
     ];
 
@@ -200,6 +208,8 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         'offset' => 'setOffset',
         'game_id' => 'setGameId',
         'video_id' => 'setVideoId',
+        'is_clipping_completed' => 'setIsClippingCompleted',
+        'analysis_status' => 'setAnalysisStatus',
         'data' => 'setData'
     ];
 
@@ -214,6 +224,8 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         'offset' => 'getOffset',
         'game_id' => 'getGameId',
         'video_id' => 'getVideoId',
+        'is_clipping_completed' => 'getIsClippingCompleted',
+        'analysis_status' => 'getAnalysisStatus',
         'data' => 'getData'
     ];
 
@@ -279,6 +291,8 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         $this->setIfExists('offset', $data ?? [], null);
         $this->setIfExists('game_id', $data ?? [], null);
         $this->setIfExists('video_id', $data ?? [], null);
+        $this->setIfExists('is_clipping_completed', $data ?? [], null);
+        $this->setIfExists('analysis_status', $data ?? [], null);
         $this->setIfExists('data', $data ?? [], null);
     }
 
@@ -323,6 +337,12 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
         }
         if ($this->container['video_id'] === null) {
             $invalidProperties[] = "'video_id' can't be null";
+        }
+        if ($this->container['is_clipping_completed'] === null) {
+            $invalidProperties[] = "'is_clipping_completed' can't be null";
+        }
+        if ($this->container['analysis_status'] === null) {
+            $invalidProperties[] = "'analysis_status' can't be null";
         }
         if ($this->container['data'] === null) {
             $invalidProperties[] = "'data' can't be null";
@@ -473,6 +493,60 @@ class ListPlayClipsResponseDto implements ModelInterface, ArrayAccess, \JsonSeri
             throw new \InvalidArgumentException('non-nullable video_id cannot be null');
         }
         $this->container['video_id'] = $video_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_clipping_completed
+     *
+     * @return bool
+     */
+    public function getIsClippingCompleted()
+    {
+        return $this->container['is_clipping_completed'];
+    }
+
+    /**
+     * Sets is_clipping_completed
+     *
+     * @param bool $is_clipping_completed is_clipping_completed
+     *
+     * @return self
+     */
+    public function setIsClippingCompleted($is_clipping_completed)
+    {
+        if (is_null($is_clipping_completed)) {
+            throw new \InvalidArgumentException('non-nullable is_clipping_completed cannot be null');
+        }
+        $this->container['is_clipping_completed'] = $is_clipping_completed;
+
+        return $this;
+    }
+
+    /**
+     * Gets analysis_status
+     *
+     * @return \VictoryCode\SDK\Model\AnalysisStatus
+     */
+    public function getAnalysisStatus()
+    {
+        return $this->container['analysis_status'];
+    }
+
+    /**
+     * Sets analysis_status
+     *
+     * @param \VictoryCode\SDK\Model\AnalysisStatus $analysis_status analysis_status
+     *
+     * @return self
+     */
+    public function setAnalysisStatus($analysis_status)
+    {
+        if (is_null($analysis_status)) {
+            throw new \InvalidArgumentException('non-nullable analysis_status cannot be null');
+        }
+        $this->container['analysis_status'] = $analysis_status;
 
         return $this;
     }

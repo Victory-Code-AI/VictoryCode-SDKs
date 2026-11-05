@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **view_type** | **str** |  | 
 **source_url** | **str** |  | 
 **is_default_video** | **bool** |  | 
+**is_clipping_completed** | **bool** |  | 
+**analysis_status** | [**AnalysisStatus**](AnalysisStatus.md) |  | 
 
 ## Example
 

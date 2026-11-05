@@ -39,7 +39,9 @@ class TestVideoListItemDto(unittest.TestCase):
                 video_id = 'video-id',
                 view_type = 'All-22 Sideline',
                 source_url = 'https://example.com/video.mp4',
-                is_default_video = False
+                is_default_video = False,
+                is_clipping_completed = True,
+                analysis_status = 'not_analyzed'
             )
         else:
             return VideoListItemDto(
@@ -48,6 +50,8 @@ class TestVideoListItemDto(unittest.TestCase):
                 view_type = 'All-22 Sideline',
                 source_url = 'https://example.com/video.mp4',
                 is_default_video = False,
+                is_clipping_completed = True,
+                analysis_status = 'not_analyzed',
         )
         """
 

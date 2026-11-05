@@ -6,10 +6,74 @@ All URIs are relative to https://sandbox.api.tactixai.com, except if the operati
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
+| [**abortMultipartUpload()**](UploadsApi.md#abortMultipartUpload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload |
 | [**completeMultipartUpload()**](UploadsApi.md#completeMultipartUpload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3 |
 | [**getPresignedUrl()**](UploadsApi.md#getPresignedUrl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload |
 | [**initiateUpload()**](UploadsApi.md#initiateUpload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file |
 
+
+## `abortMultipartUpload()`
+
+```php
+abortMultipartUpload($abort_multipart_upload_dto): \VictoryCode\SDK\Model\AbortMultipartUploadResponseDto
+```
+
+Abort a s3 multipart upload
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer (JWT) authorization: Client-App-Token
+$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+// Configure API key authorization: Client-App-Id
+$config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKey('App-Id', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = VictoryCode\SDK\Configuration::getDefaultConfiguration()->setApiKeyPrefix('App-Id', 'Bearer');
+
+
+$apiInstance = new VictoryCode\SDK\Api\UploadsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$abort_multipart_upload_dto = new \VictoryCode\SDK\Model\AbortMultipartUploadDto(); // \VictoryCode\SDK\Model\AbortMultipartUploadDto
+
+try {
+    $result = $apiInstance->abortMultipartUpload($abort_multipart_upload_dto);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling UploadsApi->abortMultipartUpload: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **abort_multipart_upload_dto** | [**\VictoryCode\SDK\Model\AbortMultipartUploadDto**](../Model/AbortMultipartUploadDto.md)|  | |
+
+### Return type
+
+[**\VictoryCode\SDK\Model\AbortMultipartUploadResponseDto**](../Model/AbortMultipartUploadResponseDto.md)
+
+### Authorization
+
+[Client-App-Token](../../README.md#Client-App-Token), [Client-App-Id](../../README.md#Client-App-Id)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
 ## `completeMultipartUpload()`
 

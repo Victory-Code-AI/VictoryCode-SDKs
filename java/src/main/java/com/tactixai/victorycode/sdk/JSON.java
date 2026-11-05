@@ -100,6 +100,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapter(LocalDate.class, localDateTypeAdapter);
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, localDateTimeTypeAdapter);
         gsonBuilder.registerTypeAdapter(byte[].class, byteArrayAdapter);
+        gsonBuilder.registerTypeAdapterFactory(new com.tactixai.victorycode.sdk.model.AbortMultipartUploadDto.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new com.tactixai.victorycode.sdk.model.AbortMultipartUploadResponseDto.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.tactixai.victorycode.sdk.model.AddVideoToGameWithS3LinkDto.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.tactixai.victorycode.sdk.model.Address.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new com.tactixai.victorycode.sdk.model.AddressDto.CustomTypeAdapterFactory());

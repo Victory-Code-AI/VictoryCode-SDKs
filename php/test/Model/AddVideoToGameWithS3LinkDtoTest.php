@@ -96,4 +96,13 @@ class AddVideoToGameWithS3LinkDtoTest extends TestCase
         // TODO: implement
         self::markTestIncomplete('Not implemented');
     }
+
+    /**
+     * Test attribute "upload_id"
+     */
+    public function testPropertyUploadId()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
 }

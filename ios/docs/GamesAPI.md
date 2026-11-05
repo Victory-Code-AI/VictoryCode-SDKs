@@ -26,7 +26,7 @@ Adds a new video to game.
 import VictoryCodeSDK
 
 let gameId = "gameId_example" // String | 
-let addVideoToGameWithS3LinkDto = AddVideoToGameWithS3LinkDto(viewType: "viewType_example", s3Link: "s3Link_example") // AddVideoToGameWithS3LinkDto | 
+let addVideoToGameWithS3LinkDto = AddVideoToGameWithS3LinkDto(viewType: "viewType_example", s3Link: "s3Link_example", uploadId: "uploadId_example") // AddVideoToGameWithS3LinkDto | 
 
 // Add new video to a game
 GamesAPI.addVideoToGame(gameId: gameId, addVideoToGameWithS3LinkDto: addVideoToGameWithS3LinkDto) { (response, error) in

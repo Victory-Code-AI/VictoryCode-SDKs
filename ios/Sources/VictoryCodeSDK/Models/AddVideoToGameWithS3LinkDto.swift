@@ -11,15 +11,18 @@ public struct AddVideoToGameWithS3LinkDto: Sendable, Codable, Hashable {
 
     public var viewType: String
     public var s3Link: String
+    public var uploadId: String?
 
-    public init(viewType: String, s3Link: String) {
+    public init(viewType: String, s3Link: String, uploadId: String? = nil) {
         self.viewType = viewType
         self.s3Link = s3Link
+        self.uploadId = uploadId
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case viewType
         case s3Link
+        case uploadId
     }
 
     // Encodable protocol methods
@@ -28,6 +31,7 @@ public struct AddVideoToGameWithS3LinkDto: Sendable, Codable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(viewType, forKey: .viewType)
         try container.encode(s3Link, forKey: .s3Link)
+        try container.encodeIfPresent(uploadId, forKey: .uploadId)
     }
 }
 

@@ -5,7 +5,7 @@
     <artifactId>victorycode-sdk</artifactId>
     <packaging>jar</packaging>
     <name>victorycode-sdk</name>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
     <url>https://github.com/Victory-Code-AI/VictoryCode-SDKs</url>
     <description>Victory Code API client for Java</description>
     <scm>

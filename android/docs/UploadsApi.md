@@ -4,10 +4,66 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
+| [**abortMultipartUpload**](UploadsApi.md#abortMultipartUpload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload |
 | [**completeMultipartUpload**](UploadsApi.md#completeMultipartUpload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3 |
 | [**getPresignedUrl**](UploadsApi.md#getPresignedUrl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload |
 | [**initiateUpload**](UploadsApi.md#initiateUpload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file |
 
+
+<a id="abortMultipartUpload"></a>
+# **abortMultipartUpload**
+> AbortMultipartUploadResponseDto abortMultipartUpload(abortMultipartUploadDto)
+
+Abort a s3 multipart upload
+
+### Example
+```kotlin
+// Import classes:
+//import com.tactixai.victorycode.sdk.infrastructure.*
+//import com.tactixai.victorycode.sdk.models.*
+
+val apiInstance = UploadsApi()
+val abortMultipartUploadDto : AbortMultipartUploadDto =  // AbortMultipartUploadDto | 
+try {
+    val result : AbortMultipartUploadResponseDto = apiInstance.abortMultipartUpload(abortMultipartUploadDto)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling UploadsApi#abortMultipartUpload")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling UploadsApi#abortMultipartUpload")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **abortMultipartUploadDto** | [**AbortMultipartUploadDto**](AbortMultipartUploadDto.md)|  | |
+
+### Return type
+
+[**AbortMultipartUploadResponseDto**](AbortMultipartUploadResponseDto.md)
+
+### Authorization
+
+
+Configure Client-App-Token statically:
+```kotlin
+ApiClient.accessToken = ""
+```
+Configure Client-App-Token dynamically:
+```kotlin
+apiInstance.accessTokenProvider = { "" }
+```
+Configure Client-App-Id:
+    ApiClient.apiKey["App-Id"] = ""
+    ApiClient.apiKeyPrefix["App-Id"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a id="completeMultipartUpload"></a>
 # **completeMultipartUpload**

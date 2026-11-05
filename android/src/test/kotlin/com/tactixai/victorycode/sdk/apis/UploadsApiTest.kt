@@ -27,6 +27,8 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import com.tactixai.victorycode.sdk.apis.UploadsApi
+import com.tactixai.victorycode.sdk.models.AbortMultipartUploadDto
+import com.tactixai.victorycode.sdk.models.AbortMultipartUploadResponseDto
 import com.tactixai.victorycode.sdk.models.BadRequestErrorResponseDto
 import com.tactixai.victorycode.sdk.models.CompleteMultipartUploadDto
 import com.tactixai.victorycode.sdk.models.CompleteMultipartUploadResponseDto
@@ -38,6 +40,14 @@ class UploadsApiTest : ShouldSpec() {
     init {
         // uncomment below to create an instance of UploadsApi
         //val apiInstance = UploadsApi()
+
+        // to test abortMultipartUpload
+        should("test abortMultipartUpload") {
+            // uncomment below to test abortMultipartUpload
+            //val abortMultipartUploadDto : AbortMultipartUploadDto =  // AbortMultipartUploadDto | 
+            //val result : AbortMultipartUploadResponseDto = apiInstance.abortMultipartUpload(abortMultipartUploadDto)
+            //result shouldBe ("TODO")
+        }
 
         // to test completeMultipartUpload
         should("test completeMultipartUpload") {

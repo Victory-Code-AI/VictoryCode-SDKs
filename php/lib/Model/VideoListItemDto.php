@@ -61,7 +61,9 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         'video_id' => 'string',
         'view_type' => 'string',
         'source_url' => 'string',
-        'is_default_video' => 'bool'
+        'is_default_video' => 'bool',
+        'is_clipping_completed' => 'bool',
+        'analysis_status' => '\VictoryCode\SDK\Model\AnalysisStatus'
     ];
 
     /**
@@ -76,7 +78,9 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         'video_id' => null,
         'view_type' => null,
         'source_url' => null,
-        'is_default_video' => null
+        'is_default_video' => null,
+        'is_clipping_completed' => null,
+        'analysis_status' => null
     ];
 
     /**
@@ -89,7 +93,9 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         'video_id' => false,
         'view_type' => false,
         'source_url' => false,
-        'is_default_video' => false
+        'is_default_video' => false,
+        'is_clipping_completed' => false,
+        'analysis_status' => false
     ];
 
     /**
@@ -182,7 +188,9 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         'video_id' => 'videoId',
         'view_type' => 'viewType',
         'source_url' => 'sourceUrl',
-        'is_default_video' => 'isDefaultVideo'
+        'is_default_video' => 'isDefaultVideo',
+        'is_clipping_completed' => 'isClippingCompleted',
+        'analysis_status' => 'analysisStatus'
     ];
 
     /**
@@ -195,7 +203,9 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         'video_id' => 'setVideoId',
         'view_type' => 'setViewType',
         'source_url' => 'setSourceUrl',
-        'is_default_video' => 'setIsDefaultVideo'
+        'is_default_video' => 'setIsDefaultVideo',
+        'is_clipping_completed' => 'setIsClippingCompleted',
+        'analysis_status' => 'setAnalysisStatus'
     ];
 
     /**
@@ -208,7 +218,9 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         'video_id' => 'getVideoId',
         'view_type' => 'getViewType',
         'source_url' => 'getSourceUrl',
-        'is_default_video' => 'getIsDefaultVideo'
+        'is_default_video' => 'getIsDefaultVideo',
+        'is_clipping_completed' => 'getIsClippingCompleted',
+        'analysis_status' => 'getAnalysisStatus'
     ];
 
     /**
@@ -273,6 +285,8 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('view_type', $data ?? [], null);
         $this->setIfExists('source_url', $data ?? [], null);
         $this->setIfExists('is_default_video', $data ?? [], null);
+        $this->setIfExists('is_clipping_completed', $data ?? [], null);
+        $this->setIfExists('analysis_status', $data ?? [], null);
     }
 
     /**
@@ -316,6 +330,12 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['is_default_video'] === null) {
             $invalidProperties[] = "'is_default_video' can't be null";
+        }
+        if ($this->container['is_clipping_completed'] === null) {
+            $invalidProperties[] = "'is_clipping_completed' can't be null";
+        }
+        if ($this->container['analysis_status'] === null) {
+            $invalidProperties[] = "'analysis_status' can't be null";
         }
         return $invalidProperties;
     }
@@ -463,6 +483,60 @@ class VideoListItemDto implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable is_default_video cannot be null');
         }
         $this->container['is_default_video'] = $is_default_video;
+
+        return $this;
+    }
+
+    /**
+     * Gets is_clipping_completed
+     *
+     * @return bool
+     */
+    public function getIsClippingCompleted()
+    {
+        return $this->container['is_clipping_completed'];
+    }
+
+    /**
+     * Sets is_clipping_completed
+     *
+     * @param bool $is_clipping_completed is_clipping_completed
+     *
+     * @return self
+     */
+    public function setIsClippingCompleted($is_clipping_completed)
+    {
+        if (is_null($is_clipping_completed)) {
+            throw new \InvalidArgumentException('non-nullable is_clipping_completed cannot be null');
+        }
+        $this->container['is_clipping_completed'] = $is_clipping_completed;
+
+        return $this;
+    }
+
+    /**
+     * Gets analysis_status
+     *
+     * @return \VictoryCode\SDK\Model\AnalysisStatus
+     */
+    public function getAnalysisStatus()
+    {
+        return $this->container['analysis_status'];
+    }
+
+    /**
+     * Sets analysis_status
+     *
+     * @param \VictoryCode\SDK\Model\AnalysisStatus $analysis_status analysis_status
+     *
+     * @return self
+     */
+    public function setAnalysisStatus($analysis_status)
+    {
+        if (is_null($analysis_status)) {
+            throw new \InvalidArgumentException('non-nullable analysis_status cannot be null');
+        }
+        $this->container['analysis_status'] = $analysis_status;
 
         return $this;
     }

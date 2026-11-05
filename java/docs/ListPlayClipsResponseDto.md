@@ -12,6 +12,8 @@
 |**offset** | **BigDecimal** |  |  |
 |**gameId** | **String** |  |  |
 |**videoId** | **String** |  |  |
+|**isClippingCompleted** | **Boolean** |  |  |
+|**analysisStatus** | **AnalysisStatus** |  |  |
 |**data** | [**List&lt;PlayClipListItemDto&gt;**](PlayClipListItemDto.md) |  |  |
 
 

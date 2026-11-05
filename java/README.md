@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.tactixai</groupId>
   <artifactId>victorycode-sdk</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -56,7 +56,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.tactixai:victorycode-sdk:1.0.1"
+     implementation "com.tactixai:victorycode-sdk:1.1.0"
   }
 ```
 
@@ -70,7 +70,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/victorycode-sdk-1.0.1.jar`
+* `target/victorycode-sdk-1.1.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -152,6 +152,7 @@ Class | Method | HTTP request | Description
 *TeamsApi* | [**deleteTeam**](docs/TeamsApi.md#deleteTeam) | **DELETE** /api/v1/client/teams/{id} | Delete a team
 *TeamsApi* | [**getTeams**](docs/TeamsApi.md#getTeams) | **GET** /api/v1/client/teams | Get teams
 *TeamsApi* | [**updateTeam**](docs/TeamsApi.md#updateTeam) | **PATCH** /api/v1/client/teams/{id} | Update a team
+*UploadsApi* | [**abortMultipartUpload**](docs/UploadsApi.md#abortMultipartUpload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload
 *UploadsApi* | [**completeMultipartUpload**](docs/UploadsApi.md#completeMultipartUpload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3
 *UploadsApi* | [**getPresignedUrl**](docs/UploadsApi.md#getPresignedUrl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload
 *UploadsApi* | [**initiateUpload**](docs/UploadsApi.md#initiateUpload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file
@@ -163,9 +164,12 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [AbortMultipartUploadDto](docs/AbortMultipartUploadDto.md)
+ - [AbortMultipartUploadResponseDto](docs/AbortMultipartUploadResponseDto.md)
  - [AddVideoToGameWithS3LinkDto](docs/AddVideoToGameWithS3LinkDto.md)
  - [Address](docs/Address.md)
  - [AddressDto](docs/AddressDto.md)
+ - [AnalysisStatus](docs/AnalysisStatus.md)
  - [BadRequestErrorResponseDto](docs/BadRequestErrorResponseDto.md)
  - [Classification](docs/Classification.md)
  - [ClientCreateGameWithVideoUrlDto](docs/ClientCreateGameWithVideoUrlDto.md)

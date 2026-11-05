@@ -61,6 +61,11 @@ public class AddVideoToGameWithS3LinkDto {
   @javax.annotation.Nonnull
   private String s3Link;
 
+  public static final String SERIALIZED_NAME_UPLOAD_ID = "uploadId";
+  @SerializedName(SERIALIZED_NAME_UPLOAD_ID)
+  @javax.annotation.Nullable
+  private String uploadId;
+
   public AddVideoToGameWithS3LinkDto() {
   }
 
@@ -102,6 +107,25 @@ public class AddVideoToGameWithS3LinkDto {
   }
 
 
+  public AddVideoToGameWithS3LinkDto uploadId(@javax.annotation.Nullable String uploadId) {
+    this.uploadId = uploadId;
+    return this;
+  }
+
+  /**
+   * Get uploadId
+   * @return uploadId
+   */
+  @javax.annotation.Nullable
+  public String getUploadId() {
+    return uploadId;
+  }
+
+  public void setUploadId(@javax.annotation.Nullable String uploadId) {
+    this.uploadId = uploadId;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -113,12 +137,13 @@ public class AddVideoToGameWithS3LinkDto {
     }
     AddVideoToGameWithS3LinkDto addVideoToGameWithS3LinkDto = (AddVideoToGameWithS3LinkDto) o;
     return Objects.equals(this.viewType, addVideoToGameWithS3LinkDto.viewType) &&
-        Objects.equals(this.s3Link, addVideoToGameWithS3LinkDto.s3Link);
+        Objects.equals(this.s3Link, addVideoToGameWithS3LinkDto.s3Link) &&
+        Objects.equals(this.uploadId, addVideoToGameWithS3LinkDto.uploadId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(viewType, s3Link);
+    return Objects.hash(viewType, s3Link, uploadId);
   }
 
   @Override
@@ -127,6 +152,7 @@ public class AddVideoToGameWithS3LinkDto {
     sb.append("class AddVideoToGameWithS3LinkDto {\n");
     sb.append("    viewType: ").append(toIndentedString(viewType)).append("\n");
     sb.append("    s3Link: ").append(toIndentedString(s3Link)).append("\n");
+    sb.append("    uploadId: ").append(toIndentedString(uploadId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -145,7 +171,7 @@ public class AddVideoToGameWithS3LinkDto {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("viewType", "s3Link"));
+    openapiFields = new HashSet<String>(Arrays.asList("viewType", "s3Link", "uploadId"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("viewType", "s3Link"));
@@ -184,6 +210,9 @@ public class AddVideoToGameWithS3LinkDto {
       }
       if (!jsonObj.get("s3Link").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format(java.util.Locale.ROOT, "Expected the field `s3Link` to be a primitive type in the JSON string but got `%s`", jsonObj.get("s3Link").toString()));
+      }
+      if ((jsonObj.get("uploadId") != null && !jsonObj.get("uploadId").isJsonNull()) && !jsonObj.get("uploadId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format(java.util.Locale.ROOT, "Expected the field `uploadId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("uploadId").toString()));
       }
   }
 

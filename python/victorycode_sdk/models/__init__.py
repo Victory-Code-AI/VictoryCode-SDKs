@@ -13,9 +13,12 @@
 """  # noqa: E501
 
 # import models into model package
+from victorycode_sdk.models.abort_multipart_upload_dto import AbortMultipartUploadDto
+from victorycode_sdk.models.abort_multipart_upload_response_dto import AbortMultipartUploadResponseDto
 from victorycode_sdk.models.add_video_to_game_with_s3_link_dto import AddVideoToGameWithS3LinkDto
 from victorycode_sdk.models.address import Address
 from victorycode_sdk.models.address_dto import AddressDto
+from victorycode_sdk.models.analysis_status import AnalysisStatus
 from victorycode_sdk.models.bad_request_error_response_dto import BadRequestErrorResponseDto
 from victorycode_sdk.models.classification import Classification
 from victorycode_sdk.models.client_create_game_with_video_url_dto import ClientCreateGameWithVideoUrlDto

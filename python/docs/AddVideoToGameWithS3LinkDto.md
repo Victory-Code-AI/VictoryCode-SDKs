@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **view_type** | **str** |  | 
 **s3_link** | **str** |  | 
+**upload_id** | **str** |  | [optional] 
 
 ## Example
 

@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `viewType` | string
 `s3Link` | string
+`uploadId` | string
 
 ## Example
 
@@ -18,6 +19,7 @@ import type { AddVideoToGameWithS3LinkDto } from '@victorycode/sdk'
 const example = {
   "viewType": Broadcast Wide,
   "s3Link": https://tactix-bucket.s3.amazonaws.com/games/2023/week5/game-video.mp4,
+  "uploadId": null,
 } satisfies AddVideoToGameWithS3LinkDto
 
 console.log(example)

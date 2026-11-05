@@ -14,13 +14,17 @@ public struct VideoListItemDto: Sendable, Codable, Hashable {
     public var viewType: String
     public var sourceUrl: String
     public var isDefaultVideo: Bool
+    public var isClippingCompleted: Bool
+    public var analysisStatus: AnalysisStatus
 
-    public init(gameId: String, videoId: String, viewType: String, sourceUrl: String, isDefaultVideo: Bool) {
+    public init(gameId: String, videoId: String, viewType: String, sourceUrl: String, isDefaultVideo: Bool, isClippingCompleted: Bool, analysisStatus: AnalysisStatus) {
         self.gameId = gameId
         self.videoId = videoId
         self.viewType = viewType
         self.sourceUrl = sourceUrl
         self.isDefaultVideo = isDefaultVideo
+        self.isClippingCompleted = isClippingCompleted
+        self.analysisStatus = analysisStatus
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -29,6 +33,8 @@ public struct VideoListItemDto: Sendable, Codable, Hashable {
         case viewType
         case sourceUrl
         case isDefaultVideo
+        case isClippingCompleted
+        case analysisStatus
     }
 
     // Encodable protocol methods
@@ -40,6 +46,8 @@ public struct VideoListItemDto: Sendable, Codable, Hashable {
         try container.encode(viewType, forKey: .viewType)
         try container.encode(sourceUrl, forKey: .sourceUrl)
         try container.encode(isDefaultVideo, forKey: .isDefaultVideo)
+        try container.encode(isClippingCompleted, forKey: .isClippingCompleted)
+        try container.encode(analysisStatus, forKey: .analysisStatus)
     }
 }
 

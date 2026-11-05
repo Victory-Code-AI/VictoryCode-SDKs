@@ -8,6 +8,8 @@ info:
 servers:
 - description: Sandbox
   url: https://sandbox.api.tactixai.com
+- description: UAT
+  url: https://uat.api.tactixai.com
 - description: Production
   url: https://api.tactixai.com
 tags:
@@ -18,7 +20,7 @@ tags:
 - name: Games
   x-displayName: Games
 - name: Plays & Events
-  x-displayName: Plays Events
+  x-displayName: Plays & Events
 - name: Game Recap
   x-displayName: Game Recap
 - name: Teams
@@ -30,6 +32,38 @@ tags:
 - name: Venue
   x-displayName: Venues
 paths:
+  /api/v1/client/abort-upload:
+    post:
+      operationId: abortMultipartUpload
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AbortMultipartUploadDto"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbortMultipartUploadResponseDto"
+          description: Successfully aborted multipart upload
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestErrorResponseDto"
+          description: Validation error
+      security:
+      - Client-App-Token: []
+        Client-App-Id: []
+      summary: Abort a s3 multipart upload
+      tags:
+      - Uploads
+      x-content-type: application/json
+      x-accepts:
+      - application/json
   /api/v1/client/auth/token:
     get:
       description: Exchanges client credentials for a temporary bearer token.
@@ -1750,6 +1784,30 @@ paths:
       - application/json
 components:
   schemas:
+    AbortMultipartUploadDto:
+      example:
+        uploadId: uploadId
+      properties:
+        uploadId:
+          type: string
+      required:
+      - uploadId
+      type: object
+    AbortMultipartUploadResponseDto:
+      example:
+        message: Operation successful
+        data: "{}"
+      properties:
+        message:
+          example: Operation successful
+          type: string
+        data:
+          nullable: true
+          type: object
+      required:
+      - data
+      - message
+      type: object
     Address:
       example:
         street: 1 Lincoln Financial Field Way
@@ -1814,6 +1872,7 @@ components:
       example:
         viewType: Broadcast Wide
         s3Link: https://tactix-bucket.s3.amazonaws.com/games/2023/week5/game-video.mp4
+        uploadId: uploadId
       properties:
         viewType:
           example: Broadcast Wide
@@ -1821,10 +1880,18 @@ components:
         s3Link:
           example: https://tactix-bucket.s3.amazonaws.com/games/2023/week5/game-video.mp4
           type: string
+        uploadId:
+          type: string
       required:
       - s3Link
       - viewType
       type: object
+    AnalysisStatus:
+      enum:
+      - not_analyzed
+      - in_progress
+      - analyzed
+      type: string
     BadRequestErrorResponseDto:
       example:
         code: 400
@@ -4371,6 +4438,8 @@ components:
         offset: 100
         gameId: game-id
         videoId: video-id
+        isClippingCompleted: true
+        analysisStatus: not_analyzed
         data:
         - playId: play-id
           playNumber: 1
@@ -4436,13 +4505,20 @@ components:
         videoId:
           example: video-id
           type: string
+        isClippingCompleted:
+          example: true
+          type: boolean
+        analysisStatus:
+          $ref: "#/components/schemas/AnalysisStatus"
         data:
           items:
             $ref: "#/components/schemas/PlayClipListItemDto"
           type: array
       required:
+      - analysisStatus
       - data
       - gameId
+      - isClippingCompleted
       - limit
       - offset
       - total
@@ -4562,11 +4638,15 @@ components:
           viewType: All-22 Sideline
           sourceUrl: https://example.com/video.mp4
           isDefaultVideo: false
+          isClippingCompleted: true
+          analysisStatus: not_analyzed
         - gameId: game-id
           videoId: video-id
           viewType: All-22 Sideline
           sourceUrl: https://example.com/video.mp4
           isDefaultVideo: false
+          isClippingCompleted: true
+          analysisStatus: not_analyzed
       properties:
         total:
           example: 150
@@ -5562,6 +5642,8 @@ components:
           viewType: All-22 Sideline
           sourceUrl: https://example.com/video.mp4
           isDefaultVideo: false
+          isClippingCompleted: true
+          analysisStatus: not_analyzed
       properties:
         message:
           example: Operation successful
@@ -6180,6 +6262,8 @@ components:
         viewType: All-22 Sideline
         sourceUrl: https://example.com/video.mp4
         isDefaultVideo: false
+        isClippingCompleted: true
+        analysisStatus: not_analyzed
       properties:
         gameId:
           example: game-id
@@ -6196,8 +6280,15 @@ components:
         isDefaultVideo:
           example: false
           type: boolean
+        isClippingCompleted:
+          example: true
+          type: boolean
+        analysisStatus:
+          $ref: "#/components/schemas/AnalysisStatus"
       required:
+      - analysisStatus
       - gameId
+      - isClippingCompleted
       - isDefaultVideo
       - sourceUrl
       - videoId

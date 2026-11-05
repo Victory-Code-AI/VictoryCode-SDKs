@@ -45,5 +45,11 @@ class AddVideoToGameWithS3LinkDtoTest : ShouldSpec() {
             //modelInstance.s3Link shouldBe ("TODO")
         }
 
+        // to test the property `uploadId`
+        should("test uploadId") {
+            // uncomment below to test the property
+            //modelInstance.uploadId shouldBe ("TODO")
+        }
+
     }
 }

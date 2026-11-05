@@ -26,6 +26,13 @@ class TestUploadsApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_abort_multipart_upload(self) -> None:
+        """Test case for abort_multipart_upload
+
+        Abort a s3 multipart upload
+        """
+        pass
+
     def test_complete_multipart_upload(self) -> None:
         """Test case for complete_multipart_upload
 

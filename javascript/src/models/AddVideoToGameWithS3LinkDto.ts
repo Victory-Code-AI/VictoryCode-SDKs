@@ -26,6 +26,10 @@ export interface AddVideoToGameWithS3LinkDto {
      * 
      */
     s3Link: string;
+    /**
+     * 
+     */
+    uploadId?: string;
 }
 
 /**
@@ -49,6 +53,7 @@ export function AddVideoToGameWithS3LinkDtoFromJSONTyped(json: any, ignoreDiscri
         
         'viewType': json['viewType'],
         's3Link': json['s3Link'],
+        'uploadId': json['uploadId'] == null ? undefined : json['uploadId'],
     };
 }
 
@@ -65,6 +70,7 @@ export function AddVideoToGameWithS3LinkDtoToJSONTyped(value?: AddVideoToGameWit
         
         'viewType': value['viewType'],
         's3Link': value['s3Link'],
+        'uploadId': value['uploadId'],
     };
 }
 

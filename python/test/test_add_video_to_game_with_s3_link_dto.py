@@ -36,7 +36,8 @@ class TestAddVideoToGameWithS3LinkDto(unittest.TestCase):
         if include_optional:
             return AddVideoToGameWithS3LinkDto(
                 view_type = 'Broadcast Wide',
-                s3_link = 'https://tactix-bucket.s3.amazonaws.com/games/2023/week5/game-video.mp4'
+                s3_link = 'https://tactix-bucket.s3.amazonaws.com/games/2023/week5/game-video.mp4',
+                upload_id = ''
             )
         else:
             return AddVideoToGameWithS3LinkDto(

@@ -12,6 +12,12 @@
  * Do not edit the class manually.
  */
 
+import type { AnalysisStatus } from './AnalysisStatus';
+import {
+    AnalysisStatusFromJSON,
+    AnalysisStatusToJSON,
+} from './AnalysisStatus';
+
 /**
  * 
  * @export
@@ -38,7 +44,17 @@ export interface VideoListItemDto {
      * 
      */
     isDefaultVideo: boolean;
+    /**
+     * 
+     */
+    isClippingCompleted: boolean;
+    /**
+     * 
+     */
+    analysisStatus: AnalysisStatus;
 }
+
+
 
 /**
  * Check if a given object implements the VideoListItemDto interface.
@@ -49,6 +65,8 @@ export function instanceOfVideoListItemDto(value: object): value is VideoListIte
     if (!('viewType' in value) || value['viewType'] === undefined) return false;
     if (!('sourceUrl' in value) || value['sourceUrl'] === undefined) return false;
     if (!('isDefaultVideo' in value) || value['isDefaultVideo'] === undefined) return false;
+    if (!('isClippingCompleted' in value) || value['isClippingCompleted'] === undefined) return false;
+    if (!('analysisStatus' in value) || value['analysisStatus'] === undefined) return false;
     return true;
 }
 
@@ -67,6 +85,8 @@ export function VideoListItemDtoFromJSONTyped(json: any, ignoreDiscriminator: bo
         'viewType': json['viewType'],
         'sourceUrl': json['sourceUrl'],
         'isDefaultVideo': json['isDefaultVideo'],
+        'isClippingCompleted': json['isClippingCompleted'],
+        'analysisStatus': AnalysisStatusFromJSON(json['analysisStatus']),
     };
 }
 
@@ -86,6 +106,8 @@ export function VideoListItemDtoToJSONTyped(value?: VideoListItemDto | null, ign
         'viewType': value['viewType'],
         'sourceUrl': value['sourceUrl'],
         'isDefaultVideo': value['isDefaultVideo'],
+        'isClippingCompleted': value['isClippingCompleted'],
+        'analysisStatus': AnalysisStatusToJSON(value['analysisStatus']),
     };
 }
 

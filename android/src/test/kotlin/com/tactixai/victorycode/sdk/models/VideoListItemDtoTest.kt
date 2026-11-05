@@ -27,6 +27,7 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.ShouldSpec
 
 import com.tactixai.victorycode.sdk.models.VideoListItemDto
+import com.tactixai.victorycode.sdk.models.AnalysisStatus
 
 class VideoListItemDtoTest : ShouldSpec() {
     init {
@@ -61,6 +62,18 @@ class VideoListItemDtoTest : ShouldSpec() {
         should("test isDefaultVideo") {
             // uncomment below to test the property
             //modelInstance.isDefaultVideo shouldBe ("TODO")
+        }
+
+        // to test the property `isClippingCompleted`
+        should("test isClippingCompleted") {
+            // uncomment below to test the property
+            //modelInstance.isClippingCompleted shouldBe ("TODO")
+        }
+
+        // to test the property `analysisStatus`
+        should("test analysisStatus") {
+            // uncomment below to test the property
+            //modelInstance.analysisStatus shouldBe ("TODO")
         }
 
     }

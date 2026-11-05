@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
+from victorycode_sdk.models.analysis_status import AnalysisStatus
 from victorycode_sdk.models.play_clip_list_item_dto import PlayClipListItemDto
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,8 +34,10 @@ class ListPlayClipsResponseDto(BaseModel):
     offset: Union[StrictFloat, StrictInt] = Field(json_schema_extra={"examples": [100]})
     game_id: StrictStr = Field(alias="gameId", json_schema_extra={"examples": ["game-id"]})
     video_id: StrictStr = Field(alias="videoId", json_schema_extra={"examples": ["video-id"]})
+    is_clipping_completed: StrictBool = Field(alias="isClippingCompleted", json_schema_extra={"examples": [True]})
+    analysis_status: AnalysisStatus = Field(alias="analysisStatus")
     data: List[PlayClipListItemDto]
-    __properties: ClassVar[List[str]] = ["total", "limit", "offset", "gameId", "videoId", "data"]
+    __properties: ClassVar[List[str]] = ["total", "limit", "offset", "gameId", "videoId", "isClippingCompleted", "analysisStatus", "data"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -98,6 +101,8 @@ class ListPlayClipsResponseDto(BaseModel):
             "offset": obj.get("offset"),
             "gameId": obj.get("gameId"),
             "videoId": obj.get("videoId"),
+            "isClippingCompleted": obj.get("isClippingCompleted"),
+            "analysisStatus": obj.get("analysisStatus"),
             "data": [PlayClipListItemDto.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
         })
         return _obj

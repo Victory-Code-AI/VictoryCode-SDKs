@@ -9,6 +9,8 @@
 | **viewType** | **kotlin.String** |  |  |
 | **sourceUrl** | **kotlin.String** |  |  |
 | **isDefaultVideo** | **kotlin.Boolean** |  |  |
+| **isClippingCompleted** | **kotlin.Boolean** |  |  |
+| **analysisStatus** | [**AnalysisStatus**](AnalysisStatus.md) |  |  |
 
 
 

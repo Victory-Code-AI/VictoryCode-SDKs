@@ -23,6 +23,7 @@
 
 package com.tactixai.victorycode.sdk.models
 
+import com.tactixai.victorycode.sdk.models.AnalysisStatus
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -35,6 +36,8 @@ import com.squareup.moshi.JsonClass
  * @param viewType 
  * @param sourceUrl 
  * @param isDefaultVideo 
+ * @param isClippingCompleted 
+ * @param analysisStatus 
  */
 
 
@@ -53,7 +56,13 @@ data class VideoListItemDto (
     val sourceUrl: kotlin.String,
 
     @Json(name = "isDefaultVideo")
-    val isDefaultVideo: kotlin.Boolean
+    val isDefaultVideo: kotlin.Boolean,
+
+    @Json(name = "isClippingCompleted")
+    val isClippingCompleted: kotlin.Boolean,
+
+    @Json(name = "analysisStatus")
+    val analysisStatus: AnalysisStatus
 
 ) {
 

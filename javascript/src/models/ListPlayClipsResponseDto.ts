@@ -17,6 +17,11 @@ import {
     PlayClipListItemDtoFromJSON,
     PlayClipListItemDtoToJSON,
 } from './PlayClipListItemDto';
+import type { AnalysisStatus } from './AnalysisStatus';
+import {
+    AnalysisStatusFromJSON,
+    AnalysisStatusToJSON,
+} from './AnalysisStatus';
 
 /**
  * 
@@ -47,8 +52,18 @@ export interface ListPlayClipsResponseDto {
     /**
      * 
      */
+    isClippingCompleted: boolean;
+    /**
+     * 
+     */
+    analysisStatus: AnalysisStatus;
+    /**
+     * 
+     */
     data: Array<PlayClipListItemDto>;
 }
+
+
 
 /**
  * Check if a given object implements the ListPlayClipsResponseDto interface.
@@ -59,6 +74,8 @@ export function instanceOfListPlayClipsResponseDto(value: object): value is List
     if (!('offset' in value) || value['offset'] === undefined) return false;
     if (!('gameId' in value) || value['gameId'] === undefined) return false;
     if (!('videoId' in value) || value['videoId'] === undefined) return false;
+    if (!('isClippingCompleted' in value) || value['isClippingCompleted'] === undefined) return false;
+    if (!('analysisStatus' in value) || value['analysisStatus'] === undefined) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
@@ -78,6 +95,8 @@ export function ListPlayClipsResponseDtoFromJSONTyped(json: any, ignoreDiscrimin
         'offset': json['offset'],
         'gameId': json['gameId'],
         'videoId': json['videoId'],
+        'isClippingCompleted': json['isClippingCompleted'],
+        'analysisStatus': AnalysisStatusFromJSON(json['analysisStatus']),
         'data': ((json['data'] as Array<any>).map(PlayClipListItemDtoFromJSON)),
     };
 }
@@ -98,6 +117,8 @@ export function ListPlayClipsResponseDtoToJSONTyped(value?: ListPlayClipsRespons
         'offset': value['offset'],
         'gameId': value['gameId'],
         'videoId': value['videoId'],
+        'isClippingCompleted': value['isClippingCompleted'],
+        'analysisStatus': AnalysisStatusToJSON(value['analysisStatus']),
         'data': ((value['data'] as Array<any>).map(PlayClipListItemDtoToJSON)),
     };
 }

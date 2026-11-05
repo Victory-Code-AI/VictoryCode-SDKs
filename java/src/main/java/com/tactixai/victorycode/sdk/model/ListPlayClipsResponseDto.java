@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.tactixai.victorycode.sdk.model.AnalysisStatus;
 import com.tactixai.victorycode.sdk.model.PlayClipListItemDto;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -79,6 +80,16 @@ public class ListPlayClipsResponseDto {
   @SerializedName(SERIALIZED_NAME_VIDEO_ID)
   @javax.annotation.Nonnull
   private String videoId;
+
+  public static final String SERIALIZED_NAME_IS_CLIPPING_COMPLETED = "isClippingCompleted";
+  @SerializedName(SERIALIZED_NAME_IS_CLIPPING_COMPLETED)
+  @javax.annotation.Nonnull
+  private Boolean isClippingCompleted;
+
+  public static final String SERIALIZED_NAME_ANALYSIS_STATUS = "analysisStatus";
+  @SerializedName(SERIALIZED_NAME_ANALYSIS_STATUS)
+  @javax.annotation.Nonnull
+  private AnalysisStatus analysisStatus;
 
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
@@ -183,6 +194,44 @@ public class ListPlayClipsResponseDto {
   }
 
 
+  public ListPlayClipsResponseDto isClippingCompleted(@javax.annotation.Nonnull Boolean isClippingCompleted) {
+    this.isClippingCompleted = isClippingCompleted;
+    return this;
+  }
+
+  /**
+   * Get isClippingCompleted
+   * @return isClippingCompleted
+   */
+  @javax.annotation.Nonnull
+  public Boolean getIsClippingCompleted() {
+    return isClippingCompleted;
+  }
+
+  public void setIsClippingCompleted(@javax.annotation.Nonnull Boolean isClippingCompleted) {
+    this.isClippingCompleted = isClippingCompleted;
+  }
+
+
+  public ListPlayClipsResponseDto analysisStatus(@javax.annotation.Nonnull AnalysisStatus analysisStatus) {
+    this.analysisStatus = analysisStatus;
+    return this;
+  }
+
+  /**
+   * Get analysisStatus
+   * @return analysisStatus
+   */
+  @javax.annotation.Nonnull
+  public AnalysisStatus getAnalysisStatus() {
+    return analysisStatus;
+  }
+
+  public void setAnalysisStatus(@javax.annotation.Nonnull AnalysisStatus analysisStatus) {
+    this.analysisStatus = analysisStatus;
+  }
+
+
   public ListPlayClipsResponseDto data(@javax.annotation.Nonnull List<PlayClipListItemDto> data) {
     this.data = data;
     return this;
@@ -225,12 +274,14 @@ public class ListPlayClipsResponseDto {
         Objects.equals(this.offset, listPlayClipsResponseDto.offset) &&
         Objects.equals(this.gameId, listPlayClipsResponseDto.gameId) &&
         Objects.equals(this.videoId, listPlayClipsResponseDto.videoId) &&
+        Objects.equals(this.isClippingCompleted, listPlayClipsResponseDto.isClippingCompleted) &&
+        Objects.equals(this.analysisStatus, listPlayClipsResponseDto.analysisStatus) &&
         Objects.equals(this.data, listPlayClipsResponseDto.data);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(total, limit, offset, gameId, videoId, data);
+    return Objects.hash(total, limit, offset, gameId, videoId, isClippingCompleted, analysisStatus, data);
   }
 
   @Override
@@ -242,6 +293,8 @@ public class ListPlayClipsResponseDto {
     sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
     sb.append("    gameId: ").append(toIndentedString(gameId)).append("\n");
     sb.append("    videoId: ").append(toIndentedString(videoId)).append("\n");
+    sb.append("    isClippingCompleted: ").append(toIndentedString(isClippingCompleted)).append("\n");
+    sb.append("    analysisStatus: ").append(toIndentedString(analysisStatus)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -261,10 +314,10 @@ public class ListPlayClipsResponseDto {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("total", "limit", "offset", "gameId", "videoId", "data"));
+    openapiFields = new HashSet<String>(Arrays.asList("total", "limit", "offset", "gameId", "videoId", "isClippingCompleted", "analysisStatus", "data"));
 
     // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>(Arrays.asList("total", "limit", "offset", "gameId", "videoId", "data"));
+    openapiRequiredFields = new HashSet<String>(Arrays.asList("total", "limit", "offset", "gameId", "videoId", "isClippingCompleted", "analysisStatus", "data"));
   }
 
   /**
@@ -301,6 +354,8 @@ public class ListPlayClipsResponseDto {
       if (!jsonObj.get("videoId").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format(java.util.Locale.ROOT, "Expected the field `videoId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("videoId").toString()));
       }
+      // validate the required field `analysisStatus`
+      AnalysisStatus.validateJsonElement(jsonObj.get("analysisStatus"));
       if (jsonObj.get("data") != null) {
         if (!jsonObj.get("data").isJsonArray()) {
           throw new IllegalArgumentException(String.format(java.util.Locale.ROOT, "Expected the field `data` to be an array in the JSON string but got `%s`", jsonObj.get("data").toString()));

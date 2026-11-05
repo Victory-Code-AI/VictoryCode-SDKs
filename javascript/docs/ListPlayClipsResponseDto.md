@@ -11,6 +11,8 @@ Name | Type
 `offset` | number
 `gameId` | string
 `videoId` | string
+`isClippingCompleted` | boolean
+`analysisStatus` | [AnalysisStatus](AnalysisStatus.md)
 `data` | [Array&lt;PlayClipListItemDto&gt;](PlayClipListItemDto.md)
 
 ## Example
@@ -25,6 +27,8 @@ const example = {
   "offset": 100,
   "gameId": game-id,
   "videoId": video-id,
+  "isClippingCompleted": true,
+  "analysisStatus": null,
   "data": null,
 } satisfies ListPlayClipsResponseDto
 

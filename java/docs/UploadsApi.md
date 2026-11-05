@@ -4,10 +4,83 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**abortMultipartUpload**](UploadsApi.md#abortMultipartUpload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload |
 | [**completeMultipartUpload**](UploadsApi.md#completeMultipartUpload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3 |
 | [**getPresignedUrl**](UploadsApi.md#getPresignedUrl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload |
 | [**initiateUpload**](UploadsApi.md#initiateUpload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file |
 
+
+<a id="abortMultipartUpload"></a>
+# **abortMultipartUpload**
+> AbortMultipartUploadResponseDto abortMultipartUpload(abortMultipartUploadDto)
+
+Abort a s3 multipart upload
+
+### Example
+```java
+// Import classes:
+import com.tactixai.victorycode.sdk.ApiClient;
+import com.tactixai.victorycode.sdk.ApiException;
+import com.tactixai.victorycode.sdk.Configuration;
+import com.tactixai.victorycode.sdk.auth.*;
+import com.tactixai.victorycode.sdk.models.*;
+import com.tactixai.victorycode.sdk.api.UploadsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://sandbox.api.tactixai.com");
+    
+    // Configure HTTP bearer authorization: Client-App-Token
+    HttpBearerAuth Client-App-Token = (HttpBearerAuth) defaultClient.getAuthentication("Client-App-Token");
+    Client-App-Token.setBearerToken("BEARER TOKEN");
+
+    // Configure API key authorization: Client-App-Id
+    ApiKeyAuth Client-App-Id = (ApiKeyAuth) defaultClient.getAuthentication("Client-App-Id");
+    Client-App-Id.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //Client-App-Id.setApiKeyPrefix("Token");
+
+    UploadsApi apiInstance = new UploadsApi(defaultClient);
+    AbortMultipartUploadDto abortMultipartUploadDto = new AbortMultipartUploadDto(); // AbortMultipartUploadDto | 
+    try {
+      AbortMultipartUploadResponseDto result = apiInstance.abortMultipartUpload(abortMultipartUploadDto);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling UploadsApi#abortMultipartUpload");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **abortMultipartUploadDto** | [**AbortMultipartUploadDto**](AbortMultipartUploadDto.md)|  | |
+
+### Return type
+
+[**AbortMultipartUploadResponseDto**](AbortMultipartUploadResponseDto.md)
+
+### Authorization
+
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Successfully aborted multipart upload |  -  |
+| **400** | Validation error |  -  |
 
 <a id="completeMultipartUpload"></a>
 # **completeMultipartUpload**

@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List
+from victorycode_sdk.models.analysis_status import AnalysisStatus
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -32,7 +33,9 @@ class VideoListItemDto(BaseModel):
     view_type: StrictStr = Field(alias="viewType", json_schema_extra={"examples": ["All-22 Sideline"]})
     source_url: StrictStr = Field(alias="sourceUrl", json_schema_extra={"examples": ["https://example.com/video.mp4"]})
     is_default_video: StrictBool = Field(alias="isDefaultVideo", json_schema_extra={"examples": [False]})
-    __properties: ClassVar[List[str]] = ["gameId", "videoId", "viewType", "sourceUrl", "isDefaultVideo"]
+    is_clipping_completed: StrictBool = Field(alias="isClippingCompleted", json_schema_extra={"examples": [True]})
+    analysis_status: AnalysisStatus = Field(alias="analysisStatus")
+    __properties: ClassVar[List[str]] = ["gameId", "videoId", "viewType", "sourceUrl", "isDefaultVideo", "isClippingCompleted", "analysisStatus"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -89,7 +92,9 @@ class VideoListItemDto(BaseModel):
             "videoId": obj.get("videoId"),
             "viewType": obj.get("viewType"),
             "sourceUrl": obj.get("sourceUrl"),
-            "isDefaultVideo": obj.get("isDefaultVideo")
+            "isDefaultVideo": obj.get("isDefaultVideo"),
+            "isClippingCompleted": obj.get("isClippingCompleted"),
+            "analysisStatus": obj.get("analysisStatus")
         })
         return _obj
 

@@ -4,10 +4,96 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**abort_multipart_upload**](UploadsApi.md#abort_multipart_upload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload
 [**complete_multipart_upload**](UploadsApi.md#complete_multipart_upload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3
 [**get_presigned_url**](UploadsApi.md#get_presigned_url) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload
 [**initiate_upload**](UploadsApi.md#initiate_upload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file
 
+
+# **abort_multipart_upload**
+> AbortMultipartUploadResponseDto abort_multipart_upload(abort_multipart_upload_dto)
+
+Abort a s3 multipart upload
+
+### Example
+
+* Bearer (JWT) Authentication (Client-App-Token):
+* Api Key Authentication (Client-App-Id):
+
+```python
+import victorycode_sdk
+from victorycode_sdk.models.abort_multipart_upload_dto import AbortMultipartUploadDto
+from victorycode_sdk.models.abort_multipart_upload_response_dto import AbortMultipartUploadResponseDto
+from victorycode_sdk.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://sandbox.api.tactixai.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = victorycode_sdk.Configuration(
+    host = "https://sandbox.api.tactixai.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): Client-App-Token
+configuration = victorycode_sdk.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Configure API key authorization: Client-App-Id
+configuration.api_key['Client-App-Id'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Client-App-Id'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with victorycode_sdk.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = victorycode_sdk.UploadsApi(api_client)
+    abort_multipart_upload_dto = victorycode_sdk.AbortMultipartUploadDto() # AbortMultipartUploadDto | 
+
+    try:
+        # Abort a s3 multipart upload
+        api_response = api_instance.abort_multipart_upload(abort_multipart_upload_dto)
+        print("The response of UploadsApi->abort_multipart_upload:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling UploadsApi->abort_multipart_upload: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **abort_multipart_upload_dto** | [**AbortMultipartUploadDto**](AbortMultipartUploadDto.md)|  | 
+
+### Return type
+
+[**AbortMultipartUploadResponseDto**](AbortMultipartUploadResponseDto.md)
+
+### Authorization
+
+[Client-App-Token](../README.md#Client-App-Token), [Client-App-Id](../README.md#Client-App-Id)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | Successfully aborted multipart upload |  -  |
+**400** | Validation error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **complete_multipart_upload**
 > CompleteMultipartUploadResponseDto complete_multipart_upload(complete_multipart_upload_dto)

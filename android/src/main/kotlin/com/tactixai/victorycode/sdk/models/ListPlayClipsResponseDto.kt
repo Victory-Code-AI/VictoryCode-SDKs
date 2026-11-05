@@ -23,6 +23,7 @@
 
 package com.tactixai.victorycode.sdk.models
 
+import com.tactixai.victorycode.sdk.models.AnalysisStatus
 import com.tactixai.victorycode.sdk.models.PlayClipListItemDto
 
 import com.squareup.moshi.Json
@@ -36,6 +37,8 @@ import com.squareup.moshi.JsonClass
  * @param offset 
  * @param gameId 
  * @param videoId 
+ * @param isClippingCompleted 
+ * @param analysisStatus 
  * @param `data` 
  */
 
@@ -56,6 +59,12 @@ data class ListPlayClipsResponseDto (
 
     @Json(name = "videoId")
     val videoId: kotlin.String,
+
+    @Json(name = "isClippingCompleted")
+    val isClippingCompleted: kotlin.Boolean,
+
+    @Json(name = "analysisStatus")
+    val analysisStatus: AnalysisStatus,
 
     @Json(name = "data")
     val `data`: kotlin.collections.List<PlayClipListItemDto>

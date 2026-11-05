@@ -72,6 +72,18 @@ class UploadsApiTest extends TestCase
     }
 
     /**
+     * Test case for abortMultipartUpload
+     *
+     * Abort a s3 multipart upload.
+     *
+     */
+    public function testAbortMultipartUpload()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test case for completeMultipartUpload
      *
      * Complete a multipart upload to S3.

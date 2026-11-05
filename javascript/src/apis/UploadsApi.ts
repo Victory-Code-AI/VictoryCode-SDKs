@@ -14,6 +14,14 @@
 
 import * as runtime from '../runtime';
 import {
+    type AbortMultipartUploadDto,
+    AbortMultipartUploadDtoToJSON,
+} from '../models/AbortMultipartUploadDto';
+import {
+    type AbortMultipartUploadResponseDto,
+    AbortMultipartUploadResponseDtoFromJSON,
+} from '../models/AbortMultipartUploadResponseDto';
+import {
     type CompleteMultipartUploadDto,
     CompleteMultipartUploadDtoToJSON,
 } from '../models/CompleteMultipartUploadDto';
@@ -33,6 +41,13 @@ import {
     type InitiateMultipartUploadResponseDto,
     InitiateMultipartUploadResponseDtoFromJSON,
 } from '../models/InitiateMultipartUploadResponseDto';
+
+export interface AbortMultipartUploadRequest {
+    /**
+     * 
+     */
+    abortMultipartUploadDto: AbortMultipartUploadDto;
+}
 
 export interface CompleteMultipartUploadRequest {
     /**
@@ -63,6 +78,65 @@ export interface InitiateUploadRequest {
  * 
  */
 export class UploadsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates request options for abortMultipartUpload without sending the request
+     */
+    async abortMultipartUploadRequestOpts(requestParameters: AbortMultipartUploadRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['abortMultipartUploadDto'] == null) {
+            throw new runtime.RequiredError(
+                'abortMultipartUploadDto',
+                'Required parameter "abortMultipartUploadDto" was null or undefined when calling abortMultipartUpload().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("Client-App-Token", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["App-Id"] = await this.configuration.apiKey("App-Id"); // Client-App-Id authentication
+        }
+
+
+        let urlPath = `/api/v1/client/abort-upload`;
+
+        return {
+            path: urlPath,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AbortMultipartUploadDtoToJSON(requestParameters['abortMultipartUploadDto']),
+        };
+    }
+
+    /**
+     * Abort a s3 multipart upload
+     */
+    async abortMultipartUploadRaw(requestParameters: AbortMultipartUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AbortMultipartUploadResponseDto>> {
+        const requestOptions = await this.abortMultipartUploadRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AbortMultipartUploadResponseDtoFromJSON(jsonValue));
+    }
+
+    /**
+     * Abort a s3 multipart upload
+     */
+    async abortMultipartUpload(requestParameters: AbortMultipartUploadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AbortMultipartUploadResponseDto> {
+        const response = await this.abortMultipartUploadRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Creates request options for completeMultipartUpload without sending the request

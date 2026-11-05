@@ -14,14 +14,18 @@ public struct ListPlayClipsResponseDto: Sendable, Codable, Hashable {
     public var offset: Double
     public var gameId: String
     public var videoId: String
+    public var isClippingCompleted: Bool
+    public var analysisStatus: AnalysisStatus
     public var data: [PlayClipListItemDto]
 
-    public init(total: Double, limit: Double, offset: Double, gameId: String, videoId: String, data: [PlayClipListItemDto]) {
+    public init(total: Double, limit: Double, offset: Double, gameId: String, videoId: String, isClippingCompleted: Bool, analysisStatus: AnalysisStatus, data: [PlayClipListItemDto]) {
         self.total = total
         self.limit = limit
         self.offset = offset
         self.gameId = gameId
         self.videoId = videoId
+        self.isClippingCompleted = isClippingCompleted
+        self.analysisStatus = analysisStatus
         self.data = data
     }
 
@@ -31,6 +35,8 @@ public struct ListPlayClipsResponseDto: Sendable, Codable, Hashable {
         case offset
         case gameId
         case videoId
+        case isClippingCompleted
+        case analysisStatus
         case data
     }
 
@@ -43,6 +49,8 @@ public struct ListPlayClipsResponseDto: Sendable, Codable, Hashable {
         try container.encode(offset, forKey: .offset)
         try container.encode(gameId, forKey: .gameId)
         try container.encode(videoId, forKey: .videoId)
+        try container.encode(isClippingCompleted, forKey: .isClippingCompleted)
+        try container.encode(analysisStatus, forKey: .analysisStatus)
         try container.encode(data, forKey: .data)
     }
 }

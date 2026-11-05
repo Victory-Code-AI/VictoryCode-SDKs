@@ -52,6 +52,7 @@ Class | Method | HTTP request | Description
 *TeamsAPI* | [**deleteTeam**](docs/TeamsAPI.md#deleteteam) | **DELETE** /api/v1/client/teams/{id} | Delete a team
 *TeamsAPI* | [**getTeams**](docs/TeamsAPI.md#getteams) | **GET** /api/v1/client/teams | Get teams
 *TeamsAPI* | [**updateTeam**](docs/TeamsAPI.md#updateteam) | **PATCH** /api/v1/client/teams/{id} | Update a team
+*UploadsAPI* | [**abortMultipartUpload**](docs/UploadsAPI.md#abortmultipartupload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload
 *UploadsAPI* | [**completeMultipartUpload**](docs/UploadsAPI.md#completemultipartupload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3
 *UploadsAPI* | [**getPresignedUrl**](docs/UploadsAPI.md#getpresignedurl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload
 *UploadsAPI* | [**initiateUpload**](docs/UploadsAPI.md#initiateupload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file
@@ -63,9 +64,12 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AbortMultipartUploadDto](docs/AbortMultipartUploadDto.md)
+ - [AbortMultipartUploadResponseDto](docs/AbortMultipartUploadResponseDto.md)
  - [AddVideoToGameWithS3LinkDto](docs/AddVideoToGameWithS3LinkDto.md)
  - [Address](docs/Address.md)
  - [AddressDto](docs/AddressDto.md)
+ - [AnalysisStatus](docs/AnalysisStatus.md)
  - [BadRequestErrorResponseDto](docs/BadRequestErrorResponseDto.md)
  - [Classification](docs/Classification.md)
  - [ClientCreateGameWithVideoUrlDto](docs/ClientCreateGameWithVideoUrlDto.md)

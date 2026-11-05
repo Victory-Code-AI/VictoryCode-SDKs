@@ -32,6 +32,7 @@ import com.squareup.moshi.JsonClass
  *
  * @param viewType 
  * @param s3Link 
+ * @param uploadId 
  */
 
 
@@ -41,7 +42,10 @@ data class AddVideoToGameWithS3LinkDto (
     val viewType: kotlin.String,
 
     @Json(name = "s3Link")
-    val s3Link: kotlin.String
+    val s3Link: kotlin.String,
+
+    @Json(name = "uploadId")
+    val uploadId: kotlin.String? = null
 
 ) {
 

@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.tactixai.victorycode.sdk.model.AnalysisStatus;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -75,6 +76,16 @@ public class VideoListItemDto {
   @SerializedName(SERIALIZED_NAME_IS_DEFAULT_VIDEO)
   @javax.annotation.Nonnull
   private Boolean isDefaultVideo;
+
+  public static final String SERIALIZED_NAME_IS_CLIPPING_COMPLETED = "isClippingCompleted";
+  @SerializedName(SERIALIZED_NAME_IS_CLIPPING_COMPLETED)
+  @javax.annotation.Nonnull
+  private Boolean isClippingCompleted;
+
+  public static final String SERIALIZED_NAME_ANALYSIS_STATUS = "analysisStatus";
+  @SerializedName(SERIALIZED_NAME_ANALYSIS_STATUS)
+  @javax.annotation.Nonnull
+  private AnalysisStatus analysisStatus;
 
   public VideoListItemDto() {
   }
@@ -174,6 +185,44 @@ public class VideoListItemDto {
   }
 
 
+  public VideoListItemDto isClippingCompleted(@javax.annotation.Nonnull Boolean isClippingCompleted) {
+    this.isClippingCompleted = isClippingCompleted;
+    return this;
+  }
+
+  /**
+   * Get isClippingCompleted
+   * @return isClippingCompleted
+   */
+  @javax.annotation.Nonnull
+  public Boolean getIsClippingCompleted() {
+    return isClippingCompleted;
+  }
+
+  public void setIsClippingCompleted(@javax.annotation.Nonnull Boolean isClippingCompleted) {
+    this.isClippingCompleted = isClippingCompleted;
+  }
+
+
+  public VideoListItemDto analysisStatus(@javax.annotation.Nonnull AnalysisStatus analysisStatus) {
+    this.analysisStatus = analysisStatus;
+    return this;
+  }
+
+  /**
+   * Get analysisStatus
+   * @return analysisStatus
+   */
+  @javax.annotation.Nonnull
+  public AnalysisStatus getAnalysisStatus() {
+    return analysisStatus;
+  }
+
+  public void setAnalysisStatus(@javax.annotation.Nonnull AnalysisStatus analysisStatus) {
+    this.analysisStatus = analysisStatus;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -188,12 +237,14 @@ public class VideoListItemDto {
         Objects.equals(this.videoId, videoListItemDto.videoId) &&
         Objects.equals(this.viewType, videoListItemDto.viewType) &&
         Objects.equals(this.sourceUrl, videoListItemDto.sourceUrl) &&
-        Objects.equals(this.isDefaultVideo, videoListItemDto.isDefaultVideo);
+        Objects.equals(this.isDefaultVideo, videoListItemDto.isDefaultVideo) &&
+        Objects.equals(this.isClippingCompleted, videoListItemDto.isClippingCompleted) &&
+        Objects.equals(this.analysisStatus, videoListItemDto.analysisStatus);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(gameId, videoId, viewType, sourceUrl, isDefaultVideo);
+    return Objects.hash(gameId, videoId, viewType, sourceUrl, isDefaultVideo, isClippingCompleted, analysisStatus);
   }
 
   @Override
@@ -205,6 +256,8 @@ public class VideoListItemDto {
     sb.append("    viewType: ").append(toIndentedString(viewType)).append("\n");
     sb.append("    sourceUrl: ").append(toIndentedString(sourceUrl)).append("\n");
     sb.append("    isDefaultVideo: ").append(toIndentedString(isDefaultVideo)).append("\n");
+    sb.append("    isClippingCompleted: ").append(toIndentedString(isClippingCompleted)).append("\n");
+    sb.append("    analysisStatus: ").append(toIndentedString(analysisStatus)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -223,10 +276,10 @@ public class VideoListItemDto {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("gameId", "videoId", "viewType", "sourceUrl", "isDefaultVideo"));
+    openapiFields = new HashSet<String>(Arrays.asList("gameId", "videoId", "viewType", "sourceUrl", "isDefaultVideo", "isClippingCompleted", "analysisStatus"));
 
     // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>(Arrays.asList("gameId", "videoId", "viewType", "sourceUrl", "isDefaultVideo"));
+    openapiRequiredFields = new HashSet<String>(Arrays.asList("gameId", "videoId", "viewType", "sourceUrl", "isDefaultVideo", "isClippingCompleted", "analysisStatus"));
   }
 
   /**
@@ -269,6 +322,8 @@ public class VideoListItemDto {
       if (!jsonObj.get("sourceUrl").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format(java.util.Locale.ROOT, "Expected the field `sourceUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sourceUrl").toString()));
       }
+      // validate the required field `analysisStatus`
+      AnalysisStatus.validateJsonElement(jsonObj.get("analysisStatus"));
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

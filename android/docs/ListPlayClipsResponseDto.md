@@ -9,6 +9,8 @@
 | **offset** | [**java.math.BigDecimal**](java.math.BigDecimal.md) |  |  |
 | **gameId** | **kotlin.String** |  |  |
 | **videoId** | **kotlin.String** |  |  |
+| **isClippingCompleted** | **kotlin.Boolean** |  |  |
+| **analysisStatus** | [**AnalysisStatus**](AnalysisStatus.md) |  |  |
 | **&#x60;data&#x60;** | [**kotlin.collections.List&lt;PlayClipListItemDto&gt;**](PlayClipListItemDto.md) |  |  |
 
 

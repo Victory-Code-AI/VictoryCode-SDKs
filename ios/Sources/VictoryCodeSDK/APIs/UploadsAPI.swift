@@ -14,6 +14,46 @@ open class UploadsAPI {
     }
 
     /**
+     Abort a s3 multipart upload
+     
+     - parameter abortMultipartUploadDto: (body)  
+     - returns: AbortMultipartUploadResponseDto
+     */
+    open func abortMultipartUpload(abortMultipartUploadDto: AbortMultipartUploadDto) async throws(ErrorResponse) -> AbortMultipartUploadResponseDto {
+        return try await abortMultipartUploadWithRequestBuilder(abortMultipartUploadDto: abortMultipartUploadDto).execute().body
+    }
+
+    /**
+     Abort a s3 multipart upload
+     - POST /api/v1/client/abort-upload
+     - Bearer Token:
+       - type: http
+       - name: Client-App-Token
+     - API Key:
+       - type: apiKey App-Id (HEADER)
+       - name: Client-App-Id
+     - parameter abortMultipartUploadDto: (body)  
+     - returns: RequestBuilder<AbortMultipartUploadResponseDto> 
+     */
+    open func abortMultipartUploadWithRequestBuilder(abortMultipartUploadDto: AbortMultipartUploadDto) -> RequestBuilder<AbortMultipartUploadResponseDto> {
+        let localVariablePath = "/api/v1/client/abort-upload"
+        let localVariableURLString = apiConfiguration.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: abortMultipartUploadDto, codableHelper: apiConfiguration.codableHelper)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: (any Sendable)?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AbortMultipartUploadResponseDto>.Type = apiConfiguration.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true, apiConfiguration: apiConfiguration)
+    }
+
+    /**
      Complete a multipart upload to S3
      
      - parameter completeMultipartUploadDto: (body)  

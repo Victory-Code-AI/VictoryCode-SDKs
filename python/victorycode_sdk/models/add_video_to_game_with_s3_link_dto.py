@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -29,7 +29,8 @@ class AddVideoToGameWithS3LinkDto(BaseModel):
     """ # noqa: E501
     view_type: StrictStr = Field(alias="viewType", json_schema_extra={"examples": ["Broadcast Wide"]})
     s3_link: StrictStr = Field(alias="s3Link", json_schema_extra={"examples": ["https://tactix-bucket.s3.amazonaws.com/games/2023/week5/game-video.mp4"]})
-    __properties: ClassVar[List[str]] = ["viewType", "s3Link"]
+    upload_id: Optional[StrictStr] = Field(default=None, alias="uploadId")
+    __properties: ClassVar[List[str]] = ["viewType", "s3Link", "uploadId"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -83,7 +84,8 @@ class AddVideoToGameWithS3LinkDto(BaseModel):
 
         _obj = cls.model_validate({
             "viewType": obj.get("viewType"),
-            "s3Link": obj.get("s3Link")
+            "s3Link": obj.get("s3Link"),
+            "uploadId": obj.get("uploadId")
         })
         return _obj
 

@@ -18,6 +18,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.tactixai.victorycode.sdk.model.AnalysisStatus;
 import com.tactixai.victorycode.sdk.model.PlayClipListItemDto;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -79,6 +80,22 @@ public class ListPlayClipsResponseDtoTest {
     @Test
     public void videoIdTest() {
         // TODO: test videoId
+    }
+
+    /**
+     * Test the property 'isClippingCompleted'
+     */
+    @Test
+    public void isClippingCompletedTest() {
+        // TODO: test isClippingCompleted
+    }
+
+    /**
+     * Test the property 'analysisStatus'
+     */
+    @Test
+    public void analysisStatusTest() {
+        // TODO: test analysisStatus
     }
 
     /**

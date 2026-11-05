@@ -11,6 +11,8 @@ Name | Type
 `viewType` | string
 `sourceUrl` | string
 `isDefaultVideo` | boolean
+`isClippingCompleted` | boolean
+`analysisStatus` | [AnalysisStatus](AnalysisStatus.md)
 
 ## Example
 
@@ -24,6 +26,8 @@ const example = {
   "viewType": All-22 Sideline,
   "sourceUrl": https://example.com/video.mp4,
   "isDefaultVideo": false,
+  "isClippingCompleted": true,
+  "analysisStatus": null,
 } satisfies VideoListItemDto
 
 console.log(example)

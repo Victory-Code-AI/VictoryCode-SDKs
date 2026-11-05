@@ -2,9 +2,12 @@
 .npmignore
 .openapi-generator-ignore
 README.md
+docs/AbortMultipartUploadDto.md
+docs/AbortMultipartUploadResponseDto.md
 docs/AddVideoToGameWithS3LinkDto.md
 docs/Address.md
 docs/AddressDto.md
+docs/AnalysisStatus.md
 docs/AuthenticationApi.md
 docs/BadRequestErrorResponseDto.md
 docs/Classification.md
@@ -121,9 +124,12 @@ src/apis/UploadsApi.ts
 src/apis/VenueApi.ts
 src/apis/index.ts
 src/index.ts
+src/models/AbortMultipartUploadDto.ts
+src/models/AbortMultipartUploadResponseDto.ts
 src/models/AddVideoToGameWithS3LinkDto.ts
 src/models/Address.ts
 src/models/AddressDto.ts
+src/models/AnalysisStatus.ts
 src/models/BadRequestErrorResponseDto.ts
 src/models/Classification.ts
 src/models/ClientCreateGameWithVideoUrlDto.ts

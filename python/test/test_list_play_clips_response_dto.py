@@ -40,6 +40,8 @@ class TestListPlayClipsResponseDto(unittest.TestCase):
                 offset = 100,
                 game_id = 'game-id',
                 video_id = 'video-id',
+                is_clipping_completed = True,
+                analysis_status = 'not_analyzed',
                 data = [
                     victorycode_sdk.models.play_clip_list_item_dto.PlayClipListItemDto(
                         play_id = 'play-id', 
@@ -75,6 +77,8 @@ class TestListPlayClipsResponseDto(unittest.TestCase):
                 offset = 100,
                 game_id = 'game-id',
                 video_id = 'video-id',
+                is_clipping_completed = True,
+                analysis_status = 'not_analyzed',
                 data = [
                     victorycode_sdk.models.play_clip_list_item_dto.PlayClipListItemDto(
                         play_id = 'play-id', 

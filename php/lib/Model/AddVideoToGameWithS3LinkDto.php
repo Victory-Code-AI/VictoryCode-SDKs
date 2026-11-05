@@ -58,7 +58,8 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
      */
     protected static $openAPITypes = [
         'view_type' => 'string',
-        's3_link' => 'string'
+        's3_link' => 'string',
+        'upload_id' => 'string'
     ];
 
     /**
@@ -70,7 +71,8 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
      */
     protected static $openAPIFormats = [
         'view_type' => null,
-        's3_link' => null
+        's3_link' => null,
+        'upload_id' => null
     ];
 
     /**
@@ -80,7 +82,8 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
      */
     protected static array $openAPINullables = [
         'view_type' => false,
-        's3_link' => false
+        's3_link' => false,
+        'upload_id' => false
     ];
 
     /**
@@ -170,7 +173,8 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
      */
     protected static $attributeMap = [
         'view_type' => 'viewType',
-        's3_link' => 's3Link'
+        's3_link' => 's3Link',
+        'upload_id' => 'uploadId'
     ];
 
     /**
@@ -180,7 +184,8 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
      */
     protected static $setters = [
         'view_type' => 'setViewType',
-        's3_link' => 'setS3Link'
+        's3_link' => 'setS3Link',
+        'upload_id' => 'setUploadId'
     ];
 
     /**
@@ -190,7 +195,8 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
      */
     protected static $getters = [
         'view_type' => 'getViewType',
-        's3_link' => 'getS3Link'
+        's3_link' => 'getS3Link',
+        'upload_id' => 'getUploadId'
     ];
 
     /**
@@ -252,6 +258,7 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
     {
         $this->setIfExists('view_type', $data ?? [], null);
         $this->setIfExists('s3_link', $data ?? [], null);
+        $this->setIfExists('upload_id', $data ?? [], null);
     }
 
     /**
@@ -352,6 +359,33 @@ class AddVideoToGameWithS3LinkDto implements ModelInterface, ArrayAccess, \JsonS
             throw new \InvalidArgumentException('non-nullable s3_link cannot be null');
         }
         $this->container['s3_link'] = $s3_link;
+
+        return $this;
+    }
+
+    /**
+     * Gets upload_id
+     *
+     * @return string|null
+     */
+    public function getUploadId()
+    {
+        return $this->container['upload_id'];
+    }
+
+    /**
+     * Sets upload_id
+     *
+     * @param string|null $upload_id upload_id
+     *
+     * @return self
+     */
+    public function setUploadId($upload_id)
+    {
+        if (is_null($upload_id)) {
+            throw new \InvalidArgumentException('non-nullable upload_id cannot be null');
+        }
+        $this->container['upload_id'] = $upload_id;
 
         return $this;
     }

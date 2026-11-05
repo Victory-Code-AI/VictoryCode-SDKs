@@ -26,9 +26,12 @@ Sources/VictoryCodeSDK/Infrastructure/OpenISO8601DateFormatter.swift
 Sources/VictoryCodeSDK/Infrastructure/SynchronizedDictionary.swift
 Sources/VictoryCodeSDK/Infrastructure/URLSessionImplementations.swift
 Sources/VictoryCodeSDK/Infrastructure/Validation.swift
+Sources/VictoryCodeSDK/Models/AbortMultipartUploadDto.swift
+Sources/VictoryCodeSDK/Models/AbortMultipartUploadResponseDto.swift
 Sources/VictoryCodeSDK/Models/AddVideoToGameWithS3LinkDto.swift
 Sources/VictoryCodeSDK/Models/Address.swift
 Sources/VictoryCodeSDK/Models/AddressDto.swift
+Sources/VictoryCodeSDK/Models/AnalysisStatus.swift
 Sources/VictoryCodeSDK/Models/BadRequestErrorResponseDto.swift
 Sources/VictoryCodeSDK/Models/Classification.swift
 Sources/VictoryCodeSDK/Models/ClientCreateGameWithVideoUrlDto.swift
@@ -125,9 +128,12 @@ Sources/VictoryCodeSDK/Models/UpdateVenueDto.swift
 Sources/VictoryCodeSDK/Models/Venue.swift
 Sources/VictoryCodeSDK/Models/VideoListItemDto.swift
 VictoryCodeSDK.podspec
+docs/AbortMultipartUploadDto.md
+docs/AbortMultipartUploadResponseDto.md
 docs/AddVideoToGameWithS3LinkDto.md
 docs/Address.md
 docs/AddressDto.md
+docs/AnalysisStatus.md
 docs/AuthenticationAPI.md
 docs/BadRequestErrorResponseDto.md
 docs/Classification.md

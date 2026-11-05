@@ -74,6 +74,9 @@ class UploadsApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
+        'abortMultipartUpload' => [
+            'application/json',
+        ],
         'completeMultipartUpload' => [
             'application/json',
         ],
@@ -129,6 +132,304 @@ class UploadsApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation abortMultipartUpload
+     *
+     * Abort a s3 multipart upload
+     *
+     * @param  \VictoryCode\SDK\Model\AbortMultipartUploadDto $abort_multipart_upload_dto abort_multipart_upload_dto (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abortMultipartUpload'] to see the possible values for this operation
+     *
+     * @throws \VictoryCode\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \VictoryCode\SDK\Model\AbortMultipartUploadResponseDto|\VictoryCode\SDK\Model\BadRequestErrorResponseDto
+     */
+    public function abortMultipartUpload($abort_multipart_upload_dto, string $contentType = self::contentTypes['abortMultipartUpload'][0])
+    {
+        list($response) = $this->abortMultipartUploadWithHttpInfo($abort_multipart_upload_dto, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation abortMultipartUploadWithHttpInfo
+     *
+     * Abort a s3 multipart upload
+     *
+     * @param  \VictoryCode\SDK\Model\AbortMultipartUploadDto $abort_multipart_upload_dto (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abortMultipartUpload'] to see the possible values for this operation
+     *
+     * @throws \VictoryCode\SDK\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \VictoryCode\SDK\Model\AbortMultipartUploadResponseDto|\VictoryCode\SDK\Model\BadRequestErrorResponseDto, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function abortMultipartUploadWithHttpInfo($abort_multipart_upload_dto, string $contentType = self::contentTypes['abortMultipartUpload'][0])
+    {
+        $request = $this->abortMultipartUploadRequest($abort_multipart_upload_dto, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch($statusCode) {
+                case 201:
+                    return $this->handleResponseWithDataType(
+                        '\VictoryCode\SDK\Model\AbortMultipartUploadResponseDto',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\VictoryCode\SDK\Model\BadRequestErrorResponseDto',
+                        $request,
+                        $response,
+                    );
+            }
+
+            
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\VictoryCode\SDK\Model\AbortMultipartUploadResponseDto',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\VictoryCode\SDK\Model\AbortMultipartUploadResponseDto',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\VictoryCode\SDK\Model\BadRequestErrorResponseDto',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+        
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation abortMultipartUploadAsync
+     *
+     * Abort a s3 multipart upload
+     *
+     * @param  \VictoryCode\SDK\Model\AbortMultipartUploadDto $abort_multipart_upload_dto (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abortMultipartUpload'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function abortMultipartUploadAsync($abort_multipart_upload_dto, string $contentType = self::contentTypes['abortMultipartUpload'][0])
+    {
+        return $this->abortMultipartUploadAsyncWithHttpInfo($abort_multipart_upload_dto, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation abortMultipartUploadAsyncWithHttpInfo
+     *
+     * Abort a s3 multipart upload
+     *
+     * @param  \VictoryCode\SDK\Model\AbortMultipartUploadDto $abort_multipart_upload_dto (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abortMultipartUpload'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function abortMultipartUploadAsyncWithHttpInfo($abort_multipart_upload_dto, string $contentType = self::contentTypes['abortMultipartUpload'][0])
+    {
+        $returnType = '\VictoryCode\SDK\Model\AbortMultipartUploadResponseDto';
+        $request = $this->abortMultipartUploadRequest($abort_multipart_upload_dto, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'abortMultipartUpload'
+     *
+     * @param  \VictoryCode\SDK\Model\AbortMultipartUploadDto $abort_multipart_upload_dto (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['abortMultipartUpload'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function abortMultipartUploadRequest($abort_multipart_upload_dto, string $contentType = self::contentTypes['abortMultipartUpload'][0])
+    {
+
+        // verify the required parameter 'abort_multipart_upload_dto' is set
+        if ($abort_multipart_upload_dto === null || (is_array($abort_multipart_upload_dto) && count($abort_multipart_upload_dto) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $abort_multipart_upload_dto when calling abortMultipartUpload'
+            );
+        }
+
+
+        $resourcePath = '/api/v1/client/abort-upload';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($abort_multipart_upload_dto)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                try {
+                    $httpBody = json_encode(ObjectSerializer::sanitizeForSerialization($abort_multipart_upload_dto), JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                $httpBody = $abort_multipart_upload_dto;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                try {
+                    $httpBody = json_encode($formParams, JSON_THROW_ON_ERROR);
+                } catch (\JsonException $e) {
+                    throw new \InvalidArgumentException('json_encode error: ' . $e->getMessage(), 0, $e);
+                }
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires Bearer (JWT) authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('App-Id');
+        if ($apiKey !== null) {
+            $headers['App-Id'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**

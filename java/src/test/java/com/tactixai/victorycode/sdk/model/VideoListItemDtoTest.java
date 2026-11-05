@@ -18,6 +18,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.tactixai.victorycode.sdk.model.AnalysisStatus;
 import java.io.IOException;
 import java.util.Arrays;
 import org.junit.jupiter.api.Disabled;
@@ -75,6 +76,22 @@ public class VideoListItemDtoTest {
     @Test
     public void isDefaultVideoTest() {
         // TODO: test isDefaultVideo
+    }
+
+    /**
+     * Test the property 'isClippingCompleted'
+     */
+    @Test
+    public void isClippingCompletedTest() {
+        // TODO: test isClippingCompleted
+    }
+
+    /**
+     * Test the property 'analysisStatus'
+     */
+    @Test
+    public void analysisStatusTest() {
+        // TODO: test analysisStatus
     }
 
 }

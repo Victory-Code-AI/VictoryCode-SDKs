@@ -6,6 +6,7 @@
 | ------------ | ------------- | ------------- | ------------- |
 | **viewType** | **kotlin.String** |  |  |
 | **s3Link** | **kotlin.String** |  |  |
+| **uploadId** | **kotlin.String** |  |  [optional] |
 
 
 

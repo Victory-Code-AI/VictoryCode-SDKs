@@ -1,8 +1,11 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './AbortMultipartUploadDto';
+export * from './AbortMultipartUploadResponseDto';
 export * from './AddVideoToGameWithS3LinkDto';
 export * from './Address';
 export * from './AddressDto';
+export * from './AnalysisStatus';
 export * from './BadRequestErrorResponseDto';
 export * from './Classification';
 export * from './ClientCreateGameWithVideoUrlDto';

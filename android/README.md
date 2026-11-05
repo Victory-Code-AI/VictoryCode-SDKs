@@ -71,6 +71,7 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 | *TeamsApi* | [**deleteTeam**](docs/TeamsApi.md#deleteteam) | **DELETE** /api/v1/client/teams/{id} | Delete a team |
 | *TeamsApi* | [**getTeams**](docs/TeamsApi.md#getteams) | **GET** /api/v1/client/teams | Get teams |
 | *TeamsApi* | [**updateTeam**](docs/TeamsApi.md#updateteam) | **PATCH** /api/v1/client/teams/{id} | Update a team |
+| *UploadsApi* | [**abortMultipartUpload**](docs/UploadsApi.md#abortmultipartupload) | **POST** /api/v1/client/abort-upload | Abort a s3 multipart upload |
 | *UploadsApi* | [**completeMultipartUpload**](docs/UploadsApi.md#completemultipartupload) | **POST** /api/v1/client/complete-upload | Complete a multipart upload to S3 |
 | *UploadsApi* | [**getPresignedUrl**](docs/UploadsApi.md#getpresignedurl) | **GET** /api/v1/client/upload-presigned-url | Get a presigned URL for a specific part of a multipart upload |
 | *UploadsApi* | [**initiateUpload**](docs/UploadsApi.md#initiateupload) | **POST** /api/v1/client/initiate-upload | Initiate a multipart upload to S3 for a large file |
@@ -83,9 +84,12 @@ All URIs are relative to *https://sandbox.api.tactixai.com*
 <a id="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [com.tactixai.victorycode.sdk.models.AbortMultipartUploadDto](docs/AbortMultipartUploadDto.md)
+ - [com.tactixai.victorycode.sdk.models.AbortMultipartUploadResponseDto](docs/AbortMultipartUploadResponseDto.md)
  - [com.tactixai.victorycode.sdk.models.AddVideoToGameWithS3LinkDto](docs/AddVideoToGameWithS3LinkDto.md)
  - [com.tactixai.victorycode.sdk.models.Address](docs/Address.md)
  - [com.tactixai.victorycode.sdk.models.AddressDto](docs/AddressDto.md)
+ - [com.tactixai.victorycode.sdk.models.AnalysisStatus](docs/AnalysisStatus.md)
  - [com.tactixai.victorycode.sdk.models.BadRequestErrorResponseDto](docs/BadRequestErrorResponseDto.md)
  - [com.tactixai.victorycode.sdk.models.Classification](docs/Classification.md)
  - [com.tactixai.victorycode.sdk.models.ClientCreateGameWithVideoUrlDto](docs/ClientCreateGameWithVideoUrlDto.md)

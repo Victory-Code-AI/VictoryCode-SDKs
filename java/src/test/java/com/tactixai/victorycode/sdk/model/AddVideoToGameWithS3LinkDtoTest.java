@@ -53,4 +53,12 @@ public class AddVideoToGameWithS3LinkDtoTest {
         // TODO: test s3Link
     }
 
+    /**
+     * Test the property 'uploadId'
+     */
+    @Test
+    public void uploadIdTest() {
+        // TODO: test uploadId
+    }
+
 }
