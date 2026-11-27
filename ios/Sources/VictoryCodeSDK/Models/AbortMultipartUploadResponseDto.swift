@@ -10,9 +10,9 @@ import Foundation
 public struct AbortMultipartUploadResponseDto: Sendable, Codable, Hashable {
 
     public var message: String
-    public var data: JSONValue?
+    public var data: JSONValue
 
-    public init(message: String, data: JSONValue?) {
+    public init(message: String, data: JSONValue) {
         self.message = message
         self.data = data
     }

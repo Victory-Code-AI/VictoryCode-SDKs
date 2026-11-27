@@ -58,7 +58,7 @@ public class AbortMultipartUploadResponseDto {
 
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   private Object data;
 
   public AbortMultipartUploadResponseDto() {
@@ -83,7 +83,7 @@ public class AbortMultipartUploadResponseDto {
   }
 
 
-  public AbortMultipartUploadResponseDto data(@javax.annotation.Nullable Object data) {
+  public AbortMultipartUploadResponseDto data(@javax.annotation.Nonnull Object data) {
     this.data = data;
     return this;
   }
@@ -92,12 +92,12 @@ public class AbortMultipartUploadResponseDto {
    * Get data
    * @return data
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Object getData() {
     return data;
   }
 
-  public void setData(@javax.annotation.Nullable Object data) {
+  public void setData(@javax.annotation.Nonnull Object data) {
     this.data = data;
   }
 

@@ -41,7 +41,7 @@ data class AbortMultipartUploadResponseDto (
     val message: kotlin.String,
 
     @Json(name = "data")
-    val `data`: kotlin.Any?
+    val `data`: kotlin.Any
 
 ) {
 

@@ -17,7 +17,7 @@ import type { AbortMultipartUploadResponseDto } from '@victorycode/sdk'
 // TODO: Update the object below with actual values
 const example = {
   "message": Operation successful,
-  "data": null,
+  "data": Successfully aborted multipart upload,
 } satisfies AbortMultipartUploadResponseDto
 
 console.log(example)

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 (2026-11-27)
+
+Generated from API v1 revision 5 (1.0).
+
+Published by @spec-sync.
+
 ## 1.1.0 (2026-11-05)
 
 Generated from API v1 revision 4 (1.0).

@@ -1,8 +1,8 @@
 {
-  "portalRepo": "victory-code-ai/developers-portal",
-  "portalSha": "8906621e6a3ddca06d703f2fa59a5033f3f72974",
+  "portalRepo": "Victory-Code-AI/Developers-Portal",
+  "portalSha": "18356d54f5e02ef09d5edb388d78b31b9962af83",
   "version": "v1",
-  "revision": 4,
+  "revision": 5,
   "apiVersion": "1.0",
-  "syncedAt": "2026-11-05T07:07:45.040Z"
+  "syncedAt": "2026-11-27T15:14:04.522Z"
 }

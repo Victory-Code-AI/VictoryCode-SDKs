@@ -2598,7 +2598,7 @@
           },
           "data": {
             "type": "object",
-            "nullable": true
+            "example": "Successfully aborted multipart upload"
           }
         },
         "required": [

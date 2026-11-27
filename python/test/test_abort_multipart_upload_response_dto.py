@@ -36,12 +36,12 @@ class TestAbortMultipartUploadResponseDto(unittest.TestCase):
         if include_optional:
             return AbortMultipartUploadResponseDto(
                 message = 'Operation successful',
-                data = None
+                data = Successfully aborted multipart upload
             )
         else:
             return AbortMultipartUploadResponseDto(
                 message = 'Operation successful',
-                data = None,
+                data = Successfully aborted multipart upload,
         )
         """
 

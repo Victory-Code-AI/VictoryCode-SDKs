@@ -1796,13 +1796,13 @@ components:
     AbortMultipartUploadResponseDto:
       example:
         message: Operation successful
-        data: "{}"
+        data: Successfully aborted multipart upload
       properties:
         message:
           example: Operation successful
           type: string
         data:
-          nullable: true
+          example: Successfully aborted multipart upload
           type: object
       required:
       - data

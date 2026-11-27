@@ -25,7 +25,7 @@ export interface AbortMultipartUploadResponseDto {
     /**
      * 
      */
-    data: object | null;
+    data: object;
 }
 
 /**

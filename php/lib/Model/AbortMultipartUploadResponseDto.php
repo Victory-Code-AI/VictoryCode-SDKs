@@ -80,7 +80,7 @@ class AbortMultipartUploadResponseDto implements ModelInterface, ArrayAccess, \J
      */
     protected static array $openAPINullables = [
         'message' => false,
-        'data' => true
+        'data' => false
     ];
 
     /**
@@ -284,8 +284,8 @@ class AbortMultipartUploadResponseDto implements ModelInterface, ArrayAccess, \J
         if ($this->container['message'] === null) {
             $invalidProperties[] = "'message' can't be null";
         }
-        if ($this->container['data'] === null && !$this->isNullableSetToNull('data')) {
-            $invalidProperties[] = "'data' is required";
+        if ($this->container['data'] === null) {
+            $invalidProperties[] = "'data' can't be null";
         }
         return $invalidProperties;
     }
@@ -332,7 +332,7 @@ class AbortMultipartUploadResponseDto implements ModelInterface, ArrayAccess, \J
     /**
      * Gets data
      *
-     * @return object|null
+     * @return object
      */
     public function getData()
     {
@@ -342,21 +342,14 @@ class AbortMultipartUploadResponseDto implements ModelInterface, ArrayAccess, \J
     /**
      * Sets data
      *
-     * @param object|null $data data
+     * @param object $data data
      *
      * @return self
      */
     public function setData($data)
     {
         if (is_null($data)) {
-            array_push($this->openAPINullablesSetToNull, 'data');
-        } else {
-            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
-            $index = array_search('data', $nullablesSetToNull);
-            if ($index !== FALSE) {
-                unset($nullablesSetToNull[$index]);
-                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
-            }
+            throw new \InvalidArgumentException('non-nullable data cannot be null');
         }
         $this->container['data'] = $data;
 
